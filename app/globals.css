@@ -12,3 +12,9 @@
 .tileCopy{align-self:start}
 @media(max-width:720px){.recipeTile{grid-template-rows:145px minmax(0,1fr)}}
 
+/* Approved 1.2.9 home hero treatment. */
+.homeHero{min-height:305px;padding-top:clamp(30px,5vh,58px);padding-bottom:clamp(30px,5vh,58px);background:#1b5039}
+.homeHero:before{content:"";position:absolute;inset:0;background:url("./botanical-hero-overlay.png") center/cover no-repeat;filter:sepia(1) saturate(.58) hue-rotate(352deg);opacity:.24;pointer-events:none}
+.homeHero:after{content:"";position:absolute;left:0;right:0;top:auto;bottom:0;height:12px;background:linear-gradient(90deg,#9a6b1f 0%,#d5ab50 22%,#b57b23 50%,#d5ab50 78%,#9a6b1f 100%);box-shadow:0 -1px 0 #f0d68f55;pointer-events:none}
+.homeHero>div{position:relative;z-index:1}
+@media(max-width:720px){.homeHero:before{opacity:.18}.homeHero:after{height:9px}}

@@ -1,5 +1,5 @@
 name: "Le Carnet du Nord"
-version: "1.2.8"
+version: "1.2.9"
 slug: "le_carnet_du_nord"
 description: "Privat receptarkiv med kommentarer, betyg och portionsanpassning"
 arch:
@@ -30,4 +30,3 @@ schema:
   github_branch: str
   github_token: password
   sync_minutes: int(5,1440)
-

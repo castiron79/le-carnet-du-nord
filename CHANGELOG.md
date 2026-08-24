@@ -3,6 +3,20 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.9 – 2026-08-24
+
+- Förfinade startsidans gröna hero med ett diskret botaniskt kantmönster.
+- Lade till ett smalt, ordlöst guldband och gjorde hero-ytan något lägre och ljusare.
+
+## 1.2.8 – 2026-08-24
+
+- Riktade receptkortens bilder mot toppen och gav dem gemensam bild- och textlinje.
+- Behåller hellre luft under kortet än ojämna starter.
+
+## 1.2.7 – 2026-08-24
+
+- Minskade beskärningszoomen i stora hero-bilder och receptkort så mer av rätten syns.
+
 ## 1.2.6 – 2026-08-24
 
 - Förhindrar extra listnummer inne i `Gör så här` genom både robust inläsning
