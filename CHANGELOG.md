@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.5 – 2026-08-24
+
+- Korrigerade hjältytans kolumnberäkning så texten behåller full läsbredd medan
+  bilden ligger bakom en lång, mjuk tonad övergång.
+
 ## 1.2.4 – 2026-08-24
 
 - Förfinade faktaradens ikonstorlek, avstånd och portionskontroller.

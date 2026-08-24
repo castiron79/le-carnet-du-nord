@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.2.5 – 2026-08-24
+
+- Återställde ett brett textfält och lade bilden bakom hela rubriklagret.
+- Gjorde övergången lång och mjuk från täckande papper till helt genomskinlig bild.
+
 ## 1.2.4 – 2026-08-24
 
 - Centrerade portionsknapparna under portionsrubriken och minskade dem till 25×25 px.

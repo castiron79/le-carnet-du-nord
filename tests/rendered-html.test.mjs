@@ -54,6 +54,7 @@ test("receptets faktarad och bildtoning följer den stabila layouten", async () 
   assert.match(css, /\.facts \.factIcon[\s\S]*width: 51px;[\s\S]*height: 51px;/);
   assert.match(css, /\.portionControls[\s\S]*justify-content: center;[\s\S]*width: 10ch;/);
   assert.match(css, /\.recipeTitle[\s\S]*linear-gradient\(90deg[\s\S]*rgba\(248,244,235,0\) 100%/);
-  assert.match(css, /\.heroDish[\s\S]*inset: 0 0 0 30%;/);
+  assert.match(css, /\.recipeTitle[\s\S]*grid-column: 1 \/ -1;[\s\S]*width: 82%;/);
+  assert.match(css, /\.heroDish[\s\S]*inset: 0 0 0 28%;/);
 });
 

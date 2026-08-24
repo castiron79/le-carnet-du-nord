@@ -5,10 +5,11 @@
 .recipeTitle {
   position: relative;
   z-index: 2;
-  width: 74%;
+  grid-column: 1 / -1;
+  width: 82%;
   min-height: 510px;
-  padding-right: clamp(150px, 18vw, 310px);
-  background: linear-gradient(90deg, #f8f4eb 0%, #f8f4eb 47%, rgba(248,244,235,.96) 60%, rgba(248,244,235,.76) 74%, rgba(248,244,235,.34) 88%, rgba(248,244,235,0) 100%);
+  padding-right: clamp(260px, 30vw, 520px);
+  background: linear-gradient(90deg, #f8f4eb 0%, #f8f4eb 43%, rgba(248,244,235,.98) 52%, rgba(248,244,235,.9) 63%, rgba(248,244,235,.68) 74%, rgba(248,244,235,.36) 87%, rgba(248,244,235,0) 100%);
 }
 
 .recipeTitle::after {
@@ -18,7 +19,7 @@
 .heroDish {
   position: absolute;
   z-index: 1;
-  inset: 0 0 0 30%;
+  inset: 0 0 0 28%;
   min-height: 100%;
 }
 
