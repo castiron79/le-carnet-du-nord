@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.3 – 2026-08-24
+
+- Förenklade portionskontrollen till stabila plus- och minusikoner utan
+  layoutförskjutning på dator, mobil eller surfplatta.
+
 ## 1.2.2 – 2026-08-24
 
 - Lade till cache-regler och automatiskt test som säkerställer att den aktuella

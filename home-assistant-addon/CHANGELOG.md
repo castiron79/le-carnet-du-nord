@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.2.3 – 2026-08-24
+
+- Ersatte portionsmenyn med två fasta, runda plus- och minusknappar.
+- Förhindrar att faktaraden och portionskontrollerna flyttar eller ändrar form.
+
 ## 1.2.2 – 2026-08-24
 
 - Förhindrar att Home Assistant visar en gammal receptsida efter appuppdatering.

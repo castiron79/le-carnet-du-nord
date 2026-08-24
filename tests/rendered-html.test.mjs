@@ -18,7 +18,9 @@ test("receptvyn erbjuder betyg, kommentarer, portionsskalning och uppdateringsun
   const page = await read("app/page.tsx");
   assert.match(page, /\[1,2,3,4,5\]\.map/);
   assert.match(page, /Lägg till kommentar/);
-  assert.match(page, /Anpassa mängder/);
+  assert.doesNotMatch(page, /Anpassa mängder/);
+  assert.match(page, /aria-label="Minska antal portioner"/);
+  assert.match(page, /aria-label="Öka antal portioner"/);
   assert.match(page, /Kopiera för uppdatering/);
   assert.doesNotMatch(page, /Föreslå ändring/);
   assert.match(page, /X-Carnet-Request/);

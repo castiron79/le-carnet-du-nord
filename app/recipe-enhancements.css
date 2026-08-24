@@ -42,74 +42,53 @@
 }
 
 .facts .portionFact {
-  position: relative;
+  grid-template-rows: 34px 32px;
+  min-height: 76px;
 }
 
-.portionToggle {
-  grid-column: 2;
-  justify-self: start;
-  min-height: 28px;
-  padding: 0;
-  border: 0;
-  border-bottom: 1px solid transparent;
-  background: transparent;
-  color: var(--gold);
-  cursor: pointer;
-  font: 700 8px Arial, sans-serif;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-.portionToggle:hover,
-.portionToggle:focus-visible {
-  border-bottom-color: currentColor;
-  outline: none;
+.portionValue {
+  min-width: 10ch;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .facts .portionControls {
-  grid-column: 1 / -1;
+  grid-column: 2;
+  grid-row: 2;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 7px;
-  margin-top: 5px;
-  padding-top: 7px;
-  border-top: 1px solid #d4c5a5;
+  justify-content: flex-start;
+  gap: 8px;
+  width: auto;
+  min-width: 0;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
-.portionControls > button:not(.portionReset) {
-  width: 44px;
-  height: 44px;
+.portionControls > button {
+  flex: 0 0 30px;
+  width: 30px;
+  min-width: 30px;
+  max-width: 30px;
+  height: 30px;
+  min-height: 30px;
+  max-height: 30px;
+  aspect-ratio: 1;
   padding: 0;
   border: 1px solid var(--forest);
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
-  font: 22px/1 Arial, sans-serif;
+  appearance: none;
+  font: 19px/28px Arial, sans-serif;
+  text-align: center;
 }
 
 .portionControls > button:disabled {
   cursor: default;
   opacity: .35;
-}
-
-.portionControls strong {
-  min-width: 24px;
-  text-align: center;
-  font: 700 14px Arial, sans-serif;
-}
-
-.portionControls .portionReset {
-  min-height: 44px;
-  padding: 0 4px;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  font: 700 8px Arial, sans-serif;
-  letter-spacing: .08em;
-  text-decoration: underline;
-  text-transform: uppercase;
 }
 
 .portionNotice {
@@ -360,13 +339,7 @@
     background: linear-gradient(180deg, #f8f4eb 0%, rgba(248,244,235,.82) 36%, rgba(248,244,235,0) 100%);
   }
 
-  .facts .portionFact {
-    min-height: 138px;
-  }
-
-  .portionToggle {
-    min-height: 44px;
-  }
+  .facts .portionFact { min-height: 76px; }
 
   .latestHead {
     align-items: flex-start;
