@@ -58,3 +58,9 @@ test("receptets faktarad och bildtoning följer den stabila layouten", async () 
   assert.match(css, /\.heroDish[\s\S]*inset: 0 0 0 28%;/);
 });
 
+test("Home Assistant tolkar varje instruktionsrad som exakt ett steg", async () => {
+  const server = await read("home-assistant-addon/rootfs/app/server.py");
+  assert.match(server, /block\("Gör så här", "Serveringstips"\)\.splitlines\(\)/);
+  assert.match(server, /content\.partition\("\. "\)/);
+});
+

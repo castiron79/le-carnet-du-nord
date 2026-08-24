@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.2.6 – 2026-08-24
+
+- Rättade tolkningen av instruktioner så varje numrerad rad alltid blir exakt ett steg.
+- Tar defensivt bort äldre numreringsrester ur visad stegtext.
+
 ## 1.2.5 – 2026-08-24
 
 - Återställde ett brett textfält och lade bilden bakom hela rubriklagret.

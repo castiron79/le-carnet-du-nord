@@ -79,7 +79,14 @@ for (let i = 0; i < ingredientGroups.length; i += 1) {
 for (const heading of ['Serveringstips', 'Varför det blir så gott']) {
   if (!/^-\s+\S/m.test(sectionText(heading))) fail(`Sektionen "${heading}" måste innehålla minst en punkt`);
 }
-if (!/^\d+\.\s+/m.test(text.slice(match?.[0].length || 0))) fail('Gör så här måste innehålla numrerade steg');
+const instructionLines = sectionText('Gör så här').split(/\r?\n/).filter(line => line.trim());
+if (!instructionLines.length) fail('Gör så här måste innehålla numrerade steg');
+instructionLines.forEach((line, index) => {
+  const step = line.match(/^(\d+)\.\s+(.+)$/);
+  if (!step) return fail(`Instruktionsrad ${index + 1} måste vara exakt ett numrerat steg`);
+  if (Number(step[1]) !== index + 1) fail(`Instruktionsstegen måste numreras obrutet från 1; hittade ${step[1]} på rad ${index + 1}`);
+  if (/(?:^|\s)\d+\.\s+[A-ZÅÄÖ]/.test(step[2])) fail(`Steg ${step[1]} innehåller en extra numreringsrest`);
+});
 
 const image = scalar('hero_image');
 if (image) {

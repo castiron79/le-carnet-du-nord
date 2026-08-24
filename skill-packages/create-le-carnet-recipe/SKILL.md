@@ -38,4 +38,5 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 - Generera aldrig egna ikonbilder för faktafält. Använd alltid sajtens gemensamma, lokala ikonsystem så att uttryck, tillgänglighet och filstorlek förblir konsekventa.
 - Ändra styrande dokument och validator tillsammans när schemaformatet ändras.
 - Efter lyckad validering är hela paketet låst. Publicera exakt de validerade filbytesen och ändra eller räkna aldrig om innehåll, mängder, bilder eller näringsvärden i publiceringssteget.
+- Varje steg under `Gör så här` ska ligga på exakt en egen rad och ha exakt en yttre numrering. Lämna aldrig kvar en extra `2.`, `5.` eller annan listmarkör i stegets rubrik eller brödtext.
 

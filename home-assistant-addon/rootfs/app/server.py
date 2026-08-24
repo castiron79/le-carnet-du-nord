@@ -88,8 +88,19 @@ def parse_recipe(folder):
         if flat_items:
             ingredients.append({"heading": "Ingredienser", "items": flat_items})
     steps = []
-    for _, title, text in re.findall(r"^(\d+)\.\s+(?:\*\*)?([^*\n.]+)[.*]*\s*(.*)$", block("Gör så här", "Serveringstips"), re.M):
-        steps.append({"title": title.strip(), "items": [text.strip()] if text.strip() else []})
+    for line in block("Gör så här", "Serveringstips").splitlines():
+        numbered = re.match(r"^\s*\d+\.\s+(.+?)\s*$", line)
+        if not numbered:
+            continue
+        content = numbered.group(1)
+        bold = re.match(r"^\*\*(.+?)\*\*\s*(.*)$", content)
+        if bold:
+            title, detail = bold.group(1).rstrip(". "), bold.group(2).strip()
+        else:
+            title, separator, detail = content.partition(". ")
+            title, detail = title.rstrip(". "), detail.strip() if separator else ""
+        detail = re.sub(r"^\d+\.\s+", "", detail)
+        steps.append({"title": title, "items": [detail] if detail else []})
     def list_or_paragraphs(value):
         items = [x.strip() for x in re.findall(r"^-\s+(.+)$", value, re.M)]
         return items or [x.strip() for x in re.split(r"\n\s*\n", value) if x.strip()]

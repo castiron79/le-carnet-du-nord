@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.6 – 2026-08-24
+
+- Förhindrar extra listnummer inne i `Gör så här` genom både robust inläsning
+  och skärpt receptvalidering.
+
 ## 1.2.5 – 2026-08-24
 
 - Korrigerade hjältytans kolumnberäkning så texten behåller full läsbredd medan
