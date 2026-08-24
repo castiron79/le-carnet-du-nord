@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="27" fill="#123d2b"/>
+  <circle cx="64" cy="64" r="49" fill="none" stroke="#c89b3c" stroke-width="2"/>
+  <text x="64" y="88" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="73" fill="#d7ad52">♛</text>
+</svg>

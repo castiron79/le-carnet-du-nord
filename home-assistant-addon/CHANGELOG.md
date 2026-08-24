@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.2.1 – 2026-08-24
+
+- Lade till Le Carnets guldfärgade krona som appikon i Home Assistant.
+
 ## 1.2.0 – 2026-08-24
 
 - Lade till mobilanpassad portionsskalning direkt på receptsidan.
@@ -11,4 +15,3 @@
 
 - Första installerbara versionen för Home Assistant Green.
 - Lade till privat receptsynkronisering, kommentarer och betyg.
-
