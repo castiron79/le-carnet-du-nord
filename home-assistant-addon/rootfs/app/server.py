@@ -246,6 +246,13 @@ class Handler(SimpleHTTPRequestHandler):
         print("carnet:", fmt % args)
 
     def end_headers(self):
+        path = urlparse(self.path).path
+        if path in ("/", "/index.html"):
+            self.send_header("Cache-Control", "no-store, max-age=0")
+            self.send_header("Pragma", "no-cache")
+            self.send_header("Expires", "0")
+        elif path.startswith("/assets/"):
+            self.send_header("Cache-Control", "public, max-age=31536000, immutable")
         self.send_header("X-Content-Type-Options", "nosniff")
         self.send_header("Referrer-Policy", "no-referrer")
         self.send_header("Permissions-Policy", "camera=(), microphone=(), geolocation=()")

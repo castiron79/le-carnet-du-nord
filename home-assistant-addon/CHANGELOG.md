@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.2.2 – 2026-08-24
+
+- Förhindrar att Home Assistant visar en gammal receptsida efter appuppdatering.
+- Behåller effektiv långtidslagring endast för versionsmärkta bild-, CSS- och JavaScript-filer.
+
 ## 1.2.1 – 2026-08-24
 
 - Lade till Le Carnets guldfärgade krona som appikon i Home Assistant.

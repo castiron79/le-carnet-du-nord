@@ -38,3 +38,11 @@ test("Home Assistant-paketet använder Ingress-säkra relativa resurser och är 
   assert.ok(sizes.reduce((sum, file) => sum + file.size, 0) < 300_000, "JS och CSS ska tillsammans vara under 300 KB");
 });
 
+test("Home Assistant hämtar ny startsida efter varje appuppdatering", async () => {
+  const server = await read("home-assistant-addon/rootfs/app/server.py");
+  assert.match(server, /path in \("\/", "\/index\.html"\)/);
+  assert.match(server, /Cache-Control", "no-store, max-age=0"/);
+  assert.match(server, /path\.startswith\("\/assets\/"\)/);
+  assert.match(server, /Cache-Control", "public, max-age=31536000, immutable"/);
+});
+

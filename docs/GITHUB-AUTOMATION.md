@@ -15,6 +15,10 @@ appändring har godkänts höjer agenten versionsnumret, uppdaterar
 GitHub och verifierar den publicerade versionen. Saknas en aktiv
 GitHub-skrivanslutning stoppas flödet tydligt.
 
+Home Assistant-appens startsida skickas med `no-store`, så en installerad
+koduppdatering syns vid nästa öppning utan att användaren ska behöva rensa
+frontend-cache. Versionsmärkta resurser cachelagras separat och säkert.
+
 ## Engångsinställning på GitHub
 
 1. Skapa ett publikt repo med namnet `le-carnet-du-nord` och ett privat repo med namnet `le-carnet-recipes` under användaren `castiron79`.

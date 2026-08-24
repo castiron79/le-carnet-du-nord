@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.2 – 2026-08-24
+
+- Lade till cache-regler och automatiskt test som säkerställer att den aktuella
+  receptsidan laddas efter varje Home Assistant-appuppdatering.
+
 ## 1.2.1 – 2026-08-24
 
 - Lade till Le Carnets guldfärgade krona som appikon i Home Assistant.
