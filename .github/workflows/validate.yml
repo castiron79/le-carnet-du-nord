@@ -15,6 +15,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm run validate:release
       - run: npm run build
       - run: npx vite build --config static/vite.config.ts
       - run: python -m py_compile home-assistant-addon/rootfs/app/server.py

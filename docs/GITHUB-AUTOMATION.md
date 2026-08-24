@@ -9,6 +9,12 @@ Le Carnet använder två arkiv:
 
 Mobil, surfplatta och dator visar samma recept eftersom alla använder samma Home Assistant-app. Green kontrollerar det privata receptarkivet var 15:e minut. Knappen **Uppdatera recept** gör samma kontroll direkt och är anpassad för små skärmar.
 
+Kodversioner publiceras utan manuell filkopiering eller GitHub Desktop. När en
+appändring har godkänts höjer agenten versionsnumret, uppdaterar
+`CHANGELOG.md`, kör valideringen, skickar den validerade committen direkt till
+GitHub och verifierar den publicerade versionen. Saknas en aktiv
+GitHub-skrivanslutning stoppas flödet tydligt.
+
 ## Engångsinställning på GitHub
 
 1. Skapa ett publikt repo med namnet `le-carnet-du-nord` och ett privat repo med namnet `le-carnet-recipes` under användaren `castiron79`.
