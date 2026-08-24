@@ -3,3 +3,12 @@
 /* GitHub recipe synchronization */
 .syncArea{display:flex;align-items:center;gap:12px}.syncState{font:10px Arial,sans-serif;letter-spacing:.13em;color:#557062}.syncState::first-letter{color:#49a16b}.syncState.error{color:#9b3e32}.syncArea button{border:1px solid #9c8c69;background:transparent;padding:8px 10px;cursor:pointer;font:9px Arial,sans-serif;letter-spacing:.1em;text-transform:uppercase}.syncArea button:disabled{opacity:.55;cursor:wait}
 @media(max-width:720px){.masthead{padding-left:14px;padding-right:14px}.wordmark{column-gap:7px}.wordmark .crown{font-size:23px}.wordmark b{font-size:13px}.wordmark small{font-size:7px;letter-spacing:.18em}.syncArea{gap:6px}.syncState{font-size:0}.syncState::first-letter{font-size:12px}.syncArea button{padding:8px;font-size:8px}}
+
+/* Keep every home-page recipe card on the same visual baseline. */
+.recipeGrid{align-items:stretch}
+.recipeTile{display:grid;grid-template-rows:clamp(120px,18vh,185px) minmax(0,1fr);align-self:stretch;height:100%;align-content:start}
+.tileImage{width:100%;height:100%;align-self:start}
+.tileImage img{object-position:center top}
+.tileCopy{align-self:start}
+@media(max-width:720px){.recipeTile{grid-template-rows:145px minmax(0,1fr)}}
+
