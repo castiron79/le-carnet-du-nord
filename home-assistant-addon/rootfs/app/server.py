@@ -80,12 +80,21 @@ def parse_recipe(folder):
     ingredient_text = block("Ingredienser", "Gör så här")
     ingredients = []
     for heading, items in re.findall(r"###\s+([^\n]+)\n(.*?)(?=\n###|\Z)", ingredient_text, re.S):
-        ingredients.append({"heading": heading.strip(), "items": [x.strip() for x in re.findall(r"^-\s+(.+)$", items, re.M)]})
+        group_items = [x.strip() for x in re.findall(r"^-\s+(.+)$", items, re.M)]
+        if group_items:
+            ingredients.append({"heading": heading.strip(), "items": group_items})
+    if not ingredients:
+        flat_items = [x.strip() for x in re.findall(r"^-\s+(.+)$", ingredient_text, re.M)]
+        if flat_items:
+            ingredients.append({"heading": "Ingredienser", "items": flat_items})
     steps = []
     for _, title, text in re.findall(r"^(\d+)\.\s+(?:\*\*)?([^*\n.]+)[.*]*\s*(.*)$", block("Gör så här", "Serveringstips"), re.M):
         steps.append({"title": title.strip(), "items": [text.strip()] if text.strip() else []})
-    tips = [x.strip() for x in re.findall(r"^-\s+(.+)$", block("Serveringstips", "Varför det blir så gott"), re.M)]
-    why = [x.strip() for x in re.findall(r"^-\s+(.+)$", block("Varför det blir så gott", "Förvaring"), re.M)]
+    def list_or_paragraphs(value):
+        items = [x.strip() for x in re.findall(r"^-\s+(.+)$", value, re.M)]
+        return items or [x.strip() for x in re.split(r"\n\s*\n", value) if x.strip()]
+    tips = list_or_paragraphs(block("Serveringstips", "Varför det blir så gott"))
+    why = list_or_paragraphs(block("Varför det blir så gott", "Förvaring"))
     nutrition = meta.get("nutrition", {})
     carb_group = str(meta.get("carb_group", "Övrigt"))
     if carb_group.lower() == "vetemjöl":
@@ -331,3 +340,4 @@ if __name__ == "__main__":
     connect().close()
     threading.Thread(target=sync_loop, daemon=True).start()
     ThreadingHTTPServer(("0.0.0.0", 8099), Handler).serve_forever()
+
