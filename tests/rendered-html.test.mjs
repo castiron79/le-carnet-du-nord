@@ -48,3 +48,12 @@ test("Home Assistant hämtar ny startsida efter varje appuppdatering", async () 
   assert.match(server, /Cache-Control", "public, max-age=31536000, immutable"/);
 });
 
+test("receptets faktarad och bildtoning följer den stabila layouten", async () => {
+  const css = await read("app/recipe-enhancements.css");
+  assert.match(css, /\.portionControls > button[\s\S]*width: 25px;[\s\S]*height: 25px;/);
+  assert.match(css, /\.facts \.factIcon[\s\S]*width: 51px;[\s\S]*height: 51px;/);
+  assert.match(css, /\.portionControls[\s\S]*justify-content: center;[\s\S]*width: 10ch;/);
+  assert.match(css, /\.recipeTitle[\s\S]*linear-gradient\(90deg[\s\S]*rgba\(248,244,235,0\) 100%/);
+  assert.match(css, /\.heroDish[\s\S]*inset: 0 0 0 30%;/);
+});
+

@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.2.4 – 2026-08-24
+
+- Centrerade portionsknapparna under portionsrubriken och minskade dem till 25×25 px.
+- Förstorade faktaradens fem ikoner med cirka 50 procent och minskade textradens luft.
+- Förlängde bildtoningen bakom rubriken och säkrade att all text ligger läsbart ovanpå.
+
 ## 1.2.3 – 2026-08-24
 
 - Ersatte portionsmenyn med två fasta, runda plus- och minusknappar.

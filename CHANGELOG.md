@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.4 – 2026-08-24
+
+- Förfinade faktaradens ikonstorlek, avstånd och portionskontroller.
+- Gjorde receptbildens överlapp och tonade övergång längre utan att rubriktext försvinner.
+
 ## 1.2.3 – 2026-08-24
 
 - Förenklade portionskontrollen till stabila plus- och minusikoner utan
