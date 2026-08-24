@@ -60,6 +60,25 @@ for (const heading of headings) {
   else if (hits[0].index < prior) fail('Sektionerna ligger i fel ordning');
   else prior = hits[0].index;
 }
+function sectionText(name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const header = new RegExp(`^## ${escaped}\\s*$`, 'm').exec(text);
+  if (!header) return '';
+  const rest = text.slice(header.index + header[0].length);
+  const next = /^##\s+/m.exec(rest);
+  return rest.slice(0, next ? next.index : rest.length).trim();
+}
+const ingredientText = sectionText('Ingredienser');
+const ingredientGroups = [...ingredientText.matchAll(/^###\s+(.+)$/gm)];
+if (!ingredientGroups.length) fail('Ingredienser måste delas in under minst en ###-underrubrik');
+for (let i = 0; i < ingredientGroups.length; i += 1) {
+  const start = ingredientGroups[i].index + ingredientGroups[i][0].length;
+  const end = ingredientGroups[i + 1]?.index ?? ingredientText.length;
+  if (!/^-\s+\S/m.test(ingredientText.slice(start, end))) fail(`Ingrediensgruppen "${ingredientGroups[i][1]}" saknar punktlistade ingredienser`);
+}
+for (const heading of ['Serveringstips', 'Varför det blir så gott']) {
+  if (!/^-\s+\S/m.test(sectionText(heading))) fail(`Sektionen "${heading}" måste innehålla minst en punkt`);
+}
 if (!/^\d+\.\s+/m.test(text.slice(match?.[0].length || 0))) fail('Gör så här måste innehålla numrerade steg');
 
 const image = scalar('hero_image');
@@ -76,3 +95,4 @@ for (const warning of warnings) console.warn(`VARNING: ${warning}`);
 for (const error of errors) console.error(`FEL: ${error}`);
 if (errors.length) process.exit(1);
 console.log(`OK: ${path.basename(dir)} är giltigt (${warnings.length} varningar)`);
+
