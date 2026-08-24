@@ -1,0 +1,37 @@
+import assert from "node:assert/strict";
+import { readFile, readdir, stat } from "node:fs/promises";
+import test from "node:test";
+
+const root = new URL("../", import.meta.url);
+const read = (path) => readFile(new URL(path, root), "utf8");
+
+test("startsidan har 6/4/2-regeln och kombinerbar råvarusökning", async () => {
+  const [page, css] = await Promise.all([read("app/page.tsx"), read("app/globals.css")]);
+  assert.match(page, /filtered\.slice\(0,6\)/);
+  assert.match(page, /protein==="Alla"\|\|r\.protein===protein/);
+  assert.match(page, /carb==="Alla"\|\|r\.carb===carb/);
+  assert.match(css, /max-width:1100px[\s\S]*nth-child\(n\+5\)/);
+  assert.match(css, /max-width:720px[\s\S]*nth-child\(n\+3\)/);
+});
+
+test("receptvyn erbjuder 1–5-betyg, kommentarer och ändringsförslag", async () => {
+  const page = await read("app/page.tsx");
+  assert.match(page, /\[1,2,3,4,5\]\.map/);
+  assert.match(page, /Lägg till kommentar/);
+  assert.match(page, /Föreslå ändring/);
+  assert.match(page, /X-Carnet-Request/);
+});
+
+test("Home Assistant-paketet använder Ingress-säkra relativa resurser och är litet", async () => {
+  const assetsUrl = new URL("home-assistant-addon/rootfs/app/www/assets/", root);
+  const [html, vite, assets] = await Promise.all([
+    read("home-assistant-addon/rootfs/app/www/index.html"),
+    read("static/vite.config.ts"),
+    readdir(assetsUrl),
+  ]);
+  assert.doesNotMatch(html, /(?:src|href)="\/assets\//);
+  assert.match(vite, /base:\s*"\.\/"/);
+  const productionAssets = assets.filter((name) => /\.(?:js|css)$/.test(name));
+  const sizes = await Promise.all(productionAssets.map((name) => stat(new URL(name, assetsUrl))));
+  assert.ok(sizes.reduce((sum, file) => sum + file.size, 0) < 300_000, "JS och CSS ska tillsammans vara under 300 KB");
+});

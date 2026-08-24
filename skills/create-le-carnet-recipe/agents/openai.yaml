@@ -1,0 +1,5 @@
+interface:
+  display_name: "Skapa Le Carnet-recept"
+  short_description: "Skapa och validera publiceringsklara receptpaket"
+  default_prompt: "Skapa eller validera ett svenskt receptpaket för Le Carnet du Nord med beräknade makron och rätt filstruktur."
+
