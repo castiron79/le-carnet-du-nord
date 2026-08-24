@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-import { cpSync, existsSync, readFileSync, rmSync } from "node:fs";
-import { basename, resolve } from "node:path";
+import { createHash } from "node:crypto";
+import { cpSync, existsSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
+import { basename, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const [sourceArg, repoArg = process.env.LE_CARNET_RECIPES_REPO, mode] = process.argv.slice(2);
@@ -19,17 +20,39 @@ const run = (command, args, cwd = process.cwd()) => {
   if (result.status !== 0) throw new Error((result.stderr || result.stdout || `${command} misslyckades`).trim());
   return result.stdout.trim();
 };
+const git = (args) => run("git", ["-c", `safe.directory=${repo}`, ...args], repo);
+const packageDigest = (root) => {
+  const hash = createHash("sha256");
+  const visit = (folder) => {
+    for (const name of readdirSync(folder).sort()) {
+      const item = resolve(folder, name);
+      if (statSync(item).isDirectory()) visit(item);
+      else {
+        hash.update(relative(root, item).replaceAll("\\", "/"));
+        hash.update("\0");
+        hash.update(readFileSync(item));
+      }
+    }
+  };
+  visit(root);
+  return hash.digest("hex");
+};
+const beforeValidation = packageDigest(source);
 run("node", [resolve(import.meta.dirname, "validate-recipe.mjs"), source]);
+const validatedDigest = packageDigest(source);
+if (validatedDigest !== beforeValidation) throw new Error("Receptpaketet ändrades under valideringen");
 const target = resolve(repo, "recipes", id);
 rmSync(target, { recursive: true, force: true });
 cpSync(source, target, { recursive: true });
-run("git", ["add", "--", `recipes/${id}`], repo);
-const changed = run("git", ["diff", "--cached", "--name-only", "--", `recipes/${id}`], repo);
+if (packageDigest(source) !== validatedDigest || packageDigest(target) !== validatedDigest) throw new Error("Receptpaketet ändrades efter valideringen; publicering avbruten");
+git(["add", "--", `recipes/${id}`]);
+const changed = git(["diff", "--cached", "--name-only", "--", `recipes/${id}`]);
 if (!changed) {
   console.log("Inga ändringar att publicera.");
   process.exit(0);
 }
-run("git", ["commit", "-m", `Publicera recept: ${id}`, "--", `recipes/${id}`], repo);
-const revision = run("git", ["rev-parse", "--short", "HEAD"], repo);
-if (mode === "--push") run("git", ["push"], repo);
+git(["commit", "-m", `Publicera recept: ${id}`, "--", `recipes/${id}`]);
+const revision = git(["rev-parse", "--short", "HEAD"]);
+if (mode === "--push") git(["push"]);
 console.log(`${mode === "--push" ? "Publicerat" : "Commit skapad"}: ${id} (${revision})`);
+
