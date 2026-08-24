@@ -99,14 +99,17 @@ Recept med status `review` eller `published` läses in automatiskt.
 
 ## 8. Uppdatera ett recept
 
-1. Behåll samma `id`, `slug` och mappnamn.
-2. Uppdatera `updated_at`.
-3. Ändra receptet och bara de bilder som behöver bytas.
-4. Kör validatorn igen.
-5. Ta en backup och ersätt den gamla receptmappen.
-6. Ladda om sajten och kontrollera resultatet.
+På receptsidan kan du trycka **Kopiera för uppdatering** och klistra in texten i en chatt där `create-le-carnet-recipe` finns. Lägg därefter till den önskade ändringen. Den kopierade texten innehåller receptets unika ID och aktiverar skillens uppdateringsläge.
 
-Kommentarer och betyg ligger separat i SQLite och ska finnas kvar. Ändringsförslag på sajten ändrar aldrig receptfilen automatiskt; använd dem som underlag för en ny granskad version.
+1. Skillen hämtar den senast publicerade versionen från receptarkivet. Om receptet inte kan hittas stoppas arbetet; ett nytt recept skapas aldrig som reserv.
+2. Samma `id`, `slug`, mappnamn och ursprungliga publiceringsdatum behålls.
+3. Endast begärda delar och nödvändiga följdberoenden ändras. Bilder ändras bara efter uttrycklig begäran.
+4. Granska den exakta diffen och skriv **Godkänn och publicera denna diff**.
+5. Kandidaten valideras, låses och publiceras utan fler ändringar.
+
+Knappen **Anpassa mängder** på receptsidan skalar ingredienslistan till 1–20 portioner. Skalningen är en tillfällig lokal visning. Receptfilen, GitHub, tillagningsstegen, tiderna och näringsvärdena per portion ändras inte.
+
+Kommentarer och betyg ligger separat i SQLite och ska finnas kvar. Skriv framtida förbättringsidéer som kommentarer och välj själv vilka som ska ingå när receptet senare uppdateras via chatten.
 
 ## 9. Bildregler
 
@@ -120,7 +123,7 @@ Kommentarer och betyg ligger separat i SQLite och ska finnas kvar. Ändringsför
 
 Ta en Home Assistant-backup före uppdatering av tillägget, större receptimport och förändring av receptformatet. Behåll också en separat kopia av receptmapparna på dator eller annan lokal lagring.
 
-Efter återställning kontrollerar du ett recept, en bild, ett betyg, en kommentar och ett ändringsförslag.
+Efter återställning kontrollerar du ett recept, en bild, ett betyg, en kommentar och portionsskalningen.
 
 ## 11. Felsökning
 
@@ -137,3 +140,4 @@ Efter återställning kontrollerar du ett recept, en bild, ett betyg, en komment
 ## 12. Styrande dokument
 
 Om receptformatet ändras ska receptspecifikation, skill, validator, exempel, beslut, tester och denna guide uppdateras tillsammans. Ett vanligt nytt recept kräver ingen ändring av styrdokumenten.
+

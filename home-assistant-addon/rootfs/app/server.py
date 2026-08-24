@@ -36,7 +36,7 @@ def read_options():
 
 
 def github_request(url, token, accept="application/vnd.github+json"):
-    headers = {"Accept": accept, "User-Agent": "le-carnet-du-nord/1.1", "X-GitHub-Api-Version": "2022-11-28"}
+    headers = {"Accept": accept, "User-Agent": "le-carnet-du-nord/1.2", "X-GitHub-Api-Version": "2022-11-28"}
     if token:
         headers["Authorization"] = f"Bearer {token}"
     return urllib.request.Request(url, headers=headers)

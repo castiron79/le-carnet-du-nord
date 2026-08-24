@@ -17,7 +17,8 @@ Implementation, dokumentation, receptskill, Home Assistant-paketering och produk
 | Protein + kolhydrat | Godkänd | oberoende filter kombineras med AND; fritext omfattar båda fälten |
 | Betyg 1–5 | Godkänd | fem val, klientpersistens och servervaliderad upsert med CHECK 1–5 |
 | Kommentar | Godkänd | formulär, lokal fallback och SQLite-lagring |
-| Ändringsförslag | Godkänd för v1 | sparas separat som `kind=change` och märks i listan |
+| Portionsskalning | Godkänd | ren visningsfunktion med tal, bråk, intervall och skydd för temperatur/procent |
+| Uppdateringsunderlag | Godkänd | recept-ID, tydligt befintlighetskrav och markerbar urklippsfallback |
 | Responsiv receptvy | Godkänd genom kodgranskning | en kolumn under 720 px; fakta, formulär och sidokolumn bryts om |
 | Paketstorlek | Godkänd | produktions-JS + CSS cirka 218 KiB; HTML och kompatibilitetsfil tillkommer marginellt |
 | Privat drift | Godkänd konfiguration | endast Ingress, `ports: {}`, endast `aarch64` |
@@ -39,9 +40,11 @@ node skills/create-le-carnet-recipe/scripts/validate-recipe.mjs skills/create-le
 
 Backendens rekommenderade smoke-test är: starta `server.py` mot en temporär datakatalog, kontrollera `/health`, spara/läs betyg 1 och 5, avvisa 0 och 6, spara både `comment` och `change`, samt verifiera 403 utan `X-Carnet-Request: 1` och 415 för annat än JSON.
 
+Frontendens regressionstest verifierar även 1–20 portioner, återställning till exakta originalsträngar, flera mängder på samma ingrediensrad, decimaler/bråk/intervall, oförändrade temperaturer/procent/minuter, oförändrade makron per portion samt urklippsfallback. Äldre `change`-poster behålls endast som historik.
+
 ## Kvarstående avvikelser och risker
 
-1. Dokumentet `docs/ARCHITECTURE.md` beskriver ett större framtida `api/v1` med revisionsgodkännande, import/export och komplett granskningskö. Den levererade v1-backenden har endast det enklare API som gränssnittet använder. Ändringsförslag kan registreras men inte godkännas eller appliceras i webbgränssnittet.
+1. Dokumentet `docs/ARCHITECTURE.md` beskriver ett större framtida `api/v1`. Den levererade lösningen använder i stället kommentarer och ett versionslåst uppdateringsflöde via chatten; äldre ändringsförslag bevaras endast som historik.
 2. Automatisk läsning av validerade Markdown-recept implementerades efter QA-granskningen. Servern läser `review` och `published` från tilläggets `recipes`-mapp och exponerar tillhörande bilder; detta har verifierats i ett efterföljande API-smoke-test.
 3. Startsidan visar rätt antal kort per brytpunkt, men kravet ”utan att skrolla” kan inte garanteras på varje fysisk skärmhöjd; hero och kortens höjd kan tillsammans överskrida mycket låga telefonvyer.
 4. Makrona i demonstrationsrecepten är redaktionella exempel. Validatorn rimlighetskontrollerar energibalans men verifierar inte automatiskt mot en extern livsmedelsdatabas.
@@ -50,3 +53,4 @@ Backendens rekommenderade smoke-test är: starta `server.py` mot en temporär da
 ## Releasebedömning
 
 Gränssnittet, lokal v1-lagring och Markdown-import är lämpliga för intern provdrift. Efter QA-granskningen kördes bygg, receptvalidator och ett levande smoke-test av import, makrodata, betyg, ändringsförslag, SQLite och startsida med godkänt resultat. Den större webbaserade granskningskön i punkt 1 är en planerad förvaltningsfunktion.
+

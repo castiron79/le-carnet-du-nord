@@ -41,6 +41,109 @@
   font-style: normal;
 }
 
+.facts .portionFact {
+  position: relative;
+}
+
+.portionToggle {
+  grid-column: 2;
+  justify-self: start;
+  min-height: 28px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  background: transparent;
+  color: var(--gold);
+  cursor: pointer;
+  font: 700 8px Arial, sans-serif;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.portionToggle:hover,
+.portionToggle:focus-visible {
+  border-bottom-color: currentColor;
+  outline: none;
+}
+
+.facts .portionControls {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 5px;
+  padding-top: 7px;
+  border-top: 1px solid #d4c5a5;
+}
+
+.portionControls > button:not(.portionReset) {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--forest);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  font: 22px/1 Arial, sans-serif;
+}
+
+.portionControls > button:disabled {
+  cursor: default;
+  opacity: .35;
+}
+
+.portionControls strong {
+  min-width: 24px;
+  text-align: center;
+  font: 700 14px Arial, sans-serif;
+}
+
+.portionControls .portionReset {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font: 700 8px Arial, sans-serif;
+  letter-spacing: .08em;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.portionNotice {
+  margin: -8px 0 17px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d8cfbd;
+  color: var(--gold);
+  font: 700 9px Arial, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.actions .copyUpdate {
+  background: transparent;
+  color: var(--forest);
+}
+
+.copyFallback {
+  grid-column: 1 / -1;
+}
+
+.community .copyFallback label {
+  display: grid;
+  gap: 8px;
+  font: 700 10px Arial, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.community .copyFallback textarea {
+  min-height: 180px;
+  text-transform: none;
+}
+
 .archiveToggle {
   display: flex;
   align-items: center;
@@ -257,6 +360,14 @@
     background: linear-gradient(180deg, #f8f4eb 0%, rgba(248,244,235,.82) 36%, rgba(248,244,235,0) 100%);
   }
 
+  .facts .portionFact {
+    min-height: 138px;
+  }
+
+  .portionToggle {
+    min-height: 44px;
+  }
+
   .latestHead {
     align-items: flex-start;
     gap: 14px;
@@ -325,3 +436,4 @@
     grid-row: 1;
   }
 }
+

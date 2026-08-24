@@ -44,9 +44,9 @@ Prioritet: **P0** krävs för första produktionsrelease, **P1** bör ingå elle
 |---|---:|---|---|
 | INT-001 | P0 | Ägaren kan lägga till, ändra status på och logiskt radera en kommentar på ett recept. | Kommentaren överlever omstart och kan markeras hanterad. |
 | INT-002 | P0 | Ägaren kan sätta eller ta bort ett betyg på 1–5 stjärnor. | Endast värden 1–5 accepteras och det aktuella betyget överlever omstart. |
-| INT-003 | P0 | Ägaren kan skicka ett ändringsförslag på ett recept. | Förslag lagras separat med basversion och status `pending`. |
+| INT-003 | P0 | Ägaren kan skala ingrediensmängder lokalt från receptsidan. | 1–20 portioner stöds; originalrecept, steg, tider och makron per portion förblir oförändrade. |
 | INT-004 | P0 | Bara ägaren använder sajten; alla skrivfunktioner ligger bakom Home Assistants befintliga inloggning. | Ingen egen användardatabas krävs; direkt oautentiserad skrivning accepteras inte. |
-| INT-005 | P0 | Ändringsförslag ska granskas innan receptet ändras. | Godkännande validerar kandidaten och ger konflikt om basversionen är inaktuell. |
+| INT-005 | P0 | Ägaren kan kopiera ett entydigt underlag för att uppdatera ett befintligt recept via chatten. | Underlaget innehåller recept-ID och kräver diff, uttryckligt godkännande, validering och konfliktkontroll. |
 | INT-006 | P0 | Kommentarer och betyg får inte ändra `recipe.md`. | De lagras i SQLite och finns kvar när receptet uppdateras. |
 
 ### Plattform, säkerhet och drift
@@ -55,7 +55,7 @@ Prioritet: **P0** krävs för första produktionsrelease, **P1** bör ingå elle
 |---|---:|---|---|
 | OPS-001 | P0 | Lösningen körs som lokalt Home Assistant-tillägg på Green (`aarch64`). | Imagen bygger/startar på `aarch64` och nås som Ingress-panel. |
 | OPS-002 | P0 | Sajten är intern och inte publik. | Inga värdportar mappas; ingen routerport, tunnel eller publik tjänst konfigureras. |
-| OPS-003 | P0 | Recept, bilder, kommentarer, betyg, förslag och revisioner lagras beständigt. | All auktoritativ användardata ligger under `/data` och överlever uppgradering. |
+| OPS-003 | P0 | Recept, bilder, kommentarer, betyg och revisioner lagras beständigt. | All auktoritativ användardata ligger under `/data` och överlever uppgradering. |
 | OPS-004 | P0 | Home Assistant-backup och återställning omfattar all användardata. | Ett dokumenterat restore-test återger recept, bild, sökning och interaktionsdata. |
 | OPS-005 | P0 | Import avvisar osäkra sökvägar, rå HTML och orimliga arkiv/bilder. | Traversering, symlänkar, skript och överskridna gränser nekas före publicering. |
 | OPS-006 | P0 | Lösningen ska vara resurssnål för mycket liten hårdvara. | Mål: vilande RSS ≤80 MB, kallstart <5 s och ingen polling i vila; se arkitekturen. |
@@ -92,3 +92,4 @@ Prioritet: **P0** krävs för första produktionsrelease, **P1** bör ingå elle
 ## 4. Beslutsspårning
 
 Kravens ursprung och tolkning dokumenteras i [DECISIONS.md](DECISIONS.md). Vid konflikt gäller senast godkända beslut, därefter denna kravspecifikation och sedan detaljerade domänspecifikationer. Konflikten ska rättas i samtliga dokument, inte lämnas permanent.
+

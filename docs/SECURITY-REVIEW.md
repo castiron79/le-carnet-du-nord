@@ -3,6 +3,14 @@
 Datum: 2026-08-11  
 Omfattning: Home Assistant-tillägget, Python-servern, Ingress, SQLite, lagring, backup och resurskrav.
 
+## Receptuppdatering 2026-08-24
+
+- Receptsidan skriver inte till GitHub och innehåller ingen skrivtoken.
+- Portionsskalning sker endast i klientminnet och kan inte förändra källreceptet.
+- Kopieringsunderlaget innehåller recept-ID och titel men inga hemligheter eller kommentarer.
+- Uppdateringsskillen stoppar om originalet inte kan hämtas, identitetsfält ändras eller basrevisionen inte längre är aktuell.
+- Publicering kräver en uttryckligen godkänd diff och exakt hashmatchning efter validering; force-push och automatisk merge är förbjudna.
+
 ## Sammanfattning
 
 Tilläggets grundmodell är lämplig för en privat Home Assistant Green: en liten Python-process, lokala statiska filer, SQLite och ingen exponerad värdport. Granskningen resulterade i konkreta förstärkningar av datalagring, indata, HTTP-svar och manifest. Innan distribution måste klientens Ingress-sökvägar korrigeras och en verklig backup/restore provas på Home Assistant.
@@ -70,3 +78,4 @@ Mät på eller nära Green-hårdvara med mål för tomgångsminne, kallstart, st
 5. Genomför backup och restore med WAL-data.
 6. Starta utan internet och kontrollera att inga externa typsnitt, bilder eller skript efterfrågas.
 7. Kontrollera loggar så att kommentarer, receptinnehåll och andra personuppgifter inte skrivs ut.
+

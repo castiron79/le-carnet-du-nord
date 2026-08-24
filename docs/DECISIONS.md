@@ -98,6 +98,14 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 - **Konsekvens:** Skillen får inte skapa separata faktarikoner. Tider, portioner, kcal och måltidstyp måste vara kompletta för varje publicerat recept.
 - **Spårar:** REC-002, REC-007, UX-007.
 
+### D-013 — Lokal portionsskalning och manuell receptrevision
+
+- **Datum/status:** 2026-08-24 — Godkänt
+- **Beslut:** Receptsidan erbjuder tillfällig portionsskalning av ingrediensmängder och ett kopieringsunderlag för uppdatering via chatten. Fritextfältet för ändringsförslag tas bort. Kommentarer används som anteckningar.
+- **Skäl:** Lösningen ska vara enkel, resurssnål, fungera på alla enheter och inte kräva en betald språkmodellstjänst i drift.
+- **Konsekvens:** Skalningen får aldrig mutera receptkällan eller makron per portion. Skillens uppdateringsläge måste hämta befintlig basversion, bevara identiteten, visa diff, kräva godkännande och publicera exakt validerade bytes.
+- **Spårar:** INT-003, INT-005, INT-006, OPS-006, OPS-007.
+
 ## Beslutsmall
 
 ```markdown
@@ -109,3 +117,4 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 - **Konsekvens:** Vad som måste ändras, testas eller migreras.
 - **Spårar:** Berörda krav-ID:n.
 ```
+

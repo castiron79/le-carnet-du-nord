@@ -32,4 +32,5 @@ Hero-bilden ska visa den färdiga rätten, utan text inbakad i bilden. Beskär m
 5. Godkänn manuellt, sätt `published` och datum.
 6. Lägg paketet i projektets receptkatalog och bygg om sökindex.
 
-Kommentarer och betyg ändrar inte receptfilen. Ändringsförslag går till granskning och resulterar, efter godkännande, i en versionshanterad ändring av `recipe.md`.
+Kommentarer och betyg ändrar inte receptfilen. Framtida ändringsidéer kan skrivas som kommentarer. En faktisk revision startas med receptsidans **Kopiera för uppdatering**, granskas som en exakt diff och publiceras först efter uttryckligt godkännande.
+

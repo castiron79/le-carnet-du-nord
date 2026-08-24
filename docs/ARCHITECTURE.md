@@ -77,6 +77,8 @@ Snabbt register; Markdown förblir innehållskälla.
 
 `id` TEXT PK, `recipe_id` FK, `body` TEXT 1–4000 tecken, `status` (`open`, `resolved`, `deleted`), `created_at`, `updated_at`. Kommentarer är ren text.
 
+Nya anteckningar skapas endast som kommentarer. Äldre poster av typen `change` kan läsas för bakåtkompatibilitet men exponeras inte längre som ett separat skapandeflöde.
+
 ### `ratings`
 
 `recipe_id` är PK/FK, `stars` är INTEGER med CHECK 1–5 samt `created_at` och `updated_at`. Eftersom bara ägaren använder sajten finns ett aktuellt betyg per recept.
@@ -125,6 +127,14 @@ Skrivande anrop kräver JSON, samma origin och `X-Le-Carnet-Request: 1`. Servern
 - `POST api/v1/change-proposals/{id}/approve` och `/reject` beslutar med valfri `decisionNote`.
 
 Godkännande jämför `base_version` med aktuell version. Konflikt ger `409 VERSION_CONFLICT`; inget tillämpas tyst.
+
+### Klientbaserad portionsskalning
+
+Portionsskalaren är en ren presentationsfunktion. Klienten utgår alltid från receptets ursprungliga ingredienssträngar och multiplicerar tydliga mängder med `vald portion / originalportion`. Receptfil, API-data, tillagningssteg, tider och makron muteras inte. Procent, temperatur, minuter och fria uttryck utan exakt tal lämnas oförändrade.
+
+### Uppdatering via chatten
+
+Receptsidan genererar ett kopieringsunderlag med stabilt recept-ID. Skillen hämtar den befintliga katalogen från GitHub och arbetar från en bytekopia av baspaketet. Basrevision och paketdigest binds till diffen; identitetsfält är låsta och aktuell `main` kontrolleras igen före en enda versionshanterad commit.
 
 ### Import och export
 
@@ -183,3 +193,4 @@ Bilder begränsas normalt till 2400 px och cirka 1,5 MB per fil. Miniatyrer skap
 ## Icke-mål i version 1
 
 Publik åtkomst, extern databas, molnpublicering, produkt-/varumärkesdatabas, näring från tillagad vikt, samtidiga redaktörer och fulltextsökning i varje instruktion ingår inte.
+

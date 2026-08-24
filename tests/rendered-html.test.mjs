@@ -14,11 +14,13 @@ test("startsidan har 6/4/2-regeln och kombinerbar råvarusökning", async () => 
   assert.match(css, /max-width:720px[\s\S]*nth-child\(n\+3\)/);
 });
 
-test("receptvyn erbjuder 1–5-betyg, kommentarer och ändringsförslag", async () => {
+test("receptvyn erbjuder betyg, kommentarer, portionsskalning och uppdateringsunderlag", async () => {
   const page = await read("app/page.tsx");
   assert.match(page, /\[1,2,3,4,5\]\.map/);
   assert.match(page, /Lägg till kommentar/);
-  assert.match(page, /Föreslå ändring/);
+  assert.match(page, /Anpassa mängder/);
+  assert.match(page, /Kopiera för uppdatering/);
+  assert.doesNotMatch(page, /Föreslå ändring/);
   assert.match(page, /X-Carnet-Request/);
 });
 
@@ -35,3 +37,4 @@ test("Home Assistant-paketet använder Ingress-säkra relativa resurser och är 
   const sizes = await Promise.all(productionAssets.map((name) => stat(new URL(name, assetsUrl))));
   assert.ok(sizes.reduce((sum, file) => sum + file.size, 0) < 300_000, "JS och CSS ska tillsammans vara under 300 KB");
 });
+

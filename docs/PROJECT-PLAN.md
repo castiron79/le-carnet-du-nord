@@ -69,6 +69,7 @@ Automatisera schema-, funktion-, tillgänglighets- och regressionstest. Håll kr
 | M1 — Responsiv läsprototyp | Startsida, sökning, receptkort och receptvy | Designmastern känns igen; 6/4/2-regeln och mobil läsordning är verifierade |
 | M2 — Receptpipeline | Skill, validator, exempelpaket, import och sökindex | Ett nytt paket kan skapas, nekas vid fel och publiceras utan kodändring |
 | M3 — Interaktion och revision | Kommentarer, betyg, ändringsförslag, granskningskö och historik | Data överlever omstart; förslag kan inte tyst skriva över nyare version |
+| M3b — Förenklad revision | Kommentarer, lokal portionsskalning och kopieringsunderlag för chatt | Fungerar på mobil utan extern API-tjänst; befintligt recept identifieras entydigt |
 | M4 — Home Assistant-release | `aarch64`-image, Ingress, `/data`, backup och restore | Kör på Green, exponerar ingen port och fungerar utan internet |
 | M5 — Produktionsacceptans | Säkerhets-, tillgänglighets-, prestanda- och återställningstest | Alla P0/P1-krav uppfyllda, inga kritiska fel, produktägaren godkänner |
 | M6+ — Förvaltning | Nya recept och prioriterade iterationer | Varje leverans följer ändringskontrollen och har verifierad återställningsväg |
@@ -139,6 +140,7 @@ Efter M5 prioriteras endast med produktägarens beslut. Kandidater:
 
 - favoriter och ”senast lagat”;
 - portionsskalning med tydliga avrundningsregler;
+- uppdateringsläge som hämtar befintlig GitHub-bas, visar diff och aldrig skapar nytt ID som reserv;
 - offline-cache/PWA;
 - utskriftsvy och QR-länk;
 - valfri bevakad `/share`-inkorg;
@@ -147,3 +149,4 @@ Efter M5 prioriteras endast med produktägarens beslut. Kandidater:
 - fler användare med verifierad identitet och serverbaserad behörighet.
 
 Ingen framtida funktion får göra internet, extern databas eller molnkonto obligatoriskt för normal drift.
+

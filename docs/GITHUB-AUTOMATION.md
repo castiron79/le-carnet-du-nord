@@ -38,6 +38,8 @@ Mobil, surfplatta och dator visar samma recept eftersom alla använder samma Hom
 - Sajten exponeras inte på internet; endast Green gör utgående HTTPS-anrop till GitHub.
 - Token är skrivskyddad för receptarkivet och kan inte ändra eller radera GitHub-innehåll.
 - Kommentarer och betyg skickas aldrig till GitHub.
+- För att uppdatera ett befintligt recept använder du **Kopiera för uppdatering** på receptsidan. Skillen hämtar den aktuella katalogen, bevarar ID och slug, visar en diff och inväntar frasen **Godkänn och publicera denna diff**. Om `main` har ändrats sedan basen hämtades stoppas publiceringen.
 - Recept installeras först efter kontroll av struktur, status, bild, storlek och säkra filsökvägar.
 - Vid fel behålls den tidigare fungerande receptversionen.
 - Återställ ett recept genom att återställa en tidigare commit i GitHub och synkronisera igen.
+

@@ -198,7 +198,7 @@ Sidan följer denna semantiska ordning på alla skärmar:
 8. Serveringstips och förvaring.
 9. Näringsvärde per portion.
 10. **Varför det blir så gott**.
-11. Kommentarer och ändringsförslag.
+11. Kommentarer och kopieringsunderlag för framtida uppdatering.
 
 ### 7.2 Datorlayout
 
@@ -209,7 +209,7 @@ Sidan följer denna semantiska ordning på alla skärmar:
 - Huvudinnehåll i tre kolumner: ingredienser 26 %, instruktioner 48 %, sidoinformation 26 %.
 - Sidoinformationen innehåller serveringstips, näringsvärde och smakförklaring.
 - Kolumnernas överkant linjeras. Sektioner får fortsätta naturligt nedåt; de ska inte tvingas till samma höjd.
-- Kommentarer och ändringsförslag ligger fullbrett under receptet för bättre läsbarhet.
+- Kommentarer och uppdateringsknappen ligger fullbrett under receptet för bättre läsbarhet.
 
 ### 7.3 Surfplattelayout
 
@@ -223,7 +223,7 @@ Sidan följer denna semantiska ordning på alla skärmar:
 - Stor bild först efter en kompakt tillbaka-länk; bildförhållande 4:3 eller 1:1, inte en extremt låg banner.
 - Titel, undertitel och ingress följer bilden. Den läsbara svenska titeln prioriteras; fransk titel behandlas som dekorativ överrad.
 - Fakta visas i en horisontellt svepbar rad med tydlig antydan om mer innehåll, eller i ett 2-kolumners rutnät. Undvik fem mycket smala kolumner.
-- En klistrad, kompakt åtgärdsrad längst ned får innehålla **Betygsätt**, **Kommentera** och **Föreslå ändring**. Den får inte täcka formulärfält eller systemets hemindikator.
+- En klistrad, kompakt åtgärdsrad längst ned får innehålla **Betygsätt**, **Kommentera** och **Kopiera för uppdatering**. Den får inte täcka formulärfält eller systemets hemindikator.
 - Ingredienser visas före instruktionerna. Ingrediensgrupper kan vara öppna dragspel, men allt ska vara öppet som standard och fungera utan JavaScript.
 - Instruktionssteg visas med gröna nummercirklar och tydligt stegavstånd.
 - Serveringstips, näringsvärde och smakförklaring staplas i denna ordning.
@@ -241,7 +241,7 @@ Sidan följer denna semantiska ordning på alla skärmar:
 - Pappersvit yta, guldkant, 12 px radie.
 - Ingrediensgrupper med mörkgrön underrubrik och diskret linje mellan grupper.
 - Checkboxar får erbjudas som lokal tillfällig hjälp, men själva mängden och ingrediensen ska förbli läsbar när rutan markeras.
-- Portionsskalning placeras vid panelrubriken; aktuell portionsmängd skrivs ut i klartext.
+- Portionsskalning öppnas diskret från faktakortet **Receptmängd**; aktuell portionsmängd skrivs ut i klartext. Minus och plus har minst 44 × 44 px pekyta. Skalningen gäller endast ingredienslistans visning.
 
 **Instruktionssteg**
 
@@ -268,7 +268,7 @@ Sidan följer denna semantiska ordning på alla skärmar:
 - Ljus panel med guldkant.
 - Eventuell liten dekorativ råvarubild är frivillig och ska döljas på mobil om den tränger undan innehåll.
 
-## 8. Betyg, kommentarer och ändringsförslag
+## 8. Betyg, kommentarer och receptuppdatering
 
 ### 8.1 Betyg
 
@@ -287,13 +287,13 @@ Sidan följer denna semantiska ordning på alla skärmar:
 - Visa teckengräns och tydliga fel nära fältet.
 - Bekräfta innan en kommentar tas bort.
 
-### 8.3 Föreslå ändring
+### 8.3 Uppdatera ett recept
 
-- Öppnas i dialog eller separat panel med fokusfälla och stängning via Escape.
-- Fält: berörd del, föreslagen ändring och orsak/notering.
-- Primär knapp: **Skicka till granskning**. Förslaget ska inte framstå som direkt publicerat.
-- Efter inskick: tydlig status **Väntar på granskning**.
-- Administratörsvyn skiljer tydligt på **Godkänn och publicera**, **Redigera** och **Avslå**; destruktiva beslut kräver bekräftelse.
+- **Kopiera för uppdatering** är en diskret sekundärknapp bredvid kommentarsfunktionen.
+- Efter lyckad kopiering visas **Kopierat ✓** i ett tillgängligt statusområde.
+- Om urklipp blockeras av HTTP eller Home Assistant Ingress visas samma text i ett skrivskyddat, markerbart fält.
+- Texten innehåller recept-ID, titel och reglerna att hämta senaste publicerade version, bevara identiteten, visa diff och invänta godkännande.
+- Kommentarer kopieras inte automatiskt och blir aldrig dolda ändringsinstruktioner.
 
 ## 9. Bilder
 
@@ -392,3 +392,4 @@ En vy är designmässigt klar när:
 - alla bilder har korrekt beskärning, definierad fokuspunkt och alternativtext;
 - färgkontrast, fokusmarkeringar och formulärfel uppfyller WCAG 2.2 AA;
 - inga externa resurser krävs för att upprätthålla sajtens visuella identitet.
+
