@@ -48,6 +48,13 @@ test("Home Assistant hämtar ny startsida efter varje appuppdatering", async () 
   assert.match(server, /Cache-Control", "public, max-age=31536000, immutable"/);
 });
 
+test("synkroniserade receptbilder får revisionsmärkta URL:er", async () => {
+  const server = await read("home-assistant-addon/rootfs/app/server.py");
+  assert.match(server, /def synced_revision\(\):/);
+  assert.match(server, /image = f"\{image\}\?v=\{revision\}"/);
+  assert.match(server, /urlparse\(self\.path\)\.path/);
+});
+
 test("receptets faktarad och bildtoning följer den stabila layouten", async () => {
   const css = await read("app/recipe-enhancements.css");
   assert.match(css, /\.portionControls > button[\s\S]*width: 25px;[\s\S]*height: 25px;/);

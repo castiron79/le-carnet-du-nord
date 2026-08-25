@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.2.11 – 2026-08-25
+
+- Versionsmärker receptbilder med den synkroniserade GitHub-revisionen så en
+  utbytt hero-bild visas direkt utan manuell rensning av appens bildcache.
+
 ## 1.2.10 – 2026-08-25
 
 - Sorterar startsidans senaste recept efter publiceringsdatum, med det nyaste längst till vänster.

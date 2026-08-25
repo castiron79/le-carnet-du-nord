@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.2.11 – 2026-08-25
+
+- Visar uppdaterade receptbilder direkt efter synkronisering utan att du behöver rensa appens cache.
+
 ## 1.2.10 – 2026-08-25
 
 - Sorterar startsidans senaste recept efter publiceringsdatum, med det nyaste längst till vänster.

@@ -35,6 +35,14 @@ def read_options():
         return {}
 
 
+def synced_revision():
+    try:
+        revision = str(json.loads(SYNC_STATE.read_text(encoding="utf-8")).get("revision", "")).lower()
+    except (OSError, ValueError, json.JSONDecodeError):
+        return None
+    return revision[:12] if re.fullmatch(r"[0-9a-f]{40}", revision) else None
+
+
 def github_request(url, token, accept="application/vnd.github+json"):
     headers = {"Accept": accept, "User-Agent": "le-carnet-du-nord/1.2", "X-GitHub-Api-Version": "2022-11-28"}
     if token:
@@ -110,7 +118,11 @@ def parse_recipe(folder):
     carb_group = str(meta.get("carb_group", "Övrigt"))
     if carb_group.lower() == "vetemjöl":
         carb_group = "bröd"
-    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": f"recipe-assets/{folder.name}/{meta.get('hero_image', 'hero.webp')}", "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, "steps": steps, "tips": tips, "why": why}
+    image = f"recipe-assets/{folder.name}/{meta.get('hero_image', 'hero.webp')}"
+    revision = synced_revision()
+    if revision:
+        image = f"{image}?v={revision}"
+    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, "steps": steps, "tips": tips, "why": why}
 
 
 def load_recipes():
