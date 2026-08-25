@@ -110,7 +110,7 @@ def parse_recipe(folder):
     carb_group = str(meta.get("carb_group", "Övrigt"))
     if carb_group.lower() == "vetemjöl":
         carb_group = "bröd"
-    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": f"recipe-assets/{folder.name}/{meta.get('hero_image', 'hero.webp')}", "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, "steps": steps, "tips": tips, "why": why}
+    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": f"recipe-assets/{folder.name}/{meta.get('hero_image', 'hero.webp')}", "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, "steps": steps, "tips": tips, "why": why}
 
 
 def load_recipes():
@@ -122,7 +122,7 @@ def load_recipes():
                 result.append(parsed)
         except (OSError, UnicodeError, ValueError):
             continue
-    return result
+    return sorted(result, key=lambda recipe: (recipe.get("publishedAt") or recipe.get("updatedAt") or "", recipe.get("swedishTitle", "")), reverse=True)
 
 
 def recipe_folders(root):

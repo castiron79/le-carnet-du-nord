@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.2.10 – 2026-08-25
+
+- Sorterar startsidans senaste recept efter publiceringsdatum, med det nyaste längst till vänster.
+- Säkerställer att det senast publicerade receptet syns bland de två korten på mobil.
+
 ## 1.2.9 – 2026-08-24
 
 - Förfinade startsidans gröna hero med ett diskret botaniskt kantmönster.

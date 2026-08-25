@@ -64,3 +64,13 @@ test("Home Assistant tolkar varje instruktionsrad som exakt ett steg", async () 
   assert.match(server, /content\.partition\("\. "\)/);
 });
 
+test("startsidan visar nyast publicerade recept först", async () => {
+  const [page, server] = await Promise.all([
+    read("app/page.tsx"),
+    read("home-assistant-addon/rootfs/app/server.py"),
+  ]);
+  assert.match(page, /\.sort\(newestFirst\)/);
+  assert.match(server, /"publishedAt": str\(meta\.get\("published_at", ""\)\)/);
+  assert.match(server, /return sorted\(result,/);
+});
+

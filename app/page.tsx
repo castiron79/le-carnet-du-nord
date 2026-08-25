@@ -5,6 +5,7 @@ import { scaleIngredientText, updateRecipePrompt } from "./portion-scaling.mjs";
 
 type Recipe = {
   id: string; title: string; subtitle: string; swedishTitle: string; description: string;
+  publishedAt?: string; updatedAt?: string;
   protein: string; carb: string; category: string; image?: string;
   prep: number; active: number; total: string; servings: number; occasion: string;
   macros: { kcal: number; protein: number; carbs: number; fat: number; fiber: number };
@@ -27,6 +28,7 @@ const seedRecipes: Recipe[] = [
 
 type Note = { text:string; date:string };
 type SyncStatus = { state:string; message:string; last_sync?:string|null; revision?:string|null };
+const newestFirst=(a:Recipe,b:Recipe)=>(b.publishedAt||b.updatedAt||"").localeCompare(a.publishedAt||a.updatedAt||"")||a.swedishTitle.localeCompare(b.swedishTitle,"sv",{sensitivity:"base"});
 
 export default function Home() {
   const [recipes,setRecipes]=useState<Recipe[]>(seedRecipes);
@@ -38,7 +40,7 @@ export default function Home() {
   useEffect(()=>{ fetch("api/sync").then(r=>r.ok?r.json():Promise.reject()).then(setSync).catch(()=>setSync({state:"local",message:"Lokal förhandsvisning"})); },[]);
   useEffect(()=>{ if(!selected)return; fetch(`api/state/${selected.id}`).then(r=>r.ok?r.json():Promise.reject()).then(data=>{setRatings(current=>({...current,[selected.id]:data.rating||0}));setNotes(current=>({...current,[selected.id]:data.notes||[]}));}).catch(()=>{}); },[selected]);
   const proteins=["Alla",...new Set(recipes.map(r=>r.protein))], carbs=["Alla",...new Set(recipes.map(r=>r.carb))];
-  const filtered=useMemo(()=>recipes.filter(r=>{const q=query.toLowerCase().trim(); return (protein==="Alla"||r.protein===protein)&&(carb==="Alla"||r.carb===carb)&&(!q||`${r.title} ${r.swedishTitle} ${r.protein} ${r.carb}`.toLowerCase().includes(q));}),[query,protein,carb,recipes]);
+  const filtered=useMemo(()=>recipes.filter(r=>{const q=query.toLowerCase().trim(); return (protein==="Alla"||r.protein===protein)&&(carb==="Alla"||r.carb===carb)&&(!q||`${r.title} ${r.swedishTitle} ${r.protein} ${r.carb}`.toLowerCase().includes(q));}).sort(newestFirst),[query,protein,carb,recipes]);
   const archive=useMemo(()=>recipes.filter(recipe=>{const name=archiveName.toLocaleLowerCase("sv").trim();return (!name||`${recipe.swedishTitle} ${recipe.title}`.toLocaleLowerCase("sv").includes(name))&&(archiveProtein==="Alla"||recipe.protein===archiveProtein)&&(archiveCarb==="Alla"||recipe.carb===archiveCarb);}).sort((a,b)=>{const av=sortBy==="protein"?a.protein:sortBy==="carb"?a.carb:a.swedishTitle;const bv=sortBy==="protein"?b.protein:sortBy==="carb"?b.carb:b.swedishTitle;return av.localeCompare(bv,"sv",{sensitivity:"base"})||a.swedishTitle.localeCompare(b.swedishTitle,"sv");}),[recipes,archiveName,archiveProtein,archiveCarb,sortBy]);
   const importantIngredients=(recipe:Recipe)=>recipe.ingredients.flatMap(group=>group.items).slice(0,3).join(" · ");
   function selectRecipe(recipe:Recipe|null){setSelected(recipe);setDisplayServings(recipe?.servings||1);setCopyState("idle");setCommentOpen(false);setDraft("");}
