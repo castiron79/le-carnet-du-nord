@@ -109,6 +109,41 @@ def parse_recipe(folder):
             title, detail = title.rstrip(". "), detail.strip() if separator else ""
         detail = re.sub(r"^\d+\.\s+", "", detail)
         steps.append({"title": title, "items": [detail] if detail else []})
+
+    # Ett frivilligt, separat illustrationsmanifest ger 0..N bilder per steg.
+    # Filsökvägar hålls strikt lokala och inga externa bild-URL:er godtas.
+    manifest_path = folder / "illustrations.json"
+    if manifest_path.is_file():
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if not isinstance(manifest, dict) or type(manifest.get("version")) is not int or manifest["version"] != 1:
+            raise ValueError("Ogiltig illustrationsversion")
+        entries = manifest.get("illustrations")
+        if not isinstance(entries, list):
+            raise ValueError("illustrations måste vara en lista")
+        used = set()
+        for item in entries:
+            if not isinstance(item, dict) or type(item.get("step")) is not int or not 1 <= item["step"] <= len(steps):
+                raise ValueError("Illustration pekar på ett ogiltigt steg")
+            kind, filename = item.get("kind"), item.get("file")
+            if kind not in ("action", "result", "detail") or not isinstance(filename, str):
+                raise ValueError("Ogiltig illustrationskategori eller fil")
+            if not re.fullmatch(r"step-\\d{2,}-" + kind + r"-\\d{2,}\\.(?:webp|avif)", filename):
+                raise ValueError("Ogiltigt eller osäkert illustrationsfilnamn")
+            if filename in used or not (folder / filename).is_file():
+                raise ValueError("Duplicerad eller saknad illustrationsfil")
+            used.add(filename)
+            if (folder / filename).stat().st_size > 2_000_000:
+                raise ValueError("För stor illustrationsfil")
+            alt, caption = item.get("alt"), item.get("caption")
+            if not isinstance(alt, str) or not alt.strip() or not isinstance(caption, str):
+                raise ValueError("Alt-text och caption måste vara strängar")
+            path = f"recipe-assets/{folder.name}/{filename}"
+            version = synced_revision()
+            if version:
+                path += f"?v={version}"
+            steps[item["step"] - 1].setdefault("illustrations", []).append(
+                {"kind": kind, "file": path, "alt": alt.strip(), "caption": caption.strip()}
+            )
     def list_or_paragraphs(value):
         items = [x.strip() for x in re.findall(r"^-\s+(.+)$", value, re.M)]
         return items or [x.strip() for x in re.split(r"\n\s*\n", value) if x.strip()]
