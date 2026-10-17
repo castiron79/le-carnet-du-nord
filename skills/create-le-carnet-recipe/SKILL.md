@@ -22,11 +22,12 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 3. Välj dominant `protein_group` och `carb_group` på grov råvarunivå. Använd inte kryddor eller små tillbehör.
 4. Skriv en tydlig svensk titel och en återhållsamt elegant, idiomatisk fransk `restaurant_title`. Bevara rättens identitet.
 5. Beräkna näring från generiska råvaruvärden och råvikter. Summera hela receptet, dividera med portioner och rimlighetskontrollera energin. Hitta inte på precision; sätt `draft` om underlaget inte räcker.
-6. Skapa `<slug>/recipe.md`. Kopiera/optimera en bifogad huvudbild som `hero.webp`, eller generera automatiskt huvudbilden när ingen bild har bifogats och bildgenerering finns tillgänglig. Använd `step-NN.webp` för valfria stegbilder. Ändra aldrig källbilder destruktivt.
+6. Skapa `<slug>/recipe.md`. Kopiera/optimera en bifogad huvudbild som `hero.webp`, eller generera automatiskt huvudbilden när ingen bild har bifogats och bildgenerering finns tillgänglig. Använd `illustrations.json` och `step-NN-kind-XX.webp` för valfria stegbilder enligt illustrationsstandarden. Ändra aldrig källbilder destruktivt.
 7. Säkerställ att de fem automatiska faktarikonerna kan visas: total tid, aktiv tid, portioner, kcal per portion och måltidstyp. De skapas av sajten från receptets metadata och ska inte levereras som separata bildfiler.
-8. Kör `node scripts/validate-recipe.mjs <receptmapp>`. Åtgärda alla fel. Varningar kräver redaktionellt ställningstagande.
-9. Sätt `published` först efter manuell granskning. Paketera endast receptmappen, utan temporära filer.
-10. När användaren uttryckligen ber att publicera till Le Carnet, läs `references/github-publicering.md`. I ChatGPT Work ska den aktiva GitHub-pluginen användas direkt; kräv inte lokal klon. Publicera till det privata recept-repot först efter lyckad validering. Ett vanligt önskemål om att skapa eller granska ett recept innebär inte tillstånd att skicka något externt.
+8. Planera och generera stegillustrationer för relevanta moment och resultat. Visa Hero och samtliga föreslagna stegillustrationer i chatten med stegnummer, bildtyp och caption. Låt användaren fritt lägga till, ta bort och göra om; visa en ny komplett översikt tills hela uppsättningen är godkänd. Ingen gräns på antal bilder.
+9. Kör `node scripts/validate-recipe.mjs <receptmapp>`. Åtgärda alla fel. Varningar kräver redaktionellt ställningstagande.
+10. Sätt `published` först efter uttryckligt godkännande av recepttext, Hero och samtliga bilder. Paketera endast receptmappen, utan temporära filer.
+11. När användaren uttryckligen ber att publicera till Le Carnet, läs `references/github-publicering.md`. I ChatGPT Work ska den aktiva GitHub-pluginen användas direkt; kräv inte lokal klon. Publicera till det privata recept-repot först efter lyckad validering. Ett vanligt önskemål om att skapa eller granska ett recept innebär inte tillstånd att skicka något externt.
 
 ## Regler
 
@@ -40,3 +41,7 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 - Efter lyckad validering är hela paketet låst. Publicera exakt de validerade filbytesen och ändra eller räkna aldrig om innehåll, mängder, bilder eller näringsvärden i publiceringssteget.
 - Varje steg under `Gör så här` ska ligga på exakt en egen rad och ha exakt en yttre numrering. Lämna aldrig kvar en extra `2.`, `5.` eller annan listmarkör i stegets rubrik eller brödtext.
 
+
+## Normerande illustrationsstandard
+
+Läs `docs/ILLUSTRATIONS.md` och `references/recipe-schema.md`. Svartvit tunn tuschteckning i fransk kokboks-/modern instruktionsstil; **endast råvaror och mat** har diskreta dova färger. **Ingen text i bilden**; vid behov separat caption. `action`, `result`, `detail`; 0..N illustrationer per steg. Bildpaketet får inte publiceras innan det har visats i sin helhet och användaren separat har godkänt slutversionen. Ändringar efter granskning kräver en ny granskning. Inga nya bilder får skapas efter publiceringsgodkännande.

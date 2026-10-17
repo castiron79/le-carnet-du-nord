@@ -34,3 +34,11 @@ Hero-bilden ska visa den färdiga rätten, utan text inbakad i bilden. Beskär m
 
 Kommentarer och betyg ändrar inte receptfilen. Framtida ändringsidéer kan skrivas som kommentarer. En faktisk revision startas med receptsidans **Kopiera för uppdatering**, granskas som en exakt diff och publiceras först efter uttryckligt godkännande.
 
+
+## Stegillustrationer – fast standard 1.0 (2026-10-17)
+
+En ny receptbildserie blandar klassiska franska kokboksillustrationer med rena moderna instruktionsbilder. Bilderna är svartvita, med tunna tuschlinjer och lätt skraffering; **endast mat och råvaror får dämpade naturliga färger**. Det får **aldrig finnas text, siffror eller handskrivna noteringar inne i bilden**. Använd separat `caption` under bilden om förklaring behövs. Tre bildtyper: `action` (teknik), `result` (hur det ska se ut), `detail` (viktigt utsnitt). Ingen maxgräns, flera bilder per steg tillåtna. Se `docs/ILLUSTRATIONS.md`.
+
+## Obligatorisk bildgrind
+
+Generera Hero och **alla** föreslagna stegillustrationer innan ägaren ombeds publicera. Visa hela serien med stegnummer, bildtyp och caption. Ägaren får lägga till, ta bort eller göra om hur många bilder som önskas. Först efter uttryckligt godkännande av slutlig recepttext **och samtliga bilder** kan ett paket låsas, valideras och publiceras. Ändras en bild efter godkännande krävs ny granskning. Publicering får aldrig användas för förhandsvisning.

@@ -53,3 +53,7 @@ frontend-cache. Versionsmärkta resurser cachelagras separat och säkert.
 - Vid fel behålls den tidigare fungerande receptversionen.
 - Återställ ett recept genom att återställa en tidigare commit i GitHub och synkronisera igen.
 
+
+## Obligatorisk bildgranskning före publicering (1.4.0)
+
+Skapa Hero och samtliga föreslagna stegillustrationer innan något skickas till receptarkivet. Användaren ska se hela uppsättningen och kunna behålla, ta bort, lägga till eller göra om varje illustration. Valfritt `illustrations.json`, dess WebP/AVIF-filer, `recipe.md` och Hero ingår i samma oföränderliga granskade paket. Validatorn måste godkänna varje bildreferens innan GitHub-kommit. Status `review` är förhandsgranskning i chatten/arbetsmiljön, inte på synkroniserade sajten. Se `docs/ILLUSTRATIONS.md`.

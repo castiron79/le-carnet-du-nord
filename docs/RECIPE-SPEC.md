@@ -100,3 +100,17 @@ Varumärken och tillagad vikt krävs inte. Salt, vatten och kryddor utan energi 
 Faktaraden använder ett gemensamt, lokalt ikonsystem. Ikonerna för total tid, aktiv tid, portioner, kcal och måltidstyp skapas automatiskt av sajten från receptets obligatoriska metadata. En receptmapp ska inte innehålla egna faktarikoner. Detta håller alla recept visuellt enhetliga och undviker extra bildfiler på Home Assistant Green.
 
 Receptets huvudbild ska kunna beskäras responsivt. På bred skärm ligger titel och beskrivning bredvid bilden med en tonad övergång från pappersbakgrunden in över bildkanten. Text eller toning ska aldrig bakas in i själva matbilden.
+
+## Manifest för valfria stegillustrationer
+
+Bakåtkompatibelt med `schema_version: 1`. Vid stegillustrationer läggs `illustrations.json` i samma katalog som `recipe.md` och `hero.webp`. Exempel:
+
+```json
+{"version":1,"illustrations":[{"step":2,"kind":"action","file":"step-02-action-01.webp","alt":"Älgkött bryns i gryta","caption":"Bryn i små omgångar för en vacker yta."},{"step":2,"kind":"result","file":"step-02-result-02.webp","alt":"Älgkött med brynt stekyta","caption":"Ytan ska vara brynt, inte bränd."}]}
+```
+
+`step` pekar på det 1-baserade numret under `Gör så här`; `kind` är action/result/detail. Bildfilen ska heta `step-NN-kind-XX.webp` eller `.avif`, finnas lokalt i katalogen och ha giltig signatur. Flera bilder per steg och obegränsat antal per recept tillåts. Alla bilder, inklusive Hero, skapas och granskas före publicering. Äldre recept utan manifest förblir oförändrade.
+
+## Stegillustrationer – fast standard 1.0 (2026-10-17)
+
+En ny receptbildserie blandar klassiska franska kokboksillustrationer med rena moderna instruktionsbilder. Bilderna är svartvita, med tunna tuschlinjer och lätt skraffering; **endast mat och råvaror får dämpade naturliga färger**. Det får **aldrig finnas text, siffror eller handskrivna noteringar inne i bilden**. Använd separat `caption` under bilden om förklaring behövs. Tre bildtyper: `action` (teknik), `result` (hur det ska se ut), `detail` (viktigt utsnitt). Ingen maxgräns, flera bilder per steg tillåtna. Se `docs/ILLUSTRATIONS.md`.

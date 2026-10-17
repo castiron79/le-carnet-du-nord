@@ -398,3 +398,11 @@ En vy är designmässigt klar när:
 - färgkontrast, fokusmarkeringar och formulärfel uppfyller WCAG 2.2 AA;
 - inga externa resurser krävs för att upprätthålla sajtens visuella identitet.
 
+
+## Stegillustrationer – fast standard 1.0 (2026-10-17)
+
+En ny receptbildserie blandar klassiska franska kokboksillustrationer med rena moderna instruktionsbilder. Bilderna är svartvita, med tunna tuschlinjer och lätt skraffering; **endast mat och råvaror får dämpade naturliga färger**. Det får **aldrig finnas text, siffror eller handskrivna noteringar inne i bilden**. Använd separat `caption` under bilden om förklaring behövs. Tre bildtyper: `action` (teknik), `result` (hur det ska se ut), `detail` (viktigt utsnitt). Ingen maxgräns, flera bilder per steg tillåtna. Se `docs/ILLUSTRATIONS.md`.
+
+## Visning i receptvyn
+
+Alla illustrationer är dolda vid första visningen. Varje bild har egen knapp: ”Visa illustration”, ”Visa hur det ska se ut” (resultat) och ”Dölj illustration”. Globalt finns ”Visa alla illustrationer” och ”Dölj alla”. Bilder öppnas inline under respektive steg; ingen modal behövs. Äldre recept utan bilder visar inga bildknappar. Använd `aria-expanded`, `aria-controls`, tangentbordsfokus och minst 44 px höga tryckytor. Hämta bildresursen först efter utfällning.
