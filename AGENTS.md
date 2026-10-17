@@ -17,3 +17,8 @@ tydligt fel; säg aldrig att en lokal ändring är publicerad.
 
 Receptinnehåll publiceras separat till det privata `le-carnet-recipes` och får
 inte blandas in i kodrepot.
+
+
+## Krav på bildgranskning
+
+Om ett nytt eller uppdaterat recept har bilder ska agenten generera och visa **samtliga** Hero- och stegillustrationer med captions innan publicering kan godkännas. Användaren får behålla, ta bort, lägga till och göra om dem. Efter slutgodkännande får inga bilder ändras före commit. Alla refererade bilder valideras; se `docs/ILLUSTRATIONS.md`. Ändringar i kod och instruktioner måste även uppdatera relevanta tester och changelog enligt ovan.

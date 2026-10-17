@@ -3,6 +3,14 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+
+## 1.4.0 – 2026-10-17
+
+- Stöder valfria, utfällbara illustrationer per matlagningssteg med Visa alla / Dölj alla.
+- Flera handlings-, resultat- och detaljbilder kan finnas på samma steg, och öppnade bilder laddas först vid behov.
+- Introducerar illustrations.json, bild- och filvalidering samt obligatoriskt bildgodkännande före receptpublicering.
+- Utökar receptskill, design- och redaktionsstandard med dova råvarufärger och textfria illustrationer.
+
 ## 1.3.3 – 2026-10-17
 
 - Placerar sidfoten vid skärmens nederkant när innehållet är kortare än den

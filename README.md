@@ -74,3 +74,8 @@ Kommentarer och betyg ändrar aldrig receptfilen. Ändringsförslag hamnar i gra
 6. tester och ändringsnotering.
 
 Detta gör att äldre recept kan fortsätta läsas eller migreras säkert.
+
+
+## Stegillustrationer
+
+Sajten stöder frivilliga, utfällbara stegillustrationer (från version 1.4.0). Receptpaket kan innehålla `illustrations.json` och tillhörande WebP/AVIF-filer. Läs [illustrationsstandarden](docs/ILLUSTRATIONS.md) och [publiceringsflödet](docs/GITHUB-AUTOMATION.md). Recept utan sådana bilder fungerar oförändrat.
