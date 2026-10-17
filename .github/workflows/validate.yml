@@ -19,5 +19,6 @@ jobs:
       - run: npm run build
       - run: npx vite build --config static/vite.config.ts
       - run: python -m py_compile home-assistant-addon/rootfs/app/server.py
+      - run: python -c "import zipfile; z=zipfile.ZipFile('skill-packages/create-le-carnet-recipe-v7.zip'); assert z.testzip() is None; assert len(z.namelist()) == 10"
       - run: node --test tests/illustration-manifest.test.mjs
       - run: python -m unittest discover -s tests -p 'test_*.py'

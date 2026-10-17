@@ -79,3 +79,6 @@ Detta gör att äldre recept kan fortsätta läsas eller migreras säkert.
 ## Stegillustrationer
 
 Sajten stöder frivilliga, utfällbara stegillustrationer (från version 1.4.0). Receptpaket kan innehålla `illustrations.json` och tillhörande WebP/AVIF-filer. Läs [illustrationsstandarden](docs/ILLUSTRATIONS.md) och [publiceringsflödet](docs/GITHUB-AUTOMATION.md). Recept utan sådana bilder fungerar oförändrat.
+
+
+Portabel, versionerad receptskill för nya Work-/Codex-installationer: [create-le-carnet-recipe-v7.zip](skill-packages/create-le-carnet-recipe-v7.zip). Den ersätter äldre v5/v6-paket och inkluderar bildvalidering och hela illustrationsstandarden. Befintlig installerad skill behöver uppdateras separat; GitHub-ändringen uppdaterar inte automatiskt en lokal installation.
