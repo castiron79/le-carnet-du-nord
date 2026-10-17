@@ -3,6 +3,14 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.3.0 – 2026-10-17
+
+- Gör de senaste recepten till en horisontell karusell med upp till tolv recept.
+- Lägger till centralt sparade favoriter, en egen favoritkarusell och favoritfilter.
+- Visar små Hero-bilder och klickbara hjärtan i hela receptlistan.
+- Säkerställer att ordmärket alltid återgår till startsidans senaste-vy.
+- Stabiliserar betygsstjärnorna och optimerar porträttläget för Galaxy Tab S7+.
+
 ## 1.2.11 – 2026-08-25
 
 - Versionsmärker receptbilder med den synkroniserade GitHub-revisionen så en

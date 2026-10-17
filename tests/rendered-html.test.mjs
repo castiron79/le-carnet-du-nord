@@ -5,13 +5,16 @@ import test from "node:test";
 const root = new URL("../", import.meta.url);
 const read = (path) => readFile(new URL(path, root), "utf8");
 
-test("startsidan har 6/4/2-regeln och kombinerbar råvarusökning", async () => {
-  const [page, css] = await Promise.all([read("app/page.tsx"), read("app/globals.css")]);
-  assert.match(page, /filtered\.slice\(0,6\)/);
+test("startsidan har svepbara karuseller med 6/4/2-regeln och kombinerbar råvarusökning", async () => {
+  const [page, css] = await Promise.all([read("app/page.tsx"), read("app/recipe-enhancements.css")]);
+  assert.match(page, /recipes\.slice\(0,12\)/);
+  assert.match(page, /label="De senaste recepten"/);
+  assert.match(page, /label="Mina favoriter"/);
   assert.match(page, /protein==="Alla"\|\|r\.protein===protein/);
   assert.match(page, /carb==="Alla"\|\|r\.carb===carb/);
-  assert.match(css, /max-width:1100px[\s\S]*nth-child\(n\+5\)/);
-  assert.match(css, /max-width:720px[\s\S]*nth-child\(n\+3\)/);
+  assert.match(css, /grid-auto-columns: calc\(\(100% - 70px\) \/ 6\)/);
+  assert.match(css, /max-width: 1100px[\s\S]*grid-auto-columns: calc\(\(100% - 42px\) \/ 4\)/);
+  assert.match(css, /max-width: 720px[\s\S]*grid-auto-columns: calc\(\(100% - 14px\) \/ 2\)/);
 });
 
 test("receptvyn erbjuder betyg, kommentarer, portionsskalning och uppdateringsunderlag", async () => {
@@ -79,5 +82,27 @@ test("startsidan visar nyast publicerade recept först", async () => {
   assert.match(page, /\.sort\(newestFirst\)/);
   assert.match(server, /"publishedAt": str\(meta\.get\("published_at", ""\)\)/);
   assert.match(server, /return sorted\(result,/);
+});
+
+test("favoriter sparas centralt, kan filtreras och visas med hjärta", async () => {
+  const [page, server, css] = await Promise.all([
+    read("app/page.tsx"),
+    read("home-assistant-addon/rootfs/app/server.py"),
+    read("app/recipe-enhancements.css"),
+  ]);
+  assert.match(server, /CREATE TABLE IF NOT EXISTS favorites/);
+  assert.match(server, /path == "\/api\/states"/);
+  assert.match(server, /self\.path == "\/api\/favorites"/);
+  assert.match(page, /SPARA SOM FAVORIT/);
+  assert.match(page, /favoritesOnly/);
+  assert.match(page, /archiveThumb/);
+  assert.doesNotMatch(page, /archiveArrow/);
+  assert.match(css, /\.rating > div \{ display: flex; flex-wrap: nowrap;/);
+});
+
+test("ordmärket återställer alltid vyn med de senaste recepten", async () => {
+  const page = await read("app/page.tsx");
+  assert.match(page, /function goHome\(\)\{selectRecipe\(null\);setShowAll\(false\)/);
+  assert.match(page, /className="wordmark" onClick=\{goHome\}/);
 });
 

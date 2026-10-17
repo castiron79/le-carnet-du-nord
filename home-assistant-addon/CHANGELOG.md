@@ -1,5 +1,13 @@
 # Ändringslogg
 
+## 1.3.0 – 2026-10-17
+
+- Svep bland upp till tolv senaste recept och upp till tolv favoriter.
+- Favoriter sparas gemensamt och syns på alla dina enheter.
+- Hela receptlistan har små matbilder, favoritfilter och klickbara hjärtan.
+- Le Carnet-namnet återgår alltid till startsidan.
+- Förbättrad layout för surfplatta och telefon, inklusive betygsstjärnorna.
+
 ## 1.2.11 – 2026-08-25
 
 - Visar uppdaterade receptbilder direkt efter synkronisering utan att du behöver rensa appens cache.

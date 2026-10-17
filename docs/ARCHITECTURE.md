@@ -123,6 +123,17 @@ Skrivande anrop kräver JSON, samma origin och `X-Le-Carnet-Request: 1`. Servern
 - `DELETE api/v1/comments/{id}` gör logisk radering.
 - `PUT api/v1/recipes/{slug}/rating` med `{ "stars": 1..5 }` gör upsert.
 - `DELETE api/v1/recipes/{slug}/rating` tar bort betyget.
+
+### `favorites`
+
+Favoritmarkeringar lagras centralt i appens SQLite-databas med recept-ID och
+senaste markeringstid. Därför delas samma favoritlista av telefon, surfplatta
+och andra enheter som öppnar Le Carnet via samma Home Assistant-installation.
+
+- `GET api/states` returnerar en kompakt översikt över alla betyg och favoriter.
+- `GET api/state/{slug}` returnerar betyg, favoritstatus, favorittid och kommentarer.
+- `POST api/favorites` med `{ "recipe_id": "...", "favorite": true|false }`
+  lägger till eller tar bort favoriten.
 - `POST api/v1/recipes/{slug}/change-proposals` skapar förslag med `kind`, `summary` och valfritt `proposedMarkdown`.
 - `POST api/v1/change-proposals/{id}/approve` och `/reject` beslutar med valfri `decisionNote`.
 

@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
     "dist/**",
     "out/**",
     "build/**",
+    "home-assistant-addon/rootfs/app/www/**",
     "next-env.d.ts",
   ]),
   eslint.configs.recommended,

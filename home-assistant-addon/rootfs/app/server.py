@@ -255,6 +255,7 @@ def connect():
     db.execute("PRAGMA journal_mode=WAL")
     db.execute("PRAGMA synchronous=NORMAL")
     db.execute("CREATE TABLE IF NOT EXISTS ratings (recipe_id TEXT PRIMARY KEY, rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5), updated_at TEXT NOT NULL)")
+    db.execute("CREATE TABLE IF NOT EXISTS favorites (recipe_id TEXT PRIMARY KEY, updated_at TEXT NOT NULL)")
     db.execute("CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY AUTOINCREMENT, recipe_id TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN ('comment','change')), text TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'open', created_at TEXT NOT NULL)")
     db.execute("CREATE INDEX IF NOT EXISTS idx_notes_recipe_id ON notes(recipe_id, created_at)")
     db.commit()
@@ -297,6 +298,14 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json(load_recipes())
         if path == "/api/sync":
             return self.send_json(sync_status)
+        if path == "/api/states":
+            with connect() as db:
+                rating_rows = db.execute("SELECT recipe_id,rating FROM ratings").fetchall()
+                favorite_rows = db.execute("SELECT recipe_id,updated_at FROM favorites").fetchall()
+            return self.send_json({
+                "ratings": {row["recipe_id"]: row["rating"] for row in rating_rows},
+                "favorites": {row["recipe_id"]: row["updated_at"] for row in favorite_rows},
+            })
         if path.startswith("/recipe-assets/"):
             relative = Path(path.removeprefix("/recipe-assets/"))
             target = (RECIPES / relative).resolve()
@@ -315,9 +324,10 @@ class Handler(SimpleHTTPRequestHandler):
                 return self.send_json({"error": "Ogiltigt recept-id"}, 400)
             with connect() as db:
                 row = db.execute("SELECT rating FROM ratings WHERE recipe_id=?", (recipe_id,)).fetchone()
+                favorite = db.execute("SELECT updated_at FROM favorites WHERE recipe_id=?", (recipe_id,)).fetchone()
                 rows = db.execute("SELECT kind,text,created_at FROM notes WHERE recipe_id=? ORDER BY id", (recipe_id,)).fetchall()
             notes = [{"text": (("Ändringsförslag: " if x["kind"] == "change" else "") + x["text"]), "date": x["created_at"][:10]} for x in rows]
-            return self.send_json({"rating": row["rating"] if row else 0, "notes": notes})
+            return self.send_json({"rating": row["rating"] if row else 0, "favorite": bool(favorite), "favorite_updated_at": favorite["updated_at"] if favorite else None, "notes": notes})
         if path == "/health":
             return self.send_json({"status": "ok"})
         if path == "/":
@@ -349,6 +359,14 @@ class Handler(SimpleHTTPRequestHandler):
                     if rating not in range(1, 6):
                         raise ValueError("Betyg måste vara 1–5")
                     db.execute("INSERT INTO ratings(recipe_id,rating,updated_at) VALUES(?,?,?) ON CONFLICT(recipe_id) DO UPDATE SET rating=excluded.rating,updated_at=excluded.updated_at", (recipe_id, rating, now))
+                elif self.path == "/api/favorites":
+                    favorite = data.get("favorite")
+                    if not isinstance(favorite, bool):
+                        raise ValueError("Favorit måste vara true eller false")
+                    if favorite:
+                        db.execute("INSERT INTO favorites(recipe_id,updated_at) VALUES(?,?) ON CONFLICT(recipe_id) DO UPDATE SET updated_at=excluded.updated_at", (recipe_id, now))
+                    else:
+                        db.execute("DELETE FROM favorites WHERE recipe_id=?", (recipe_id,))
                 elif self.path == "/api/notes":
                     kind = str(data.get("kind", ""))
                     text = str(data.get("text", "")).strip()

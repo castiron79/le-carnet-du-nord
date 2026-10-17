@@ -109,6 +109,19 @@ På receptsidan kan du trycka **Kopiera för uppdatering** och klistra in texten
 
 Knappen **Anpassa mängder** på receptsidan skalar ingredienslistan till 1–20 portioner. Skalningen är en tillfällig lokal visning. Receptfilen, GitHub, tillagningsstegen, tiderna och näringsvärdena per portion ändras inte.
 
+## Senaste recept och favoriter
+
+På startsidan kan du svepa i sidled bland upp till tolv av de senaste recepten.
+Raden **Mina favoriter** fungerar på samma sätt. Tryck på hjärtat vid ett recept
+för att spara det som favorit; ett rött fyllt hjärta betyder sparat och ett
+konturhjärta betyder inte sparat. Favoriterna lagras i Le Carnet och är därför
+desamma på telefonen och surfplattan. De senast favoritmarkerade visas först.
+
+I **Visa alla recept** kan du filtrera med **Favoriter**. Klicka på resten av
+receptets rad för att öppna receptet, eller direkt på hjärtat för att ändra
+favoritstatus. Klick på **Le Carnet du Nord** uppe till vänster återgår alltid
+till startsidans vy med de senaste recepten.
+
 Kommentarer och betyg ligger separat i SQLite och ska finnas kvar. Skriv framtida förbättringsidéer som kommentarer och välj själv vilka som ska ingå när receptet senare uppdateras via chatten.
 
 ## 9. Bildregler

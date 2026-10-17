@@ -131,6 +131,11 @@ Brytpunkt: från 1180 px bredd. Referensvy: 1440 × 900.
 - Toppfält: 72 px.
 - Introduktionsrad: varumärkesrubrik och en kort mening till vänster; stor sökruta till höger eller direkt under, totalt högst 120 px.
 - Sektionstitel **Senast från köket** och länk **Visa alla** på samma rad.
+- De senaste recepten och favoriterna visas i två horisontella, svepbara rader
+  med högst tolv recept vardera. Samtidigt syns 6 kort på bred skärm, 4 på
+  surfplatta och 2 på telefon.
+- Favorithjärtat är konturformat i neutralt läge och fyllt i en dämpad röd ton
+  när receptet är sparat.
 - Receptgrid: 3 kolumner × 2 rader.
 - Mellanrum: 20–24 px.
 - Kortens visuella höjd: cirka 250–275 px vid 900 px vyhöjd.
