@@ -2,6 +2,11 @@
   position: relative;
 }
 
+/* Fill the available Home Assistant Ingress viewport on short pages. */
+main { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
+main > header, main > section, main > article, main > footer { flex-shrink: 0; }
+main > footer { margin-top: auto; }
+
 .archiveViewToggle { display:flex; justify-content:flex-end; gap:4px; margin:16px 0; }
 .archiveViewToggle button { padding:9px 14px; border:1px solid #cdbd9d; border-radius:5px; background:transparent; cursor:pointer; font:12px Arial,sans-serif; }
 .archiveViewToggle button[aria-pressed="true"] { background:var(--forest); color:#f8f4eb; border-color:var(--forest); }
@@ -219,13 +224,15 @@
   display: flex;
   align-items: flex-end;
   gap: 24px;
+  flex-wrap: wrap;
   min-width: 0;
 }
 
-.rating { min-width: 0; }
+.rating { flex: 0 0 auto; min-width: max-content; }
+.rating > span { display: block; white-space: nowrap; }
 .rating > div { display: flex; flex-wrap: nowrap; white-space: nowrap; }
 .rating button { flex: 0 0 auto; }
-.favoriteControl { display: grid; gap: 7px; justify-items: center; }
+.favoriteControl { flex: 0 0 auto; display: grid; gap: 7px; justify-items: center; }
 .favoriteControl > span { white-space: nowrap; font: 9px Arial,sans-serif; letter-spacing: .12em; }
 
 .community .copyFallback label {
@@ -450,6 +457,8 @@
 
 @media (max-width: 1100px) {
   .recipeCarousel { grid-auto-columns: calc((100% - 42px) / 4); }
+  .community { grid-template-columns: minmax(0,1fr) auto; }
+  .community .actions { grid-column: 1 / -1; justify-content: flex-end; }
 }
 
 @media (max-width: 900px) {
@@ -484,6 +493,7 @@
 }
 
 @media (max-width: 720px) {
+  .community { grid-template-columns: minmax(0,1fr); }
   .recipeCarousel { grid-auto-columns: calc((100% - 14px) / 2); }
   .recipeCarousel .recipeTile:nth-child(n) { grid-template-rows: 145px auto; }
   .carouselArrow { display: none; }

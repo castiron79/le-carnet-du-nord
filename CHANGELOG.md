@@ -3,6 +3,13 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.3.3 – 2026-10-17
+
+- Placerar sidfoten vid skärmens nederkant när innehållet är kortare än den
+  tillgängliga ytan i Home Assistant, och efter innehållet på längre sidor.
+- Ger betyg och favorit egna utrymmen och flyttar åtgärdsknapparna till en egen
+  rad på surfplatta så stjärnor, hjärta och rubriker inte överlappar.
+
 ## 1.3.2 – 2026-10-17
 
 - Återställer karusellkortens separata bild- och textyta så franskt namn,

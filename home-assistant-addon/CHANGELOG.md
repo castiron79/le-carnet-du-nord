@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.3.3 – 2026-10-17
+
+- Sidfoten ligger nu längst ned även på korta sidor.
+- Rättar överlappande betyg och favorithjärta i surfplattans porträttläge.
+
 ## 1.3.2 – 2026-10-17
 
 - Rättar startsidans karuseller så franskt namn, svensk rättbeskrivning och tid
