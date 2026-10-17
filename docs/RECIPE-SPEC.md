@@ -10,10 +10,11 @@ Källformat: en katalog per recept med `recipe.md` och bilder.
 recipes/<slug>/
   recipe.md
   hero.webp
-  step-01.webp       # valfri
+  illustrations.json # valfri; krävs när moderna stegbilder används
+  step-01-action-01.webp  # exempel
 ```
 
-`slug` ska vara unik kebab-case med a–z, 0–9 och bindestreck, utan å/ä/ö. Bildnamn ska vara gemener och relativa till receptmappen. Hero-bilden ska vara WebP eller AVIF, helst 1600×1000 px, högst 500 KB. Stegbilder är valfria.
+`slug` ska vara unik kebab-case med a–z, 0–9 och bindestreck, utan å/ä/ö. Bildnamn ska vara gemener och relativa till receptmappen. Hero-bilden ska vara WebP eller AVIF, helst 1600×1000 px, högst 500 KB. Stegbilder är valfria och styrs av illustrations.json enligt illustrationsstandarden.
 
 ## Obligatorisk frontmatter
 
