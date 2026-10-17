@@ -1,6 +1,7 @@
 import importlib.util
 import json
 import os
+import shutil
 import tempfile
 import unittest
 from pathlib import Path
@@ -24,6 +25,7 @@ class IllustrationsServerTests(unittest.TestCase):
 
     def setUp(self):
         self.recipe = Path(self.root.name) / "recipes" / "elk"
+        if self.recipe.exists(): shutil.rmtree(self.recipe)
         self.recipe.mkdir(exist_ok=True)
         (self.recipe / "recipe.md").write_text("""---
 id: elk
