@@ -79,3 +79,6 @@ Mät på eller nära Green-hårdvara med mål för tomgångsminne, kallstart, st
 6. Starta utan internet och kontrollera att inga externa typsnitt, bilder eller skript efterfrågas.
 7. Kontrollera loggar så att kommentarer, receptinnehåll och andra personuppgifter inte skrivs ut.
 
+## Säkerhetsregler för illustrationsmanifest (1.4.0)
+
+`illustrations.json` måste innehålla en versionerad lista. Stegindex kontrolleras mot faktiskt antal instruktioner, filnamn är strikt begränsade till `step-NN-kind-XX.webp` eller `.avif` utan sökvägsseparatorer, och externa bild-URL:er accepteras aldrig. Validatorn kontrollerar även bildsignatur och storlek; servern kontrollerar verklig lokal fil. Den befintliga `/recipe-assets/`-handlern kontrollerar att canonical path ligger inom `RECIPES`. AI-bilders innehåll (inklusive inbakad text och teknisk korrekthet) måste godkännas manuellt.
