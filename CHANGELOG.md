@@ -3,6 +3,11 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.3.2 – 2026-10-17
+
+- Återställer karusellkortens separata bild- och textyta så franskt namn,
+  svensk rättbeskrivning och tid alltid visas under bilden i båda karusellerna.
+
 ## 1.3.1 – 2026-10-17
 
 - Lägger till en responsiv spelkortsgrid i Alla recept med bild, svenskt namn,

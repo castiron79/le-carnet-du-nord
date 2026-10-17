@@ -158,7 +158,8 @@
 
 .recipeCarousel::-webkit-scrollbar { display: none; }
 .recipeCarousel .recipeTile { scroll-snap-align: start; }
-.recipeCarousel .recipeTile:nth-child(n) { display: block; }
+.recipeCarousel .recipeTile:nth-child(n) { display: grid; grid-template-rows: clamp(120px,18vh,185px) auto; height: auto; }
+.recipeCarousel .tileImage { height: 100%; min-height: 0; }
 
 .carouselArrow {
   position: absolute;
@@ -476,7 +477,7 @@
   .latestHead { margin-bottom: 12px; }
   .homeShelves { gap: 17px; }
   .shelfHead { margin-bottom: 9px; }
-  .recipeCarousel .tileImage { height: 112px; }
+  .recipeCarousel .recipeTile:nth-child(n) { grid-template-rows: 112px auto; }
   .recipeCarousel .tileCopy { padding: 9px 11px; }
   .recipeCarousel .tileCopy h3 { margin-top: 5px; font-size: 18px; }
   footer { padding-block: 18px; }
@@ -484,6 +485,7 @@
 
 @media (max-width: 720px) {
   .recipeCarousel { grid-auto-columns: calc((100% - 14px) / 2); }
+  .recipeCarousel .recipeTile:nth-child(n) { grid-template-rows: 145px auto; }
   .carouselArrow { display: none; }
   .homeShelves { gap: 22px; }
   .shelfHead { align-items: flex-start; }

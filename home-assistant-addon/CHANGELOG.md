@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.3.2 – 2026-10-17
+
+- Rättar startsidans karuseller så franskt namn, svensk rättbeskrivning och tid
+  visas under bilden igen på telefon, surfplatta och dator.
+
 ## 1.3.1 – 2026-10-17
 
 - Växla mellan lista och stående receptkort i Alla recept.

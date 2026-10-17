@@ -39,7 +39,7 @@ function RecipeCarousel({recipes,ratings,onSelect,label}:{recipes:Recipe[];ratin
   const scroll=(direction:number)=>track.current?.scrollBy({left:direction*track.current.clientWidth,behavior:"smooth"});
   return <div className="carousel">
     <button type="button" className="carouselArrow previous" onClick={()=>scroll(-1)} aria-label={`Visa föregående recept i ${label}`}>‹</button>
-    <div className="recipeCarousel" ref={track} aria-label={label}>{recipes.slice(0,12).map((recipe,index)=><button className={`recipeTile tile${index+1}`} key={recipe.id} onClick={()=>onSelect(recipe)}><div className="tileImage">{recipe.image?<img src={recipe.image} alt=""/>:<span>{recipe.protein.slice(0,1)}</span>}<em>{ratings[recipe.id]?`${ratings[recipe.id]} ★`:"NYTT"}</em></div><div className="tileCopy"><small>{recipe.total}</small><h3>{recipe.title}</h3><p>{recipe.subtitle}</p></div></button>)}</div>
+    <div className="recipeCarousel" ref={track} aria-label={label}>{recipes.slice(0,12).map((recipe,index)=><button className={`recipeTile tile${index+1}`} key={recipe.id} onClick={()=>onSelect(recipe)}><div className="tileImage">{recipe.image?<img src={recipe.image} alt=""/>:<span>{recipe.protein.slice(0,1)}</span>}<em>{ratings[recipe.id]?`${ratings[recipe.id]} ★`:"NYTT"}</em></div><div className="tileCopy"><small>{recipe.total}</small><h3>{recipe.title}</h3><p>{recipe.swedishTitle}</p></div></button>)}</div>
     <button type="button" className="carouselArrow next" onClick={()=>scroll(1)} aria-label={`Visa fler recept i ${label}`}>›</button>
   </div>;
 }
