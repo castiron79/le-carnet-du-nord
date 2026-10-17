@@ -3,6 +3,13 @@
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
+## 1.3.1 – 2026-10-17
+
+- Lägger till en responsiv spelkortsgrid i Alla recept med bild, svenskt namn,
+  fransk titel och kort beskrivning samt tid, kcal per portion och hjärta på en rad.
+- Växla mellan lista och kort; visningsvalet sparas på enheten.
+- Båda vyerna använder samma sökning, sortering och favoritfilter.
+
 ## 1.3.0 – 2026-10-17
 
 - Gör de senaste recepten till en horisontell karusell med upp till tolv recept.

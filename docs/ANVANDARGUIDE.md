@@ -111,6 +111,12 @@ Knappen **Anpassa mängder** på receptsidan skalar ingredienslistan till 1–20
 
 ## Senaste recept och favoriter
 
+I **Visa alla recept** väljer du **Lista** eller **Kort**. Kortvyn visar stående
+kort med bild, svenskt och franskt namn, en kort beskrivning samt tid, kalorier
+per portion och favoritknapp. Samma filter och sortering gäller för båda vyerna.
+Visningsvalet sparas i den aktuella webbläsaren. Tryck på kortet för att öppna
+receptet eller på hjärtat för att ändra favoritstatus.
+
 På startsidan kan du svepa i sidled bland upp till tolv av de senaste recepten.
 Raden **Mina favoriter** fungerar på samma sätt. Tryck på hjärtat vid ett recept
 för att spara det som favorit; ett rött fyllt hjärta betyder sparat och ett

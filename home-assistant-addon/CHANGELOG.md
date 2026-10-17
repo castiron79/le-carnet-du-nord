@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.3.1 – 2026-10-17
+
+- Växla mellan lista och stående receptkort i Alla recept.
+- Korten visar bild, namn, beskrivning samt tid, kalorier per portion och hjärta på en rad.
+- Ditt visningsval sparas på enheten och alla befintliga filter fungerar i båda vyerna.
+
 ## 1.3.0 – 2026-10-17
 
 - Svep bland upp till tolv senaste recept och upp till tolv favoriter.
