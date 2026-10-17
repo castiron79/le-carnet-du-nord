@@ -587,3 +587,30 @@ main > footer { margin-top: auto; }
   .rating button { padding-inline: 1px; font-size: 24px; }
 }
 
+
+/* Le Carnet illustrations 1.0: optional, lazy, inline and keyboard-accessible. */
+.methodHeading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
+.methodHeading h3 { margin:0; }
+.illustrationBulkActions { display:flex; flex-wrap:wrap; gap:8px; }
+.illustrationBulkActions button, .illustrationToggle { border:1px solid #bfb7a6; border-radius:7px; background:#f4efe5; color:#254533; padding:10px 12px; font:600 11px Arial,sans-serif; cursor:pointer; min-height:44px; }
+.illustrationBulkActions button:first-child { border-color:#315742; background:#315742; color:#fff; }
+.illustrationBulkActions button:hover, .illustrationToggle:hover { filter:brightness(.96); }
+.illustrationBulkActions button:focus-visible, .illustrationToggle:focus-visible { outline:3px solid #bd872d; outline-offset:3px; }
+.stepContents { min-width:0; }
+.stepIllustration { margin-top:12px; }
+.illustrationToggle { display:flex; align-items:center; justify-content:space-between; max-width:100%; gap:12px; }
+.illustrationPanel[hidden] { display:none !important; }
+.illustrationPanel { margin-top:10px; }
+.illustrationPanel figure { margin:0; padding:10px; border:1px solid #d1c7b4; border-radius:8px; background:#fbf8f2; }
+.illustrationPanel img { display:block; width:100%; max-height:480px; object-fit:contain; height:auto; border-radius:5px; }
+.illustrationPanel figcaption { margin:10px 3px 2px; font:italic 13px/1.45 Georgia,serif; color:#57564f; }
+@media (max-width:720px) {
+  .methodHeading { display:block; }
+  .illustrationBulkActions { margin-top:12px; }
+  .illustrationBulkActions button { flex:1; }
+  .illustrationToggle { width:100%; }
+  .illustrationPanel figure { padding:6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .illustrationBulkActions button,.illustrationToggle { transition:none; }
+}

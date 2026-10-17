@@ -160,3 +160,6 @@ Efter återställning kontrollerar du ett recept, en bild, ett betyg, en komment
 
 Om receptformatet ändras ska receptspecifikation, skill, validator, exempel, beslut, tester och denna guide uppdateras tillsammans. Ett vanligt nytt recept kräver ingen ändring av styrdokumenten.
 
+## Visa och dölj stegillustrationer
+
+Recept med illustrerade moment har **Visa illustration** eller **Visa hur det ska se ut** vid vissa steg. Öppna endast det du behöver; knappen blir **Dölj illustration**. I början av Gör så här finns **Visa alla illustrationer** och **Dölj alla**. Bilderna är dolda vid öppning, och vanliga recept fungerar precis som förut. Eventuell förklaring ligger i en separat text under bilden. Se även `ILLUSTRATIONS.md`.

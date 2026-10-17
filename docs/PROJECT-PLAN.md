@@ -150,3 +150,6 @@ Efter M5 prioriteras endast med produktägarens beslut. Kandidater:
 
 Ingen framtida funktion får göra internet, extern databas eller molnkonto obligatoriskt för normal drift.
 
+## M6+ – Illustrationer för nya recept
+
+Utbyggnaden omfattar ett valfritt illustrationsmanifest och en inline-vy, de gemensamma knapparna, lazy loading, validatorn i båda arkiven och uppdaterad publiceringsskill. Vid nytt eller ändrat recept ska alla föreslagna Hero- och stegbilder visas och godkännas före GitHub-commit. Äldre recept migreras inte automatiskt. Båda CI-flödena ska vara gröna innan appversion 1.4.0 releasas. Se `ILLUSTRATIONS.md`.

@@ -19,3 +19,8 @@ Aktivera detta läge endast när användaren uttryckligen vill uppdatera ett bef
 
 Kommentarer från sajten är anteckningar och blir inte automatiskt ändringsinstruktioner. Användaren väljer själv vilken kommentar som ska ingå i uppdateringsbegäran.
 
+
+
+## Uppdaterade stegillustrationer
+
+Hämta hela originalpaketet med eventuell `illustrations.json` och bildbytes. Ändrade stegnummer kräver nya referenser; visa i diff vilka filer som tas bort, tillkommer eller får nytt innehåll. Visa den kompletta slutliga bildserien för nytt uttryckligt godkännande innan publicering. Ingen tyst automatisk regenerering.

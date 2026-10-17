@@ -10,7 +10,7 @@ type Recipe = {
   prep: number; active: number; total: string; servings: number; occasion: string;
   macros: { kcal: number; protein: number; carbs: number; fat: number; fiber: number };
   ingredients: { heading: string; items: string[] }[];
-  steps: { title: string; items: string[] }[];
+  steps: { title: string; items: string[]; illustrations?: { kind: "action" | "result" | "detail"; file: string; alt: string; caption: string }[] }[];
   tips: string[]; why: string[];
 };
 
@@ -32,6 +32,24 @@ const newestFirst=(a:Recipe,b:Recipe)=>(b.publishedAt||b.updatedAt||"").localeCo
 
 function FavoriteButton({active,onClick,label="Spara som favorit",className=""}:{active:boolean;onClick:()=>void;label?:string;className?:string}) {
   return <button type="button" className={`favoriteButton ${active?"active":""} ${className}`} onClick={onClick} aria-pressed={active} aria-label={active?"Ta bort från favoriter":label} title={active?"Ta bort från favoriter":label}><span aria-hidden="true">{active?"♥":"♡"}</span></button>;
+}
+
+function RecipeInstructions({steps}:{steps:Recipe["steps"]}) {
+  const [expanded,setExpanded]=useState<Record<string,boolean>>({});
+  const pictures=steps.flatMap((step,i)=>(step.illustrations||[]).map((_,j)=>`${i}-${j}`));
+  const setAll=(visible:boolean)=>setExpanded(visible?Object.fromEntries(pictures.map(key=>[key,true])):{});
+  const toggle=(key:string)=>setExpanded(current=>({...current,[key]:!current[key]}));
+  return <>
+    <div className="methodHeading"><h3>Gör så här</h3>{pictures.length>0&&<div className="illustrationBulkActions"><button type="button" onClick={()=>setAll(true)}>Visa alla illustrationer</button><button type="button" onClick={()=>setAll(false)}>Dölj alla</button></div>}</div>
+    {steps.map((step,i)=><section className="step" key={i}><i>{i+1}</i><div className="stepContents"><h4>{step.title}</h4><ul>{step.items.map((value,j)=><li key={j}>{value}</li>)}</ul>{(step.illustrations||[]).map((picture,j)=>{
+      const id=`illustration-${i+1}-${j+1}`,key=`${i}-${j}`,visible=Boolean(expanded[key]);
+      const verb=picture.kind==="result"?"Visa hur det ska se ut":"Visa illustration";
+      return <div className="stepIllustration" key={key}>
+        <button type="button" className="illustrationToggle" aria-expanded={visible} aria-controls={id} onClick={()=>toggle(key)}>{visible?"Dölj illustration":verb}<span aria-hidden="true">{visible?" −":" +"}</span></button>
+        <div className="illustrationPanel" id={id} hidden={!visible}>{visible&&<figure><img src={picture.file} alt={picture.alt} loading="lazy" decoding="async"/>{picture.caption&&<figcaption>{picture.caption}</figcaption>}</figure>}</div>
+      </div>;
+    })}</div></section>)}
+  </>;
 }
 
 function RecipeCarousel({recipes,ratings,onSelect,label}:{recipes:Recipe[];ratings:Record<string,number>;onSelect:(recipe:Recipe)=>void;label:string}) {
@@ -99,7 +117,7 @@ export default function Home() {
     </>:<article className="recipePage">
       <section className="recipeHero"><div className="recipeTitle"><div className="ornament">— ♛ —</div><h1>{selected.title}</h1><h2>{selected.subtitle}</h2><p>{selected.description}</p></div><div className="heroDish">{selected.image?<img src={selected.image} alt={selected.swedishTitle}/>:<span>{selected.protein}</span>}</div></section>
       <section className="facts"><div><i className="factIcon" aria-hidden="true">◷</i><b>{selected.total}</b><span>Total tid</span></div><div><i className="factIcon" aria-hidden="true">♨</i><b>{selected.active} minuter</b><span>Aktiv tid</span></div><div className="portionFact"><i className="factIcon" aria-hidden="true">◉</i><b className="portionValue" aria-live="polite">{displayServings} portioner</b><div className="portionControls" aria-label="Ändra antal portioner"><button onClick={()=>setDisplayServings(value=>Math.max(1,value-1))} disabled={displayServings<=1} aria-label="Minska antal portioner">−</button><button onClick={()=>setDisplayServings(value=>Math.min(20,value+1))} disabled={displayServings>=20} aria-label="Öka antal portioner">+</button></div></div><div><i className="factIcon" aria-hidden="true">▥</i><b>{selected.macros.kcal} kcal</b><span>Per portion</span></div><div><i className="factIcon" aria-hidden="true">⌂</i><b>{selected.occasion}</b><span>Passar som</span></div></section>
-      <section className="recipeBody"><div className="paper ingredients"><h3>Ingredienser</h3>{displayServings!==selected.servings&&<p className="portionNotice">Mängder för {displayServings} portioner · original {selected.servings}</p>}{selected.ingredients.map(g=><section key={g.heading}><h4>{g.heading}</h4><ul>{g.items.map((x,index)=><li key={`${g.heading}-${index}`}>{scaleIngredientText(x,displayServings/selected.servings)}</li>)}</ul></section>)}</div><div className="paper method"><h3>Gör så här</h3>{selected.steps.map((s,i)=><section className="step" key={s.title}><i>{i+1}</i><div><h4>{s.title}</h4><ul>{s.items.map(x=><li key={x}>{x}</li>)}</ul></div></section>)}</div><aside><div className="paper"><h3>Serveringstips</h3><ul>{selected.tips.map(x=><li key={x}>{x}</li>)}</ul></div><div className="paper macros"><h3>Näringsvärde</h3><small>PER PORTION · BERÄKNAT</small>{Object.entries(selected.macros).map(([k,v])=><div key={k}><span>{{kcal:"Kalorier",protein:"Protein",carbs:"Kolhydrater",fat:"Fett",fiber:"Fiber"}[k]}</span><b>{v}{k==="kcal"?" kcal":" g"}</b></div>)}</div><div className="why"><h3>Varför det blir så gott</h3>{selected.why.map(x=><p key={x}>✓ {x}</p>)}</div></aside></section>
+      <section className="recipeBody"><div className="paper ingredients"><h3>Ingredienser</h3>{displayServings!==selected.servings&&<p className="portionNotice">Mängder för {displayServings} portioner · original {selected.servings}</p>}{selected.ingredients.map(g=><section key={g.heading}><h4>{g.heading}</h4><ul>{g.items.map((x,index)=><li key={`${g.heading}-${index}`}>{scaleIngredientText(x,displayServings/selected.servings)}</li>)}</ul></section>)}</div><div className="paper method"><RecipeInstructions key={selected.id} steps={selected.steps}/></div><aside><div className="paper"><h3>Serveringstips</h3><ul>{selected.tips.map(x=><li key={x}>{x}</li>)}</ul></div><div className="paper macros"><h3>Näringsvärde</h3><small>PER PORTION · BERÄKNAT</small>{Object.entries(selected.macros).map(([k,v])=><div key={k}><span>{{kcal:"Kalorier",protein:"Protein",carbs:"Kolhydrater",fat:"Fett",fiber:"Fiber"}[k]}</span><b>{v}{k==="kcal"?" kcal":" g"}</b></div>)}</div><div className="why"><h3>Varför det blir så gott</h3>{selected.why.map(x=><p key={x}>✓ {x}</p>)}</div></aside></section>
       <section className="community"><div><p className="kicker">MINA ANTECKNINGAR</p><h2>Smaka, minns, förbättra.</h2></div><div className="recipeReactions"><div className="rating"><span>MITT BETYG</span><div>{[1,2,3,4,5].map(n=><button key={n} onClick={()=>rate(selected.id,n)} className={(ratings[selected.id]||0)>=n?"on":""} aria-label={`${n} stjärnor`}>★</button>)}</div></div><div className="favoriteControl"><span>SPARA SOM FAVORIT</span><FavoriteButton active={Boolean(favorites[selected.id])} onClick={()=>toggleFavorite(selected.id)}/></div></div><div className="actions"><button onClick={()=>setCommentOpen(true)}>Lägg till kommentar</button><button className="copyUpdate" onClick={copyUpdateContext} aria-live="polite">{copyState==="copied"?"Kopierat ✓":"Kopiera för uppdatering"}</button></div>{commentOpen&&<form onSubmit={submitNote}><label>Kommentar<textarea value={draft} onChange={e=>setDraft(e.target.value)} placeholder="Skriv din anteckning här…"/></label><div><button type="button" onClick={()=>setCommentOpen(false)}>Avbryt</button><button type="submit">Spara</button></div></form>}{copyState==="fallback"&&<div className="copyFallback"><label>Markera och kopiera texten till chatten<textarea readOnly value={updateRecipePrompt(selected)} onFocus={event=>event.currentTarget.select()}/></label></div>}{(notes[selected.id]||[]).length>0&&<div className="notes">{notes[selected.id].map((n,i)=><p key={i}><span>{n.date}</span>{n.text}</p>)}</div>}</section>
       <button className="back" onClick={()=>{selectRecipe(null);scrollTo(0,0)}}>← Till receptarkivet</button>
     </article>}

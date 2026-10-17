@@ -93,3 +93,13 @@ Prioritet: **P0** krävs för första produktionsrelease, **P1** bör ingå elle
 
 Kravens ursprung och tolkning dokumenteras i [DECISIONS.md](DECISIONS.md). Vid konflikt gäller senast godkända beslut, därefter denna kravspecifikation och sedan detaljerade domänspecifikationer. Konflikten ska rättas i samtliga dokument, inte lämnas permanent.
 
+## Funktionella krav ILL-01…ILL-06 (2026-10-17)
+
+- ILL-01: Bilder visas dolda som standard. En bild öppnas och stängs vid sitt steg. Globala Visa alla / Dölj alla påverkar samtliga stegillustrationer.
+- ILL-02: Valfritt manifest och 0..N bilder per steg; inget maxantal per recept. Befintliga recept utan manifest måste fungera.
+- ILL-03: Bilder saknar text i pixlarna och har monokrom tuschstilsbas; enbart mat och råvaror får dämpade färger. Caption/alt hanteras separat.
+- ILL-04: Validatorn kontrollerar bildfiler, typer, lokala sökvägar, bildsignaturer, stegindex och duplikat; fel blockerar publicering.
+- ILL-05: Ägaren får se Hero och hela föreslagna stegillustrationsserien, lägga till, ta bort och göra om innan uttryckligt slutgodkännande och låsning av paketet.
+- ILL-06: Bilder är lätta, lokala och laddas först efter utfällning; ARIA, tangentbord och mobilstöd är obligatoriskt.
+
+Acceptanskriterier och normerande format i `ILLUSTRATIONS.md`.

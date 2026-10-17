@@ -205,3 +205,6 @@ Bilder begränsas normalt till 2400 px och cirka 1,5 MB per fil. Miniatyrer skap
 
 Publik åtkomst, extern databas, molnpublicering, produkt-/varumärkesdatabas, näring från tillagad vikt, samtidiga redaktörer och fulltextsökning i varje instruktion ingår inte.
 
+## Valfria stegillustrationer, version 1.4.0
+
+`/data/recipes/<slug>/illustrations.json` är en bakåtkompatibel sidecar med en ordnad lista av 1-baserade stegindex, bildtyp, lokala filnamn, alt och caption. `parse_recipe` läser och validerar manifestet vid synk och bygger bildobjekt under respektive steg i API-svaret. Bilder nås via redan existerande `/recipe-assets/` och cachebryts av GitHub-revisionen. React bygger en illustrationstoggle som endast monterar `img` när användaren öppnar den. Inga nya databastabeller, fjärr-API:er eller separata bildservrar behövs. Se `ILLUSTRATIONS.md`.

@@ -173,3 +173,7 @@ När receptschemat ändras ska styrdokument, migrering och receptagentens format
 - Tom installation, migrering och felaktigt paket hanteras säkert.
 - Resursmålen i `ARCHITECTURE.md` verifieras på eller nära Green-hårdvara.
 - Appen fungerar utan internet efter installation.
+
+## Stegillustrationer på Home Assistant Green
+
+Från version 1.4.0 har nya recept valfria `illustrations.json` och komprimerade WebP/AVIF-bilder i respektive receptkatalog. De hämtas genom samma privata GitHub-synk som Hero-bilder och serveras lokalt via `/recipe-assets/`. Webbklienten monterar bildfiler först vid användarens aktiva utfällning; detta minskar skärmens nätverks- och minnesbelastning. Inga externa CDN:er eller tillägg behöver installeras. Se `ILLUSTRATIONS.md`.

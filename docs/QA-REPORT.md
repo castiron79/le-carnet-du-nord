@@ -54,3 +54,6 @@ Frontendens regressionstest verifierar även 1–20 portioner, återställning t
 
 Gränssnittet, lokal v1-lagring och Markdown-import är lämpliga för intern provdrift. Efter QA-granskningen kördes bygg, receptvalidator och ett levande smoke-test av import, makrodata, betyg, ändringsförslag, SQLite och startsida med godkänt resultat. Den större webbaserade granskningskön i punkt 1 är en planerad förvaltningsfunktion.
 
+## Tillagda acceptansfall för illustrationsfunktion (1.4.0)
+
+Regressionskontroll: äldre recept utan manifest; flera illustrationer i ett enda steg; många steg utan teknisk gräns; fel stegnummer; saknad eller extra bildfil; osäker sökväg; fel bildsignatur. Webbtest: enstaka visa/dölj, globala Visa alla/Dölj alla, bilder dolda och nätverksladdning uppskjuten, mobil, surfplatta, tangentbord och ARIA. Den faktiska CI-statusen ska kontrolleras innan release; manuell mobil-/HA Green-kontroll ska inte rapporteras som genomförd utan observation. Norm: `ILLUSTRATIONS.md`.

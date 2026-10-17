@@ -118,3 +118,11 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 - **Spårar:** Berörda krav-ID:n.
 ```
 
+## Beslut – Illustrationer per receptsteg (2026-10-17)
+
+- En kombination av klassiska franska kokboksteckningar och moderna instruktioner.
+- Ingen text i själva bildpixlarna; captions visas separat nedanför bilden.
+- Endast mat och råvaror får diskreta, dova färger. Händer, köksredskap och omgivning förblir svartvita.
+- Bilder dolda som standard, individuella bildknappar och Visa alla / Dölj alla.
+- Ingen antalsgräns och stöd för flera bilder på samma steg.
+- Hero och alla föreslagna stegillustrationer granskas i sin helhet före separat uttryckligt publiceringsgodkännande. Se `ILLUSTRATIONS.md`.

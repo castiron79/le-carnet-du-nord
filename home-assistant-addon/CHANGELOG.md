@@ -1,5 +1,12 @@
 # Ändringslogg
 
+
+## 1.4.0 – 2026-10-17
+
+- Nytt stöd för frivilliga stegillustrationer som är dolda tills du öppnar dem.
+- Öppna enstaka eller alla bilder, se separat bildtext och korrekt färdiggrad.
+- Validerat bildmanifest och krav på granskning av samtliga bilder före publicering.
+
 ## 1.3.3 – 2026-10-17
 
 - Sidfoten ligger nu längst ned även på korta sidor.
