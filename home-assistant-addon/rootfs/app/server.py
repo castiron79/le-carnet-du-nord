@@ -127,7 +127,7 @@ def parse_recipe(folder):
             kind, filename = item.get("kind"), item.get("file")
             if kind not in ("action", "result", "detail") or not isinstance(filename, str):
                 raise ValueError("Ogiltig illustrationskategori eller fil")
-            if not re.fullmatch(r"step-\\d{2,}-" + kind + r"-\\d{2,}\\.(?:webp|avif)", filename):
+            if not re.fullmatch(r"step-\d{2,}-" + kind + r"-\d{2,}\.(?:webp|avif)", filename):
                 raise ValueError("Ogiltigt eller osäkert illustrationsfilnamn")
             if filename in used or not (folder / filename).is_file():
                 raise ValueError("Duplicerad eller saknad illustrationsfil")

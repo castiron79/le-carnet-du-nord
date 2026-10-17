@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { validateIllustrations } from './validate-illustrations.mjs';
 
 const dir = path.resolve(process.argv[2] || '.');
 const file = path.join(dir, 'recipe.md');
@@ -97,6 +98,8 @@ if (image) {
 }
 
 for (const d of ['published_at','updated_at']) if (scalar(d) && !/^\d{4}-\d{2}-\d{2}$/.test(scalar(d))) fail(`${d} måste vara YYYY-MM-DD`);
+
+validateIllustrations({dir, stepCount: instructionLines.length, fail, warnings});
 
 for (const warning of warnings) console.warn(`VARNING: ${warning}`);
 for (const error of errors) console.error(`FEL: ${error}`);
