@@ -24,3 +24,8 @@ Använd aldrig en skrivoperation före användarens uttryckliga publiceringsgodk
 
 Det lokala skriptet ersätter endast katalogen med samma recept-id, skapar en avgränsad commit och skickar till den klonens befintliga remote. GitHub-token ska aldrig skrivas i receptet, repot, loggen eller ett kommando. Autentisering hanteras av användarens Git-klient eller GitHub-anslutning.
 
+
+
+## Illustrationsgrind
+
+Utöver Hero ska samtliga föreslagna stegillustrationer skapas och granskas av ägaren **före** publiceringsgodkännande. Ägaren får ändra, ta bort eller lägga till fritt. Publicera `illustrations.json` och bildfiler som en del av samma godkända, validerade och hash-låsta receptpaket. Ingen bild får genereras efter paketlåsning.

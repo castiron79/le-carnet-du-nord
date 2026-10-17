@@ -19,3 +19,8 @@ Aktivera detta läge endast när användaren uttryckligen vill uppdatera ett bef
 
 Kommentarer från sajten är anteckningar och blir inte automatiskt ändringsinstruktioner. Användaren väljer själv vilken kommentar som ska ingå i uppdateringsbegäran.
 
+
+
+## Uppdatering av illustrationer
+
+Hämta hela det publicerade baspaketet, inklusive alla stegillustrationer. Visa i diffen vilka bilder som tillkommit, ändrats eller tagits bort och kontrollera stegkopplingar när instruktioner ändrats. Visa den kompletta bildserien för användaren före ett nytt separat godkännande. Aldrig tyst bildbyte.

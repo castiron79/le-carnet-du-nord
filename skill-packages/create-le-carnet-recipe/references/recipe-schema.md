@@ -30,3 +30,6 @@ Efter godkännande ska det kompletta receptpaketet valideras och därefter behan
 
 Vid uppdatering av ett publicerat recept är katalognamn, `id`, `slug`, `schema_version` och `published_at` identitetsfält och får inte ändras. Kandidaten ska vara en fullständig kopia av baspaketet, verifieras mot basen med `verify-recipe-update.mjs` och följa `uppdatera-befintligt-recept.md`.
 
+## Stegillustrationer (bakåtkompatibelt tillägg v1.0)
+
+Ett recept kan valfritt ha `illustrations.json` bredvid `recipe.md` och Hero. Formen är `{"version":1,"illustrations":[{"step":2,"kind":"result","file":"step-02-result-01.webp","alt":"...","caption":"..."}]}`. Stegindex är 1-baserat; kind=action/result/detail; flera bilder per steg och inget maxantal. Bilden saknar text, caption hålls utanför, bara råvaror/mat har subtila färger. Alla bilder ska visas för användaren och godkännas innan publicering; tomt eller uteblivet manifest fungerar för bildlösa recept. Full standard i projektets `docs/ILLUSTRATIONS.md`.
