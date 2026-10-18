@@ -2,6 +2,8 @@
 
 App 1.6.0. En timer och illustrationsknappar delar en rad under stegtexten och kan radbrytas om utrymmet tar slut. Steg utan tidsmetadata får inga timerreglage. Varje timer startas manuellt. Tider påverkas inte av portionsskalning.
 
+Från app 1.6.3 visas illustrationsknapparnas text även på mobil. Längre texter kan brytas inom den 44 px höga knappen för att ge plats bredvid timern. Hela knappen flyttas till nästa rad om utrymmet inte räcker.
+
 Obligatorisk `timers.json` vid ny publicering och receptuppdatering (standard v10), bredvid recipe.md. Om stegen saknar uttryckliga tider används `{"version":1,"timers":[]}`:
 
 ```json

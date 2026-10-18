@@ -627,9 +627,8 @@ main > footer { margin-top: auto; }
   .step:has(.stepTimerBlock,.illustrationToggle) h4 { padding-left:35px; min-height:25px; }
   .stepControls { gap:8px; }
   .stepControlRow { gap:8px; }
-  .stepControls .illustrationLabel { display:none; }
-  .stepControls .illustrationToggle { min-width:44px; padding:8px; }
-  .illustrationSymbol { font-size:16px; }
+  .stepControls .illustrationToggle { flex:1 1 120px; max-width:max-content; min-width:44px; padding:8px; }
+  .illustrationSymbol { font-size:16px; white-space:nowrap; flex-shrink:0; }
   .stepTimer button { padding-inline:6px; }
   .timerDigits { min-width:50px; padding-inline:2px; }
 }

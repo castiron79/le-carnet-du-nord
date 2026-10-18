@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.6.3 – 2026-10-18
+
+- Visar ”Visa illustration”, ”Visa hur det ska se ut” och ”Dölj illustration” även på mobil.
+
 ## 1.6.2 – 2026-10-18
 
 - Favorithjärtat visas utan ring och ligger i linje med betygets stjärnor och rubrik.

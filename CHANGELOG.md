@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.6.3 – 2026-10-18
+
+- Visar illustrationsknapparnas text även på mobil. Reglagen delar rad när de får plats och radbryts vid behov.
+
 ## 1.6.2 – 2026-10-18
 
 - Tar bort ramen runt favorithjärtat i receptvyn och linjerar favoritens rubrik och hjärta med betygets rubrik och stjärnor.
