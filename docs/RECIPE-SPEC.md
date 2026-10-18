@@ -126,4 +126,4 @@ Alla nya eller uppdaterade receptpaket ska innehålla `timers.json`, även om `t
 
 ## Paketkontroll vid publicering (skillpaket v12)
 
-Endast filer enligt `RECIPE-PACKAGE-FILES.md` får ingå. Kontrollen körs före övrig validering och inför inga nya storleks- eller bildantalsgränser. Serverns import- och bildutlämningsskydd införs separat; ingen Green-uppdatering ingår i denna validatorändring.
+Endast filer enligt `RECIPE-PACKAGE-FILES.md` får ingå. Kontrollen körs före övrig publiceringsvalidering och inför inga nya storleks- eller bildantalsgränser. Från app 1.6.4 finns motsvarande kontroll vid serverimport och bildutlämning. Bildfunktionen lämnar endast ut vald huvudbild och manifestrefererade stegbilder.

@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.6.4 – 2026-10-18
+
+- Säkerhetskontroll av receptfiler och bildformat vid synk. Ett felaktigt receptpaket lämnar tidigare fungerande recept kvar.
+- Bildfunktionen lämnar bara ut receptets godkända bilder. WebP och AVIF stöds som huvudbild.
+
 ## 1.6.3 – 2026-10-18
 
 - Visar ”Visa illustration”, ”Visa hur det ska se ut” och ”Dölj illustration” även på mobil.

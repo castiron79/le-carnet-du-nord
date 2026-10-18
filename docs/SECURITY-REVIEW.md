@@ -1,5 +1,17 @@
 # Säkerhets- och driftgranskning
 
+## Aktuell avgränsad uppföljning – app 1.6.4, 2026-10-18
+
+- Skillpaket v12 stoppar otillåtna paketfiler före publicering. App 1.6.4 kontrollerar nu också platta paket, vanliga filer, UTF-8/JSON, valda/refererade bilder och bildsignaturer före import. Alla paket valideras innan något tidigare recept ersätts.
+- Bild-API:t lämnar enbart ut vald huvudbild och refererade stegillustrationer med explicit image/webp eller image/avif. Markdown, JSON, HTML, JavaScript, okända filer, länkar och osäkra sökvägar lämnas inte ut där.
+- WebP och AVIF stöds som huvudbild via hero_image. Befintliga storleksgränser och runtime-stöd för äldre recept utan mängd-/timerfiler behålls. Bildsignaturkontroll är inte full bildavkodning.
+- Ingress-källkontroll är inte införd: den hör till senare etapper 4–5. Byggberoenden hanteras separat. Backup/restore har uttryckligen skjutits upp av användaren och är inte verifierat.
+- Följande äldre avsnitt är historik. Klientens API-adresser är numera relativa; manifestet innehåller addon_config:rw. Historiska påståenden om motsatsen beskriver inte nuvarande kod. Denna uppföljning ändrar inte konfigurationsmappningen eller nätverksåtkomsten.
+
+Regler och kompatibilitet: `RECIPE-PACKAGE-FILES.md`. Verifiering: isolerade import-/HTTP-tester, oförändrade verkliga receptpaket samt efterföljande driftkontroll; faktiska enhetsprov ska redovisas separat och inte härledas från lokala tester.
+
+## Historiska granskningar
+
 Datum: 2026-08-11  
 Omfattning: Home Assistant-tillägget, Python-servern, Ingress, SQLite, lagring, backup och resurskrav.
 

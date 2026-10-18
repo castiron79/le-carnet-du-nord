@@ -4,6 +4,7 @@ import math
 import os
 import re
 import sqlite3
+import stat
 import shutil
 import tempfile
 import threading
@@ -272,17 +273,81 @@ def recipe_folders(root):
     return sorted({p.parent for p in root.rglob("recipe.md") if ".git" not in p.parts}, key=lambda p: p.name)
 
 
+def validate_recipe_files(folder):
+    """Flat package boundary; return only the declared image filenames."""
+    if folder.is_symlink() or not folder.is_dir():
+        raise ValueError("Receptmappen måste vara en vanlig katalog")
+    files = {entry.name: entry for entry in folder.iterdir()}
+    for name, entry in files.items():
+        if not stat.S_ISREG(entry.lstat().st_mode):
+            raise ValueError(f"Endast vanliga filer direkt i receptmappen tillåts: {name}")
+    if "recipe.md" not in files:
+        raise ValueError("recipe.md saknas")
+    source = files["recipe.md"].read_text(encoding="utf-8")
+    frontmatter = re.match(r"^---\r?\n(.*?)\r?\n---(?:\r?\n|$)", source, re.S)
+    match = re.search(r"^hero_image:\s*(.+?)\s*$", frontmatter[1] if frontmatter else "", re.M)
+    hero = match[1].strip("\"'") if match else ""
+    if hero not in ("hero.webp", "hero.avif"):
+        raise ValueError("hero_image måste vara exakt hero.webp eller hero.avif")
+    allowed = {"recipe.md", "quantities.json", "timers.json", "illustrations.json", hero}
+    images = {hero}
+    manifests = {}
+    for name in ("quantities.json", "timers.json", "illustrations.json"):
+        if name not in files:
+            continue
+        if name != "illustrations.json" and files[name].stat().st_size > 100_000:
+            raise ValueError(f"För stor {name}")
+        manifests[name] = json.loads(files[name].read_text(encoding="utf-8"))
+    if "illustrations.json" in manifests:
+        manifest = manifests["illustrations.json"]
+        if not isinstance(manifest, dict) or type(manifest.get("version")) is not int or manifest["version"] != 1 or not isinstance(manifest.get("illustrations"), list):
+            raise ValueError("Ogiltigt illustrationsmanifest")
+        for item in manifest["illustrations"]:
+            name = item.get("file") if isinstance(item, dict) else None
+            match = re.fullmatch(r"step-([0-9]{2,})-(action|result|detail)-[0-9]{2,}\.(webp|avif)", name) if isinstance(name, str) else None
+            if not match or type(item.get("step")) is not int or int(match[1]) != item["step"] or match[2] != item.get("kind"):
+                raise ValueError("Ogiltigt illustrationsfilnamn")
+            allowed.add(name)
+            images.add(name)
+    extra = files.keys() - allowed
+    if extra:
+        raise ValueError(f"Otillåten eller orefererad fil: {sorted(extra)[0]}")
+    for name in images:
+        if name not in files:
+            raise ValueError(f"Refererad bild saknas: {name}")
+        image = files[name]
+        size = image.stat().st_size
+        if size > (12_000_000 if name == hero else 2_000_000):
+            raise ValueError(f"För stor bild: {name}")
+        with image.open("rb") as stream:
+            head = stream.read(16)
+            if name.endswith(".webp"):
+                valid = (size >= 20 and len(head) == 16 and head[:4] == b"RIFF" and head[8:12] == b"WEBP"
+                         and int.from_bytes(head[4:8], "little") + 8 == size
+                         and head[12:16] in (b"VP8 ", b"VP8L", b"VP8X"))
+            else:
+                end = int.from_bytes(head[:4], "big")
+                valid = len(head) == 16 and head[4:8] == b"ftyp" and 16 <= end <= size and end % 4 == 0
+                if valid:
+                    valid = head[8:12] == b"avif"
+                    for offset in range(16, end, 4):
+                        if stream.read(4) == b"avif":
+                            valid = True
+                            break
+            if not valid:
+                raise ValueError(f"Bildformatet stämmer inte med filnamnet: {name}")
+    return images
+
+
 def install_synced_recipes(source_root, revision):
     incoming = recipe_folders(source_root)
     if not incoming:
         raise ValueError("GitHub-arkivet innehåller inga recept")
     names = []
     for folder in incoming:
+        validate_recipe_files(folder)
         if not RECIPE_ID.fullmatch(folder.name) or parse_recipe(folder) is None:
             raise ValueError(f"Ogiltigt receptpaket: {folder.name}")
-        hero = folder / "hero.webp"
-        if not hero.is_file() or hero.stat().st_size > 12_000_000:
-            raise ValueError(f"Saknad eller för stor hero.webp: {folder.name}")
         names.append(folder.name)
     old = {}
     try:
@@ -438,13 +503,21 @@ class Handler(SimpleHTTPRequestHandler):
                 "favorites": {row["recipe_id"]: row["updated_at"] for row in favorite_rows},
             })
         if path.startswith("/recipe-assets/"):
-            relative = Path(path.removeprefix("/recipe-assets/"))
-            target = (RECIPES / relative).resolve()
-            if RECIPES.resolve() not in target.parents or not target.is_file():
+            parts = path.removeprefix("/recipe-assets/").split("/")
+            if len(parts) != 2 or not RECIPE_ID.fullmatch(parts[0]):
+                return self.send_error(404)
+            folder, filename = RECIPES / parts[0], parts[1]
+            try:
+                if folder.resolve().parent != RECIPES.resolve() or filename not in validate_recipe_files(folder):
+                    return self.send_error(404)
+                target = folder / filename
+                if target.resolve().parent != folder.resolve():
+                    return self.send_error(404)
+            except (OSError, ValueError, UnicodeError):
                 return self.send_error(404)
             data = target.read_bytes()
             self.send_response(200)
-            self.send_header("Content-Type", mimetypes.guess_type(target.name)[0] or "application/octet-stream")
+            self.send_header("Content-Type", "image/webp" if filename.endswith(".webp") else "image/avif")
             self.send_header("Content-Length", str(len(data)))
             self.send_header("Cache-Control", "public, max-age=86400")
             self.end_headers()

@@ -13,4 +13,6 @@ Textfiler ska vara giltig UTF-8, JSON ska kunna tolkas och bilder ska ha formatb
 
 Kör `node scripts/validate-recipe.mjs <receptmapp>`. Filgränsen kontrolleras före övrig inläsning. Publiceringsskriptet anropar samma validator; publicera exakt det godkända paketet.
 
-Kompatibilitet: v12 inför kontrollen före publicering, inte i den installerade appen. Green 1.6.3 kräver fortfarande `hero.webp` vid import. Fortsätt därför använda WebP-huvudbilder tills serverstödet för det redan dokumenterade AVIF-alternativet har verifierats i säkerhetsetapp 3. Äldre recept utan mängdreferenser får fortfarande sakna quantities.json.
+Skillpaket v12 kontrollerar paketet före publicering. Från app 1.6.4 kontrolleras samma filgräns även på servern före import, och bildfunktionen lämnar bara ut vald huvudbild och refererade stegbilder. Huvudbilden följer `hero_image` och kan vara WebP eller AVIF. Green 1.6.3 och äldre kräver fortfarande hero.webp vid import. Äldre recept utan mängdreferenser får fortsatt sakna quantities.json; äldre recept utan timerfil fungerar också i runtime.
+
+Alla inkommande paket kontrolleras före ersättning av något befintligt recept. Ett paket som underkänns vid validering lämnar tidigare recept och synkrevision oförändrade. Detta är inte en garanti om en fullständig transaktion vid exempelvis diskfel mitt under installationen.

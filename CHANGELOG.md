@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.6.4 – 2026-10-18
+
+- Kontrollerar receptpaketets tillåtna filer och bildsignaturer före import; felaktiga paket avvisas innan fungerande recept ersätts.
+- Bildfunktionen lämnar endast ut vald huvudbild och refererade stegillustrationer. Stödjer dokumenterade WebP- och AVIF-huvudbilder utan att ändra befintliga bilder.
+- Behåller äldre recept utan mängd-/timerfiler och befintliga storleksgränser. Inga åtkomstregler eller nya behörigheter införs i denna etapp.
+
 ## 1.6.3 – 2026-10-18
 
 - Visar illustrationsknapparnas text även på mobil. Reglagen delar rad när de får plats och radbryts vid behov.
