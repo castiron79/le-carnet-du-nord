@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.6.0 – 2026-10-18
+
+- Visuella steg-timers med plus/minus, start, paus, fortsätt och avbryt bredvid illustrationsknappen.
+- Timern sparas lokalt och räknar ikapp när receptet öppnas igen. Ingen ljudsignal eller synk mellan enheter.
+- Stöd för valfria granskade timerfiler, med två recept som pilot. Ingen ny HA-behörighet.
+
 
 ## 1.5.0 – 2026-10-18
 

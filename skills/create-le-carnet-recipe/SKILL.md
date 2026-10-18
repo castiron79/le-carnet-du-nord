@@ -46,6 +46,10 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 
 Läs `references/illustrations.md` och `references/recipe-schema.md`. När projektets `docs/ILLUSTRATIONS.md` finns är den normerande för projektet. Svartvit tunn tuschteckning i fransk kokboks-/modern instruktionsstil; **endast råvaror och mat** har diskreta dova färger. **Ingen text i bilden**; vid behov separat caption. `action`, `result`, `detail`; 0..N illustrationer per steg. Bildpaketet får inte publiceras innan det har visats i sin helhet och användaren separat har godkänt slutversionen. Ändringar efter granskning kräver en ny granskning. Inga nya bilder får skapas efter publiceringsgodkännande.
 
-## Gemensamma mängder
+## Visuella steg-timers
+
+Från app 1.6.0 kan recept ha en valfri timers.json. Märk endast upp uttryckliga tillagningstider manuellt. Använd stabila ID:n, 1-baserat steg, label och seconds (10–86400). Intervall får nedre gränsen som kontrolltimer och hela intervallet i note. Flera faser får separata tydligt namngivna timers. Skala aldrig tid med portioner. Ingen ljudfunktion ingår. Se references/timers.md och kör validatorn. Vid ändrad stegföljd ska timrarnas stegkoppling granskas.
+
+## Gemensamma mängder – arbetsflöde
 
 För nya recept eller när portionsskalning införs, läs `references/portion-scaling.md`. Använd quantities.json och samma referenser i ingredienslista och steg. Behåll antal bakverk, bitar och serveringskärl enligt grundreceptet; sajten visar en notis vid skalning. Granska 1, grundantal och dubbelt antal portioner. Ändra inte befintliga bilder eller makron vid en ren formatkonvertering.

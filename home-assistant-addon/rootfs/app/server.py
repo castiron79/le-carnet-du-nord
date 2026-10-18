@@ -176,6 +176,8 @@ def parse_recipe(folder):
         detail = re.sub(r"^\d+\.\s+", "", detail)
         steps.append({"title": title, "items": [detail] if detail else []})
 
+    load_step_timers(folder, steps)
+
     # Ett frivilligt, separat illustrationsmanifest ger 0..N bilder per steg.
     # Filsökvägar hålls strikt lokala och inga externa bild-URL:er godtas.
     manifest_path = folder / "illustrations.json"
@@ -224,6 +226,34 @@ def parse_recipe(folder):
     if revision:
         image = f"{image}?v={revision}"
     return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
+
+
+def load_step_timers(folder, steps):
+    file = folder / 'timers.json'
+    if not file.is_file():
+        return
+    if file.stat().st_size > 100_000:
+        raise ValueError('För stor timers.json')
+    manifest = json.loads(file.read_text(encoding='utf-8'))
+    if not isinstance(manifest, dict) or type(manifest.get('version')) is not int or manifest['version'] != 1 or not isinstance(manifest.get('timers'), list):
+        raise ValueError('Ogiltig timers.json')
+    used = set()
+    for timer in manifest['timers']:
+        if not isinstance(timer, dict):
+            raise ValueError('Ogiltig steg-timer')
+        timer_id, step, seconds = timer.get('id'), timer.get('step'), timer.get('seconds')
+        label, note = timer.get('label'), timer.get('note')
+        if not isinstance(timer_id, str) or not re.fullmatch(r'[a-z][a-z0-9-]{0,63}', timer_id) or timer_id in used:
+            raise ValueError('Ogiltigt eller duplicerat timer-id')
+        if type(step) is not int or not 1 <= step <= len(steps) or type(seconds) is not int or not 10 <= seconds <= 86400:
+            raise ValueError('Ogiltigt timersteg eller tidsvärde')
+        if not isinstance(label, str) or not label.strip() or len(label) > 100 or ('note' in timer and (not isinstance(note, str) or len(note) > 200)):
+            raise ValueError('Ogiltig timertext')
+        used.add(timer_id)
+        clean = {key: timer[key] for key in ('id', 'step', 'seconds', 'label')}
+        if note is not None:
+            clean['note'] = note
+        steps[step - 1].setdefault('timers', []).append(clean)
 
 
 def load_recipes():

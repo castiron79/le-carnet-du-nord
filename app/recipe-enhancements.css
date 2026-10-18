@@ -597,6 +597,40 @@ main > footer { margin-top: auto; }
 
 
 /* Le Carnet illustrations 1.0: optional, lazy, inline and keyboard-accessible. */
+.stepControls { --step-control-height:44px; display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 12px; margin-top:12px; }
+.stepControls:empty { display:none; }
+.stepControls:not(:has(.stepTimerBlock,.illustrationToggle)) { display:none; }
+.stepControlRow { display:flex; flex-wrap:wrap; align-items:flex-start; gap:10px 12px; width:100%; }
+.stepControlRow:empty { display:none; }
+.stepTimerBlock { width:max-content; max-width:100%; }
+.stepTimer { display:inline-flex; align-items:center; box-sizing:border-box; height:var(--step-control-height); border:1px solid #bfb7a6; border-radius:7px; background:#f4efe5; overflow:hidden; max-width:100%; color:#254533; }
+.stepTimer button { min-width:44px; min-height:42px; height:42px; padding:6px 8px; border:0; background:transparent; color:inherit; cursor:pointer; font:600 13px Arial,sans-serif; }
+.stepTimer button:first-child { font-size:20px; }
+.stepTimer button:hover { background:#e7e0d3; }
+.stepTimer button:disabled { opacity:.4; cursor:default; }
+.stepTimer .timerPrimary { background:#315742; color:white; }
+.stepTimer .timerPrimary:hover { background:#254533; }
+.stepTimer button:focus-visible { outline:3px solid #bd872d; outline-offset:-3px; }
+.timerDigits { font:500 15px Arial,sans-serif; font-variant-numeric:tabular-nums; padding:0 5px; min-width:54px; text-align:center; white-space:nowrap; }
+.timerNote { display:block; font:12px/1.4 Arial,sans-serif; margin-top:5px; width:0; min-width:100%; color:#666054; }
+.visualTimerHint { font:12px/1.5 Arial,sans-serif; color:#666054; margin:0 0 20px; }
+.isDone .stepTimer { background:#f0e2bf; border-color:#9b6f25; }
+.isDone .timerDigits { padding:0 10px; }
+.timerAnnouncement { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+.stepControls .illustrationToggle { width:auto; height:var(--step-control-height); flex:0 1 auto; }
+@media (max-width:520px) {
+  .step:has(.stepTimerBlock,.illustrationToggle) { position:relative; }
+  .step:has(.stepTimerBlock,.illustrationToggle) > i { position:absolute; top:0; left:0; }
+  .step:has(.stepTimerBlock,.illustrationToggle) .stepContents { grid-column:1/-1; }
+  .step:has(.stepTimerBlock,.illustrationToggle) h4 { padding-left:35px; min-height:25px; }
+  .stepControls { gap:8px; }
+  .stepControlRow { gap:8px; }
+  .stepControls .illustrationLabel { display:none; }
+  .stepControls .illustrationToggle { min-width:44px; padding:8px; }
+  .illustrationSymbol { font-size:16px; }
+  .stepTimer button { padding-inline:6px; }
+  .timerDigits { min-width:50px; padding-inline:2px; }
+}
 .methodHeading { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
 .methodHeading h3 { margin:0; }
 .illustrationBulkActions { display:flex; flex-wrap:wrap; gap:8px; }

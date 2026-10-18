@@ -9,10 +9,11 @@ TARGET = ROOT / "skill-packages/create-le-carnet-recipe"
 
 # The standalone validator and the app must use the same reference contract.
 shutil.copyfile(ROOT / "app/quantity-references.mjs", SOURCE / "scripts/quantity-references.mjs")
+shutil.copyfile(ROOT / "app/step-timers.mjs", SOURCE / "scripts/step-timers.mjs")
 FILES = ["SKILL.md", "agents/openai.yaml"]
 FILES += [str(p.relative_to(SOURCE)).replace("\\", "/") for p in sorted((SOURCE / "references").glob("*.md"))]
 FILES += [str(p.relative_to(SOURCE)).replace("\\", "/") for p in sorted((SOURCE / "scripts").glob("*.mjs"))]
-with zipfile.ZipFile(ROOT / "skill-packages/create-le-carnet-recipe-v8.zip", "w", zipfile.ZIP_DEFLATED) as archive:
+with zipfile.ZipFile(ROOT / "skill-packages/create-le-carnet-recipe-v9.zip", "w", zipfile.ZIP_DEFLATED) as archive:
     for name in FILES:
         data = (SOURCE / name).read_bytes()
         destination = TARGET / name
@@ -22,4 +23,4 @@ with zipfile.ZipFile(ROOT / "skill-packages/create-le-carnet-recipe-v8.zip", "w"
         info.compress_type = zipfile.ZIP_DEFLATED
         info.external_attr = 0o644 << 16
         archive.writestr(info, data)
-print(f"Packaged v8: {len(FILES)} files")
+print(f"Packaged v9: {len(FILES)} files")

@@ -50,6 +50,22 @@ Förvara svalt.
     def test_legacy_recipe(self):
         self.assertEqual(len(self.module.parse_recipe(self.recipe)["steps"]), 2)
 
+    def test_optional_timers_are_attached_to_the_correct_step(self):
+        data = {"version": 1, "timers": [{"id":"sjud", "step":2, "seconds":120, "label":"Sjud"}]}
+        (self.recipe / "timers.json").write_text(json.dumps(data), encoding="utf-8")
+        result = self.module.parse_recipe(self.recipe)
+        self.assertNotIn("timers", result["steps"][0])
+        self.assertEqual(result["steps"][1]["timers"][0]["seconds"],120)
+
+    def test_timer_manifest_invalid_values_are_rejected(self):
+        timer = {"id":"sjud", "step":2, "seconds":120, "label":"Sjud"}
+        invalid = [None, {"version":True,"timers":[]}, {"version":1,"timers":[timer,timer]}]
+        invalid += [{"version":1,"timers":[dict(timer, **change)]} for change in [{"step":9},{"seconds":True},{"seconds":0},{"id":"../x"},{"note":None}]]
+        for data in invalid:
+            with self.subTest(data=data):
+                (self.recipe / "timers.json").write_text(json.dumps(data),encoding="utf-8")
+                with self.assertRaises(ValueError): self.module.parse_recipe(self.recipe)
+
     def test_two_images_on_one_step(self):
         pictures = [
             {"step": 1, "kind": "action", "file": "step-01-action-01.webp", "alt": "Kött i gryta", "caption": ""},

@@ -25,6 +25,10 @@ if (!heading.test(changelog) || !heading.test(projectChangelog)) {
 }
 
 const quantitySource = readFileSync("app/quantity-references.mjs", "utf8");
+const timerSource = readFileSync("app/step-timers.mjs", "utf8");
+for (const file of ["skills/create-le-carnet-recipe/scripts/step-timers.mjs", "skill-packages/create-le-carnet-recipe/scripts/step-timers.mjs"]) {
+  if (readFileSync(file, "utf8") !== timerSource) throw new Error(`Timerkontraktet är inte synkroniserat: ${file}`);
+}
 for (const file of ["skills/create-le-carnet-recipe/scripts/quantity-references.mjs", "skill-packages/create-le-carnet-recipe/scripts/quantity-references.mjs"]) {
   if (readFileSync(file, "utf8") !== quantitySource) {
     console.error(`Mängdkontraktet är inte synkroniserat: ${file}`);

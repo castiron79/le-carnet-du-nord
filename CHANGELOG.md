@@ -1,5 +1,12 @@
 # Ändringslogg
 
+## 1.6.0 – 2026-10-18
+
+- Visuella timers under stegtexten, på samma reglagerad som illustrationsknappen.
+- Start, plus/minus, paus, fortsätt, avbryt och tydligt utgången tid. Lokal sparning och återhämtning efter omladdning/skärmvila.
+- Valfria granskade timers.json, validering och skillpaket v9. Pilotmetadata publiceras separat för två recept.
+- Ingen ljud- eller Spotify-kod och ingen ny HA-behörighet.
+
 Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
