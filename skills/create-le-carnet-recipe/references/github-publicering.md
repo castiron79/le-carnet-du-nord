@@ -33,3 +33,7 @@ Alla föreslagna stegbilder samt Hero ska visas för användaren och vara uttryc
 ## Obligatorisk timerkontroll (v10)
 
 Granska alla steg och inkludera `timers.json` i samma receptmapp som övriga filer. Kör den aktuella validatorn före låsning av publiceringspaketet; den stoppar saknat manifest och saknade uttryckliga stegtider. Publicera även timerfilen med exakt de validerade filbytesen. Efter publicering ska arkivets automatiska receptkontroll vara grön. Ingen automatisk tidsuppskattning eller ljudfunktion ingår.
+
+## Paketkontroll (v12)
+
+Läs `recipe-files.md`. Endast godkända receptfiler och refererade bilder får ingå. Validatorn avvisar okända filer, länkar, underkataloger och felaktiga bildformat före publicering. Förvara granskningsunderlag och originalbilder utanför paketet. Publicera inte AVIF-huvudbilder till Green 1.6.3; använd hero.webp tills serverstödet är verifierat.

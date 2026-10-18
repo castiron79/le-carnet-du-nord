@@ -48,3 +48,6 @@ console.log(`Releasekontroll godkänd för Le Carnet du Nord ${version}.`);
 
 const coverage = readFileSync("skills/create-le-carnet-recipe/scripts/timer-coverage.mjs", "utf8");
 if (coverage !== readFileSync("skill-packages/create-le-carnet-recipe/scripts/timer-coverage.mjs", "utf8")) throw new Error("Timertäckningskontrollen är inte synkroniserad");
+
+const recipeFiles = readFileSync("skills/create-le-carnet-recipe/scripts/recipe-files.mjs", "utf8");
+if (recipeFiles !== readFileSync("skill-packages/create-le-carnet-recipe/scripts/recipe-files.mjs", "utf8")) throw new Error("Receptfilkontrollen är inte synkroniserad");

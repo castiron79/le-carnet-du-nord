@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { cpSync, existsSync, readFileSync, readdirSync, rmSync, statSync } from "node:fs";
 import { basename, relative, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
+import { validateRecipeFiles } from "./recipe-files.mjs";
 
 const [sourceArg, repoArg = process.env.LE_CARNET_RECIPES_REPO, mode] = process.argv.slice(2);
 if (!sourceArg || !repoArg) {
@@ -12,6 +13,8 @@ if (!sourceArg || !repoArg) {
 const source = resolve(sourceArg);
 const repo = resolve(repoArg);
 const id = basename(source);
+const packageErrors = validateRecipeFiles(source);
+if (packageErrors.length) throw new Error(packageErrors.join("\n"));
 if (!existsSync(resolve(repo, ".git"))) throw new Error("Målet är inte en Git-klon");
 const markdown = readFileSync(resolve(source, "recipe.md"), "utf8");
 if (!/^status:\s*published\s*$/m.test(markdown)) throw new Error("Receptet måste vara manuellt godkänt och ha status published");

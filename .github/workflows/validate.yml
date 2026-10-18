@@ -20,6 +20,6 @@ jobs:
       - run: npx vite build --config static/vite.config.ts
       - run: npm test
       - run: python -m py_compile home-assistant-addon/rootfs/app/server.py
-      - run: python -c "import zipfile; z=zipfile.ZipFile('skill-packages/create-le-carnet-recipe-v11.zip'); assert z.testzip() is None; assert {'create-le-carnet-recipe/SKILL.md', 'create-le-carnet-recipe/scripts/timer-coverage.mjs', 'create-le-carnet-recipe/references/timers.md'} <= set(z.namelist())"
+      - run: python -c "import zipfile; z=zipfile.ZipFile('skill-packages/create-le-carnet-recipe-v12.zip'); assert z.testzip() is None; assert {'create-le-carnet-recipe/SKILL.md', 'create-le-carnet-recipe/scripts/timer-coverage.mjs', 'create-le-carnet-recipe/scripts/recipe-files.mjs', 'create-le-carnet-recipe/references/timers.md'} <= set(z.namelist())"
       - run: node --test tests/illustration-manifest.test.mjs
       - run: python -m unittest discover -s tests -p 'test_*.py'

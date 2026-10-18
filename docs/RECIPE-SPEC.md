@@ -123,3 +123,7 @@ Valfria `quantities.json` version 1 delar ingrediensmängder mellan lista och st
 ## Visuella timers i receptstandard v10
 
 Alla nya eller uppdaterade receptpaket ska innehålla `timers.json`, även om `timers` är en tom lista. Varje uttrycklig stegtid ska ha en granskad timer på rätt steg. Intervall använder nedre gränsen med hela intervallet i notisen. Separata faser och båda sidor får egna timers. Vaga tider och förpackningsanvisningar får ingen påhittad tid. Tider portionsskalas aldrig. App 1.6.0 är bakåtkompatibel med äldre recept utan fil. Se timerstandarden och kör receptvalidatorn före publicering. Receptets schema_version är fortsatt 1.
+
+## Paketkontroll vid publicering (skillpaket v12)
+
+Endast filer enligt `RECIPE-PACKAGE-FILES.md` får ingå. Kontrollen körs före övrig validering och inför inga nya storleks- eller bildantalsgränser. Serverns import- och bildutlämningsskydd införs separat; ingen Green-uppdatering ingår i denna validatorändring.

@@ -138,3 +138,8 @@ följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
 - Obligatoriskt timermanifest och kontroll av uttryckliga stegtider i receptskillen och publiceringsflödet.
 - Samtliga 14 recept granskade: 47 visuella timers. Ingen ändring av app 1.6.0 eller ljudfunktion.
+
+## Receptskill v12 – 2026-10-18
+
+- Filkontroll före publicering: endast receptdata, vald huvudbild och refererade stegillustrationer. Stoppar extra filer, länkar, undermappar, ogiltig UTF-8/JSON och felaktiga bildsignaturer.
+- Isolerade regressionstester för WebP/AVIF och publiceringsvalidatorn. Ingen ändring av app 1.6.3 eller Green-installationen.

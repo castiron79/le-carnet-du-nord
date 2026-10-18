@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { validateTimers } from './step-timers.mjs';
+import { validateRecipeFiles } from './recipe-files.mjs';
 import { validateTimerCoverage } from './timer-coverage.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -7,6 +8,11 @@ import { validateIllustrations } from './validate-illustrations.mjs';
 import { validateQuantityReferences } from './quantity-references.mjs';
 
 const dir = path.resolve(process.argv[2] || '.');
+const packageErrors = validateRecipeFiles(dir);
+if (packageErrors.length) {
+  for (const error of packageErrors) console.error(`FEL: ${error}`);
+  process.exit(1);
+}
 const file = path.join(dir, 'recipe.md');
 const errors = [];
 const warnings = [];

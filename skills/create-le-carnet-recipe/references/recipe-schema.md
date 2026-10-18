@@ -41,3 +41,7 @@ Valfria quantities.json version 1 stöds utan att schema_version ändras. Läs `
 ## Visuella timers i receptstandard v10
 
 Alla nya eller uppdaterade receptpaket ska innehålla `timers.json`, även om `timers` är en tom lista. Varje uttrycklig stegtid ska ha en granskad timer på rätt steg. Intervall använder nedre gränsen med hela intervallet i notisen. Separata faser och båda sidor får egna timers. Vaga tider och förpackningsanvisningar får ingen påhittad tid. Tider portionsskalas aldrig. App 1.6.0 är bakåtkompatibel med äldre recept utan fil. Se timerstandarden och kör receptvalidatorn före publicering. Receptets schema_version är fortsatt 1.
+
+## Filgräns vid publicering
+
+Skillpaket v12 kräver en platt receptmapp med enbart tillåtna datafiler och refererade bilder. Se `recipe-files.md`; ingen ändring av schema_version eller befintliga recept krävs.
