@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.6.1 – 2026-10-18
+
+- Timerknapparna ändrar 10 sekunder upp till 2 minuter, 30 sekunder upp till 5 minuter och hela minuter därefter.
+- Plus/minus fungerar konsekvent vid gränserna 2 och 5 minuter, även när timern räknar ned.
+
 ## 1.6.0 – 2026-10-18
 
 - Visuella steg-timers med plus/minus, start, paus, fortsätt och avbryt bredvid illustrationsknappen.

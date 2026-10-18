@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.6.1 – 2026-10-18
+
+- Timerknapparna ändrar 10 sekunder upp till 2 minuter, 30 sekunder upp till 5 minuter och hela minuter därefter.
+- Vid exakt 2 eller 5 minuter används intervallet i knappens riktning; justering stannar vid nästa gräns.
+- Uppdaterad timerdokumentation och receptskillpaket v11 med samma timermodul.
+
 ## 1.6.0 – 2026-10-18
 
 - Visuella timers under stegtexten, på samma reglagerad som illustrationsknappen.

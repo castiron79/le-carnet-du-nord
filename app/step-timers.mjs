@@ -38,8 +38,16 @@ export function changeTimer(timer, action, now, initialSeconds) {
   if (timer.status === 'running' && remaining === 0) return timer;
   if (action === 'start') return { status:'running', seconds:remaining, deadline:now + remaining * 1000 };
   if (action === 'pause') return { status:'paused', seconds:remaining };
-  const delta = remaining <= 60 ? 10 : 60;
-  const seconds = Math.max(10, Math.min(MAX_SECONDS, remaining + (action === 'plus' ? delta : -delta)));
+  // At a boundary, use the interval in the direction of the adjustment.
+  // Stop at the next boundary even when a running timer is between intervals.
+  const increasing = action === 'plus';
+  const lowerBand = increasing ? remaining < 120 : remaining <= 120;
+  const middleBand = increasing ? remaining < 300 : remaining <= 300;
+  const delta = lowerBand ? 10 : middleBand ? 30 : 60;
+  const boundary = increasing ? (lowerBand ? 120 : middleBand ? 300 : MAX_SECONDS)
+    : (lowerBand ? 10 : middleBand ? 120 : 300);
+  const adjusted = increasing ? Math.min(boundary, remaining + delta) : Math.max(boundary, remaining - delta);
+  const seconds = Math.max(10, Math.min(MAX_SECONDS, adjusted));
   return {status:timer.status, seconds, ...(timer.status === 'running' ? {deadline:now + seconds * 1000} : {})};
 }
 

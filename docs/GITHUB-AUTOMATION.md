@@ -59,6 +59,6 @@ frontend-cache. Versionsmärkta resurser cachelagras separat och säkert.
 Skapa Hero och samtliga föreslagna stegillustrationer innan något skickas till receptarkivet. Användaren ska se hela uppsättningen och kunna behålla, ta bort, lägga till eller göra om varje illustration. Valfritt `illustrations.json`, dess WebP/AVIF-filer, `recipe.md` och Hero ingår i samma oföränderliga granskade paket. Validatorn måste godkänna varje bildreferens innan GitHub-kommit. Status `review` är förhandsgranskning i chatten/arbetsmiljön, inte på synkroniserade sajten. Se `docs/ILLUSTRATIONS.md`.
 
 
-## Skillpaket version 10
+## Skillpaket version 11
 
-Den aktuella portabla versionen finns som `skill-packages/create-le-carnet-recipe-v10.zip` och innehåller SKILL.md, kompletterande illustrationsstandard och validatorer för bilder, gemensamma mängder och obligatorisk timertäckning. Äldre v5/v6-zipfiler är historiska och ska inte användas för ny installation. Om ett verktyg använder en egen installerad kopia av skillen måste v10 aktiveras där separat.
+Den aktuella portabla versionen finns som `skill-packages/create-le-carnet-recipe-v11.zip` och innehåller SKILL.md, kompletterande illustrationsstandard och validatorer för bilder, gemensamma mängder och obligatorisk timertäckning. Äldre v5/v6-zipfiler är historiska och ska inte användas för ny installation. Om ett verktyg använder en egen installerad kopia av skillen måste v11 aktiveras där separat.

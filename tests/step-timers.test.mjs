@@ -18,10 +18,22 @@ test('pause freezes remaining time and resume creates a new deadline',()=>{
 test('adjustments use live remaining time and respect bounds',()=>{
  let running=changeTimer(initial,'start',1000,120);
  running=changeTimer(running,'plus',31000,120);
- assert.equal(remainingSeconds(running,31000),150);
+ assert.equal(remainingSeconds(running,31000),100);
  assert.equal(changeTimer({status:'ready',seconds:30},'plus',0,30).seconds,40);
  assert.equal(changeTimer({status:'paused',seconds:10},'minus',0,30).seconds,10);
  assert.equal(changeTimer({status:'ready',seconds:86400},'plus',0,120).seconds,86400);
+});
+
+test('adjustments use 10 seconds up to 2 minutes, 30 up to 5, then full minutes',()=>{
+ const adjust=(seconds,action)=>changeTimer({status:'ready',seconds},action,0,seconds).seconds;
+ for(const [seconds,minus,plus] of [[60,50,70],[110,100,120],[120,110,150],[150,120,180],[270,240,300],[300,270,360],[360,300,420]]) {
+  assert.equal(adjust(seconds,'minus'),minus,`minus at ${seconds}`);
+  assert.equal(adjust(seconds,'plus'),plus,`plus at ${seconds}`);
+ }
+ assert.equal(adjust(119,'plus'),120);
+ assert.equal(adjust(121,'minus'),120);
+ assert.equal(adjust(299,'plus'),300);
+ assert.equal(adjust(301,'minus'),300);
 });
 test('corrupt storage and far future deadlines are rejected; recipes and definitions are isolated',()=>{
  for(const raw of ['oops','{}','{"status":"running","seconds":60,"deadline":"bad"}','{"status":"paused","seconds":-1}'])assert.equal(decodeTimer(raw),null);
