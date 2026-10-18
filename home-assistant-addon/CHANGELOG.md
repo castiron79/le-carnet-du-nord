@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.6.2 – 2026-10-18
+
+- Favorithjärtat visas utan ring och ligger i linje med betygets stjärnor och rubrik.
+
 ## 1.6.1 – 2026-10-18
 
 - Timerknapparna ändrar 10 sekunder upp till 2 minuter, 30 sekunder upp till 5 minuter och hela minuter därefter.

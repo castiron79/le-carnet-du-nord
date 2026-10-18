@@ -230,18 +230,20 @@ main > footer { margin-top: auto; }
 
 .recipeReactions {
   display: flex;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 24px;
   flex-wrap: wrap;
   min-width: 0;
 }
 
-.rating { flex: 0 0 auto; min-width: max-content; }
+.rating { flex: 0 0 auto; min-width: max-content; display: grid; grid-template-rows: auto 42px; gap: 7px; }
 .rating > span { display: block; white-space: nowrap; }
-.rating > div { display: flex; flex-wrap: nowrap; white-space: nowrap; }
-.rating button { flex: 0 0 auto; }
-.favoriteControl { flex: 0 0 auto; display: grid; gap: 7px; justify-items: center; }
+.rating > div { display: flex; flex-wrap: nowrap; align-items: center; white-space: nowrap; }
+.rating button { flex: 0 0 auto; height: 42px; line-height: 1; }
+.favoriteControl { flex: 0 0 auto; display: grid; grid-template-rows: auto 42px; gap: 7px; justify-items: center; }
 .favoriteControl > span { white-space: nowrap; font: 9px Arial,sans-serif; letter-spacing: .12em; }
+.favoriteControl .favoriteButton { border: 0; border-radius: 0; }
+.favoriteControl .favoriteButton:hover { background: transparent; outline: none; }
 
 .community .copyFallback label {
   display: grid;
