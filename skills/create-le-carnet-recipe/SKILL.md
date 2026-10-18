@@ -25,7 +25,7 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 6. Skapa `<slug>/recipe.md`. Kopiera/optimera en bifogad huvudbild som `hero.webp`, eller generera automatiskt huvudbilden när ingen bild har bifogats och bildgenerering finns tillgänglig. Använd `illustrations.json` och `step-NN-kind-XX.webp` för valfria stegbilder enligt illustrationsstandarden. Ändra aldrig källbilder destruktivt.
 7. Säkerställ att de fem automatiska faktarikonerna kan visas: total tid, aktiv tid, portioner, kcal per portion och måltidstyp. De skapas av sajten från receptets metadata och ska inte levereras som separata bildfiler.
 8. Planera och generera stegillustrationer för relevanta moment och resultat. Visa Hero och samtliga föreslagna stegillustrationer i chatten med stegnummer, bildtyp och caption. Låt användaren fritt lägga till, ta bort och göra om; visa en ny komplett översikt tills hela uppsättningen är godkänd. Ingen gräns på antal bilder.
-9. Kör `node scripts/validate-recipe.mjs <receptmapp>`. Åtgärda alla fel. Varningar kräver redaktionellt ställningstagande.
+9. Läs `references/timers.md`, granska varje stegtid och skapa `timers.json`. Filen krävs även när listan är tom. Täck alla uttryckliga tider och separata faser; hitta inte på tider för vaga formuleringar. Kör `node scripts/validate-recipe.mjs <receptmapp>`. Åtgärda alla fel. Varningar kräver redaktionellt ställningstagande.
 10. Sätt `published` först efter uttryckligt godkännande av recepttext, Hero och samtliga bilder. Paketera endast receptmappen, utan temporära filer.
 11. När användaren uttryckligen ber att publicera till Le Carnet, läs `references/github-publicering.md`. I ChatGPT Work ska den aktiva GitHub-pluginen användas direkt; kräv inte lokal klon. Publicera till det privata recept-repot först efter lyckad validering. Ett vanligt önskemål om att skapa eller granska ett recept innebär inte tillstånd att skicka något externt.
 
@@ -48,7 +48,7 @@ Läs `references/illustrations.md` och `references/recipe-schema.md`. När proje
 
 ## Visuella steg-timers
 
-Från app 1.6.0 kan recept ha en valfri timers.json. Märk endast upp uttryckliga tillagningstider manuellt. Använd stabila ID:n, 1-baserat steg, label och seconds (10–86400). Intervall får nedre gränsen som kontrolltimer och hela intervallet i note. Flera faser får separata tydligt namngivna timers. Skala aldrig tid med portioner. Ingen ljudfunktion ingår. Se references/timers.md och kör validatorn. Vid ändrad stegföljd ska timrarnas stegkoppling granskas.
+Receptstandard v10 kräver timers.json i varje nytt eller uppdaterat receptpaket. Använd en tom timers-lista när stegen saknar uttryckliga tider. App 1.6.0 visar timrarna; äldre recept utan fil kan fortfarande läsas. Märk endast upp uttryckliga tillagningstider manuellt. Använd stabila ID:n, 1-baserat steg, label och seconds (10–86400). Intervall får nedre gränsen som kontrolltimer och hela intervallet i note. Flera faser får separata tydligt namngivna timers. Skala aldrig tid med portioner. Ingen ljudfunktion ingår. Se references/timers.md och kör validatorn. Vid ändrad stegföljd ska timrarnas stegkoppling granskas.
 
 ## Gemensamma mängder – arbetsflöde
 

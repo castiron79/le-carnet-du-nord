@@ -45,3 +45,6 @@ if (icon.subarray(0, 8).toString("hex") !== pngSignature || width !== 128 || hei
 }
 
 console.log(`Releasekontroll godkänd för Le Carnet du Nord ${version}.`);
+
+const coverage = readFileSync("skills/create-le-carnet-recipe/scripts/timer-coverage.mjs", "utf8");
+if (coverage !== readFileSync("skill-packages/create-le-carnet-recipe/scripts/timer-coverage.mjs", "utf8")) throw new Error("Timertäckningskontrollen är inte synkroniserad");

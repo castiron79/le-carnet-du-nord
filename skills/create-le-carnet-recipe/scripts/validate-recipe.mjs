@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { validateTimers } from './step-timers.mjs';
+import { validateTimerCoverage } from './timer-coverage.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { validateIllustrations } from './validate-illustrations.mjs';
@@ -115,12 +116,17 @@ for (const d of ['published_at','updated_at']) if (scalar(d) && !/^\d{4}-\d{2}-\
 
 validateIllustrations({dir, stepCount: instructionLines.length, fail, warnings});
 const timerFile = path.join(dir, 'timers.json');
+let timerManifest;
 if (fs.existsSync(timerFile)) {
   try {
     if (fs.statSync(timerFile).size > 100_000) throw new Error('För stor timers.json');
-    for (const error of validateTimers(JSON.parse(fs.readFileSync(timerFile,'utf8')), instructionLines.length)) fail(error);
+    timerManifest = JSON.parse(fs.readFileSync(timerFile,'utf8'));
+    const timerErrors = validateTimers(timerManifest, instructionLines.length);
+    for (const error of timerErrors) fail(error);
+    if (timerErrors.length) timerManifest = undefined;
   } catch (error) { fail(`Ogiltig timers.json: ${error.message}`); }
 }
+for (const error of validateTimerCoverage(instructionLines, timerManifest)) fail(error);
 
 for (const warning of warnings) console.warn(`VARNING: ${warning}`);
 for (const error of errors) console.error(`FEL: ${error}`);

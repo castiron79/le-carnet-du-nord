@@ -91,5 +91,5 @@ piloterna. Övriga recept behöver ingen massmigration. Vid återgång ska pilot
 tidigare revision återställas före nedgradering av appen. SQLite berörs inte.
 
 Skillpaketet byggs med `python scripts/package-recipe-skill.py`; det synkroniserar
-validatorns fristående modul med appens kontrakt och skapar v8. Den installerade
-ChatGPT-skillen ersätts separat med `skill-packages/create-le-carnet-recipe-v8.zip`.
+validatorns fristående modul med appens kontrakt och skapar v10. Den installerade
+ChatGPT-skillen ersätts separat med `skill-packages/create-le-carnet-recipe-v10.zip`.

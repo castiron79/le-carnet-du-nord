@@ -29,3 +29,7 @@ Det lokala skriptet ersätter endast katalogen med samma recept-id, skapar en av
 ## Bildgranskningsgrind
 
 Alla föreslagna stegbilder samt Hero ska visas för användaren och vara uttryckligen godkända innan paketet hash-låses och skickas. När ägaren väljer att lägga till, ta bort eller göra om en bild måste hela den uppdaterade uppsättningen granskas på nytt. `illustrations.json`, bilder och captions ingår i exakt samma byte-låsta publiceringscommit. Skapa aldrig en ny bild efter låsningen.
+
+## Obligatorisk timerkontroll (v10)
+
+Granska alla steg och inkludera `timers.json` i samma receptmapp som övriga filer. Kör den aktuella validatorn före låsning av publiceringspaketet; den stoppar saknat manifest och saknade uttryckliga stegtider. Publicera även timerfilen med exakt de validerade filbytesen. Efter publicering ska arkivets automatiska receptkontroll vara grön. Ingen automatisk tidsuppskattning eller ljudfunktion ingår.

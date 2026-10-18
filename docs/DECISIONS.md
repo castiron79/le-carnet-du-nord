@@ -134,3 +134,7 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 - **Skäl:** En källa för varje råvarumängd ger konsekvent visning utan att tolka godtycklig instruktionstext eller bygga en grammatikmotor.
 - **Konsekvens:** App före referensrecept; explicit ordformsdata; server och båda validatorer följer samma kontrakt. Äldre recept visar tydlig begränsningsnotis. Se PORTION-SCALING.md.
 - **Spårar:** INT-003, REC-007, GOV-002.
+
+## 2026-10-18: obligatorisk timertäckning vid publicering
+
+Alla recept har granskade visuella timers. Skillstandard v10 kräver timers.json och kontroll av uttryckliga stegtider vid varje ny publicering och uppdatering. Runtime behåller bakåtkompatibilitet. Vaga tidsangivelser får ingen gissad tid. Recepttext, bilder och appversion ändras inte av denna utrullning. Ljud och Spotify-återupptagning kvarstår som separat framtida arbete.

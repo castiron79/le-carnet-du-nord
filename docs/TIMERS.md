@@ -2,7 +2,7 @@
 
 App 1.6.0. En timer och illustrationsknappar delar en rad under stegtexten och kan radbrytas om utrymmet tar slut. Steg utan tidsmetadata får inga timerreglage. Varje timer startas manuellt. Tider påverkas inte av portionsskalning.
 
-Valfri `timers.json` bredvid recipe.md:
+Obligatorisk `timers.json` vid ny publicering och receptuppdatering (standard v10), bredvid recipe.md. Om stegen saknar uttryckliga tider används `{"version":1,"timers":[]}`:
 
 ```json
 {"version":1,"timers":[{"id":"sjud","step":3,"label":"Sjud soppan","seconds":2400,"note":"Kontrollera efter 40 min; receptet anger 40–50 min."}]}
@@ -18,4 +18,6 @@ Lokal lagring nycklas med recept-ID, stabilt timer-ID och grundtid. Start sparar
 
 Ingen ljudkod, notifiering, Spotify-styrning, HA-timerbackend eller utökad HA-behörighet ingår. Ingen garanti om visning när webbläsaren är stängd eller sover: vyn visar rätt återstående/utgången tid när den öppnas. Ljud och säker Spotify-återupptagning är separat framtida arbete. Den tidigare HA-larmpiloten är avstängd.
 
-Första pilot: potatis- och purjolökssoppa samt Bœuf fondant. Övriga recept märks upp efter granskning av pilotens placering och beteende.
+Utrullning 2026-10-18: samtliga 14 recept är granskade och har totalt 47 timers. Recepttexter, mängder och bilder har behållits. ”Per sida” får två manuellt startade timers.
+
+Skillpaket v10 och receptarkivets GitHub-kontroll kräver manifestet och kontrollerar täckning av uttryckliga stegtider. Separata tidsfaser kräver separata poster. Redaktionell granskning av steg, etikett och startpunkt krävs även när kontrollen passerar. Kontrollen körs vid varje publicering och uppdatering. Appen förblir 1.6.0; detta är receptmetadata och kräver bara receptsynkronisering.

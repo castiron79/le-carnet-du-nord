@@ -119,3 +119,8 @@ följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
 - Första installerbara versionen för Home Assistant Green.
 - Lade till privat GitHub-synkronisering, kommentarer och betyg.
+
+## Receptstandard v10 – 2026-10-18
+
+- Obligatoriskt timermanifest och kontroll av uttryckliga stegtider i receptskillen och publiceringsflödet.
+- Samtliga 14 recept granskade: 47 visuella timers. Ingen ändring av app 1.6.0 eller ljudfunktion.

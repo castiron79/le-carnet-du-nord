@@ -37,3 +37,7 @@ Ett recept kan valfritt ha `illustrations.json` bredvid `recipe.md` och Hero. Fo
 ## Gemensamma mängder (app 1.5.0, skill v8)
 
 Valfria quantities.json version 1 stöds utan att schema_version ändras. Läs `portion-scaling.md` för format, referenser, ordformer och validering. Varje känd mängd i ett konverterat recept har en källa och delas av lista och steg. Installera appstödet före referensrecept. Konvertera inte andra recept utan användarens begäran.
+
+## Visuella timers i receptstandard v10
+
+Alla nya eller uppdaterade receptpaket ska innehålla `timers.json`, även om `timers` är en tom lista. Varje uttrycklig stegtid ska ha en granskad timer på rätt steg. Intervall använder nedre gränsen med hela intervallet i notisen. Separata faser och båda sidor får egna timers. Vaga tider och förpackningsanvisningar får ingen påhittad tid. Tider portionsskalas aldrig. App 1.6.0 är bakåtkompatibel med äldre recept utan fil. Se timerstandarden och kör receptvalidatorn före publicering. Receptets schema_version är fortsatt 1.

@@ -163,3 +163,9 @@ Om receptformatet ändras ska receptspecifikation, skill, validator, exempel, be
 ## Visa och dölj stegillustrationer
 
 Recept med illustrerade moment har **Visa illustration** eller **Visa hur det ska se ut** vid vissa steg. Öppna endast det du behöver; knappen blir **Dölj illustration**. I början av Gör så här finns **Visa alla illustrationer** och **Dölj alla**. Bilderna är dolda vid öppning, och vanliga recept fungerar precis som förut. Eventuell förklaring ligger i en separat text under bilden. Se även `ILLUSTRATIONS.md`.
+
+## Visuell timer i receptsteg
+
+Från app 1.6.0 ligger timern under stegtexten, på samma rad som eventuell illustrationsknapp. Starta varje fas manuellt och ändra tiden med plus/minus. Timern är ljudlös och sparas i samma webbläsare. När sidan öppnas igen visas rätt återstående eller utgången tid. Tiden synkroniseras inte mellan enheter.
+
+Alla 14 nuvarande recept är granskade. För framtida recept används skillpaket v10 med obligatorisk timerfil och publiceringskontroll. Uppdatera även en separat installerad ChatGPT-skill med det aktuella paketet.

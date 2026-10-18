@@ -119,3 +119,7 @@ En ny receptbildserie blandar klassiska franska kokboksillustrationer med rena m
 ## Gemensamma mängdreferenser
 
 Valfria `quantities.json` version 1 delar ingrediensmängder mellan lista och steg, utan ändring av `schema_version: 1`. Format, språkformer, antalnotis, validering och migrationsordning är normativa i [PORTION-SCALING.md](PORTION-SCALING.md). Äldre recept fortsätter läsas.
+
+## Visuella timers i receptstandard v10
+
+Alla nya eller uppdaterade receptpaket ska innehålla `timers.json`, även om `timers` är en tom lista. Varje uttrycklig stegtid ska ha en granskad timer på rätt steg. Intervall använder nedre gränsen med hela intervallet i notisen. Separata faser och båda sidor får egna timers. Vaga tider och förpackningsanvisningar får ingen påhittad tid. Tider portionsskalas aldrig. App 1.6.0 är bakåtkompatibel med äldre recept utan fil. Se timerstandarden och kör receptvalidatorn före publicering. Receptets schema_version är fortsatt 1.
