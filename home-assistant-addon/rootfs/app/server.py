@@ -1,5 +1,6 @@
 import json
 import mimetypes
+import math
 import os
 import re
 import sqlite3
@@ -59,6 +60,66 @@ def scalar(value):
     return value.strip("\"'")
 
 
+QUANTITY_REFERENCE = re.compile(r"\{\{q:([a-z][a-z0-9-]*)(?:\*([0-9]+(?:\.[0-9]+)?))?(?::(amount))?\}\}")
+
+
+def load_quantities(folder, ingredient_text, step_text):
+    path = folder / "quantities.json"
+    combined = ingredient_text + "\n" + step_text
+    if not path.is_file():
+        if "{{q:" in combined:
+            raise ValueError("Mängdreferens utan quantities.json")
+        return None
+    if path.stat().st_size > 100_000:
+        raise ValueError("För stor quantities.json")
+    manifest = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(manifest, dict) or type(manifest.get("version")) is not int or manifest["version"] != 1:
+        raise ValueError("Ogiltig mängdversion")
+    entries = manifest.get("quantities")
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("quantities måste vara en icke-tom lista")
+
+    def positive(value):
+        return type(value) in (int, float) and math.isfinite(value) and value > 0
+
+    def forms_valid(value):
+        return (isinstance(value, str) and bool(value.strip())) or (isinstance(value, dict)
+            and all(isinstance(value.get(key), str) and value[key].strip() for key in ("one", "other")))
+
+    ids = set()
+    for item in entries:
+        if not isinstance(item, dict) or not isinstance(item.get("id"), str) or not re.fullmatch(r"[a-z][a-z0-9-]*", item["id"]):
+            raise ValueError("Ogiltigt mängd-ID")
+        if item["id"] in ids:
+            raise ValueError("Duplicerat mängd-ID")
+        ids.add(item["id"])
+        amount = item.get("amount")
+        if not (positive(amount) or (isinstance(amount, list) and len(amount) == 2
+                and all(positive(n) for n in amount) and amount[0] <= amount[1])):
+            raise ValueError("Ogiltig mängd")
+        if not forms_valid(item.get("name")) or ("unit" in item and not forms_valid(item["unit"])):
+            raise ValueError("Ogiltiga ordformer")
+    ingredient_ids = set()
+    for text, ingredients in ((ingredient_text, True), (step_text, False)):
+        for match in QUANTITY_REFERENCE.finditer(text):
+            if match[1] not in ids:
+                raise ValueError("Okänt mängd-ID")
+            if match[2] is not None and not 0 < float(match[2]) <= 1:
+                raise ValueError("Ogiltig andel")
+            if ingredients:
+                ingredient_ids.add(match[1])
+        if "{{q:" in QUANTITY_REFERENCE.sub("", text):
+            raise ValueError("Felaktig mängdreferens")
+    if ids - ingredient_ids:
+        raise ValueError("Mängden saknas i ingredienslistan")
+    if re.search(r"^-\s+[0-9¼½¾⅓⅔⅛⅜⅝⅞]", ingredient_text, re.M):
+        raise ValueError("Kända ingrediensmängder måste använda mängdreferenser")
+    if (any("{{q:" in line and not re.match(r"^-\s+", line) for line in ingredient_text.splitlines())
+            or any("{{q:" in line and not re.match(r"^\d+\.\s+", line) for line in step_text.splitlines())):
+        raise ValueError("Mängdreferenser tillåts bara i ingrediensrader och numrerade steg")
+    return manifest
+
+
 def parse_recipe(folder):
     source = (folder / "recipe.md").read_text(encoding="utf-8")
     parts = source.split("---", 2)
@@ -86,6 +147,11 @@ def parse_recipe(folder):
         match = re.search(rf"## {re.escape(name)}\s*(.*?){end}", body, re.S | re.I)
         return match.group(1).strip() if match else ""
     ingredient_text = block("Ingredienser", "Gör så här")
+    step_text = block("Gör så här", "Serveringstips")
+    quantities = load_quantities(folder, ingredient_text, step_text)
+    outside = body.replace(ingredient_text, "").replace(step_text, "")
+    if "{{q:" in outside or "{{q:" in parts[1]:
+        raise ValueError("Mängdreferenser tillåts bara i ingrediensrader och steg")
     ingredients = []
     for heading, items in re.findall(r"###\s+([^\n]+)\n(.*?)(?=\n###|\Z)", ingredient_text, re.S):
         group_items = [x.strip() for x in re.findall(r"^-\s+(.+)$", items, re.M)]
@@ -157,7 +223,7 @@ def parse_recipe(folder):
     revision = synced_revision()
     if revision:
         image = f"{image}?v={revision}"
-    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, "steps": steps, "tips": tips, "why": why}
+    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
 
 
 def load_recipes():

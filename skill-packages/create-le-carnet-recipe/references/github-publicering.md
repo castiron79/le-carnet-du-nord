@@ -14,7 +14,7 @@ När användaren uttryckligen ber att publicera:
 2. Kör receptvalidatorn.
 3. Beräkna SHA-256 för varje fil i receptpaketet direkt efter lyckad validering. Från denna punkt är paketet låst: ingen text, metadata, mängd, makro eller bild får regenereras, räknas om eller formateras om.
 4. Kontrollera med en läsoperation att `castiron79/le-carnet-recipes` och grenen `main` är åtkomliga.
-5. Publicera hela katalogen under `recipes/<recept-id>/`. Receptfilen ska heta `recipe.md`, huvudbilden `hero.webp` och eventuella stegbilder `step-NN.webp`.
+5. Publicera hela katalogen under `recipes/<recept-id>/`. Receptfilen ska heta `recipe.md`, huvudbilden `hero.webp` och valfria stegbilder från `illustrations.json` med formatet `step-NN-kind-XX.webp` eller `.avif`.
 6. Använd GitHub-anslutningens blob-, tree-, commit- och ref-funktioner när paketet innehåller binära bilder. Skapa blobbar direkt från de låsta filbytesen, kontrollera deras SHA-256 mot de validerade värdena, bygg ett träd ovanpå aktuell `main`, skapa en enda commit och flytta `main` med fast-forward.
 7. Om samma recept-id redan finns, ersätt endast filer under dess egen katalog och bevara övriga recept.
    Vid en uppdatering måste `references/uppdatera-befintligt-recept.md` vara uppfylld, basrevisionen fortfarande vara aktuell och verifieringsmanifestets kandidatdigest motsvara de bytes som skickas.
@@ -26,6 +26,6 @@ Det lokala skriptet ersätter endast katalogen med samma recept-id, skapar en av
 
 
 
-## Illustrationsgrind
+## Bildgranskningsgrind
 
-Utöver Hero ska samtliga föreslagna stegillustrationer skapas och granskas av ägaren **före** publiceringsgodkännande. Ägaren får ändra, ta bort eller lägga till fritt. Publicera `illustrations.json` och bildfiler som en del av samma godkända, validerade och hash-låsta receptpaket. Ingen bild får genereras efter paketlåsning.
+Alla föreslagna stegbilder samt Hero ska visas för användaren och vara uttryckligen godkända innan paketet hash-låses och skickas. När ägaren väljer att lägga till, ta bort eller göra om en bild måste hela den uppdaterade uppsättningen granskas på nytt. `illustrations.json`, bilder och captions ingår i exakt samma byte-låsta publiceringscommit. Skapa aldrig en ny bild efter låsningen.

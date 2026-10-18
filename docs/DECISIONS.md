@@ -126,3 +126,11 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 - Bilder dolda som standard, individuella bildknappar och Visa alla / Dölj alla.
 - Ingen antalsgräns och stöd för flera bilder på samma steg.
 - Hero och alla föreslagna stegillustrationer granskas i sin helhet före separat uttryckligt publiceringsgodkännande. Se `ILLUSTRATIONS.md`.
+
+### D-014 — Gemensamma mängder och fasta grundantal
+
+- **Datum/status:** 2026-10-18 — Godkänt
+- **Beslut:** Utökar D-013 med valfria quantities.json version 1 och uttryckliga mängdreferenser i lista och steg. Befintligt schema och recept-ID behålls. Antal bakverk, bitar och serveringskärl lämnas enligt grundreceptet och förklaras med notis bara vid skalning.
+- **Skäl:** En källa för varje råvarumängd ger konsekvent visning utan att tolka godtycklig instruktionstext eller bygga en grammatikmotor.
+- **Konsekvens:** App före referensrecept; explicit ordformsdata; server och båda validatorer följer samma kontrakt. Äldre recept visar tydlig begränsningsnotis. Se PORTION-SCALING.md.
+- **Spårar:** INT-003, REC-007, GOV-002.

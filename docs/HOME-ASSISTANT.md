@@ -177,3 +177,5 @@ När receptschemat ändras ska styrdokument, migrering och receptagentens format
 ## Stegillustrationer på Home Assistant Green
 
 Från version 1.4.0 har nya recept valfria `illustrations.json` och komprimerade WebP/AVIF-bilder i respektive receptkatalog. De hämtas genom samma privata GitHub-synk som Hero-bilder och serveras lokalt via `/recipe-assets/`. Webbklienten monterar bildfiler först vid användarens aktiva utfällning; detta minskar skärmens nätverks- och minnesbelastning. Inga externa CDN:er eller tillägg behöver installeras. Se `ILLUSTRATIONS.md`.
+
+Vid införande av mängdreferenser ska app 1.5.0 installeras före konverterade recept. Verifiera lista, steg, 1/grundantal/dubbelt, notis och återställning via Ingress. För nedgradering återställ först pilotreceptens tidigare revisioner. Se PORTION-SCALING.md.

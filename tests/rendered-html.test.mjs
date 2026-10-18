@@ -5,6 +5,14 @@ import test from "node:test";
 const root = new URL("../", import.meta.url);
 const read = (path) => readFile(new URL(path, root), "utf8");
 
+test("HA-paketet innehåller både mängdreferenser och illustrationsvyn", async () => {
+  const folder = "home-assistant-addon/rootfs/app/www/assets/";
+  const names = await readdir(new URL(folder, root));
+  const scripts = (await Promise.all(names.filter(name => name.endsWith(".js")).map(name => read(folder + name)))).join("\n");
+  assert.ok(scripts.includes("serveringskärl"), "Bygg om HA-paketet efter ändring av portionsvyn");
+  assert.ok(scripts.includes("Visa alla illustrationer"), "HA-paketet saknar aktuell illustrationsvy");
+});
+
 test("startsidan har svepbara karuseller med 6/4/2-regeln och kombinerbar råvarusökning", async () => {
   const [page, css] = await Promise.all([read("app/page.tsx"), read("app/recipe-enhancements.css")]);
   assert.match(page, /recipes\.slice\(0,12\)/);

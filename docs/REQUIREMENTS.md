@@ -44,7 +44,7 @@ Prioritet: **P0** krävs för första produktionsrelease, **P1** bör ingå elle
 |---|---:|---|---|
 | INT-001 | P0 | Ägaren kan lägga till, ändra status på och logiskt radera en kommentar på ett recept. | Kommentaren överlever omstart och kan markeras hanterad. |
 | INT-002 | P0 | Ägaren kan sätta eller ta bort ett betyg på 1–5 stjärnor. | Endast värden 1–5 accepteras och det aktuella betyget överlever omstart. |
-| INT-003 | P0 | Ägaren kan skala ingrediensmängder lokalt från receptsidan. | 1–20 portioner stöds; originalrecept, steg, tider och makron per portion förblir oförändrade. |
+| INT-003 | P0 | Ägaren kan skala ingrediensmängder lokalt från receptsidan. | 1–20 portioner stöds; konverterade recept delar mängder och ordformer mellan lista och steg. Grundantal för bakverk, bitar och kärl förklaras med notis vid skalning. Äldre recept stöds. Källfiler, tider och makron per portion förblir oförändrade. |
 | INT-004 | P0 | Bara ägaren använder sajten; alla skrivfunktioner ligger bakom Home Assistants befintliga inloggning. | Ingen egen användardatabas krävs; direkt oautentiserad skrivning accepteras inte. |
 | INT-005 | P0 | Ägaren kan kopiera ett entydigt underlag för att uppdatera ett befintligt recept via chatten. | Underlaget innehåller recept-ID och kräver diff, uttryckligt godkännande, validering och konfliktkontroll. |
 | INT-006 | P0 | Kommentarer och betyg får inte ändra `recipe.md`. | De lagras i SQLite och finns kvar när receptet uppdateras. |

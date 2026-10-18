@@ -246,7 +246,7 @@ Sidan följer denna semantiska ordning på alla skärmar:
 - Pappersvit yta, guldkant, 12 px radie.
 - Ingrediensgrupper med mörkgrön underrubrik och diskret linje mellan grupper.
 - Checkboxar får erbjudas som lokal tillfällig hjälp, men själva mängden och ingrediensen ska förbli läsbar när rutan markeras.
-- Portionsskalning öppnas diskret från faktakortet **Receptmängd**; aktuell portionsmängd skrivs ut i klartext. Minus och plus har minst 44 × 44 px pekyta. Skalningen gäller endast ingredienslistans visning.
+- Portionsskalning öppnas diskret från faktakortet **Receptmängd**; aktuell portionsmängd skrivs ut i klartext. Minus och plus har minst 44 × 44 px pekyta. Konverterade recept skalar mängdreferenser i både lista och steg; äldre recept skalar bara listan. En diskret notis ovanför instruktionerna förklarar vilka grundantal som behöver anpassas.
 
 **Instruktionssteg**
 

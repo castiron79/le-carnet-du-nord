@@ -45,3 +45,7 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 ## Normerande illustrationsstandard
 
 Läs `references/illustrations.md` och `references/recipe-schema.md`. När projektets `docs/ILLUSTRATIONS.md` finns är den normerande för projektet. Svartvit tunn tuschteckning i fransk kokboks-/modern instruktionsstil; **endast råvaror och mat** har diskreta dova färger. **Ingen text i bilden**; vid behov separat caption. `action`, `result`, `detail`; 0..N illustrationer per steg. Bildpaketet får inte publiceras innan det har visats i sin helhet och användaren separat har godkänt slutversionen. Ändringar efter granskning kräver en ny granskning. Inga nya bilder får skapas efter publiceringsgodkännande.
+
+## Gemensamma mängder
+
+För nya recept eller när portionsskalning införs, läs `references/portion-scaling.md`. Använd quantities.json och samma referenser i ingredienslista och steg. Behåll antal bakverk, bitar och serveringskärl enligt grundreceptet; sajten visar en notis vid skalning. Granska 1, grundantal och dubbelt antal portioner. Ändra inte befintliga bilder eller makron vid en ren formatkonvertering.

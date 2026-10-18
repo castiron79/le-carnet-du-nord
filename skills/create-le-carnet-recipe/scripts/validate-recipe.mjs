@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { validateIllustrations } from './validate-illustrations.mjs';
+import { validateQuantityReferences } from './quantity-references.mjs';
 
 const dir = path.resolve(process.argv[2] || '.');
 const file = path.join(dir, 'recipe.md');
@@ -80,6 +81,18 @@ for (let i = 0; i < ingredientGroups.length; i += 1) {
 for (const heading of ['Serveringstips', 'Varför det blir så gott']) {
   if (!/^-\s+\S/m.test(sectionText(heading))) fail(`Sektionen "${heading}" måste innehålla minst en punkt`);
 }
+let quantities;
+const quantityPath = path.join(dir, 'quantities.json');
+if (fs.existsSync(quantityPath)) {
+  try {
+    if (fs.statSync(quantityPath).size > 100_000) throw new Error('För stor quantities.json');
+    quantities = JSON.parse(fs.readFileSync(quantityPath, 'utf8'));
+  } catch (error) { fail(`Ogiltig quantities.json: ${error.message}`); }
+}
+for (const error of validateQuantityReferences(quantities, ingredientText, sectionText('Gör så här'))) fail(error);
+const outsideQuantities = text.replace(ingredientText, '').replace(sectionText('Gör så här'), '');
+if (outsideQuantities.includes('{{q:')) fail('Mängdreferenser tillåts bara i ingrediensrader och steg');
+
 const instructionLines = sectionText('Gör så här').split(/\r?\n/).filter(line => line.trim());
 if (!instructionLines.length) fail('Gör så här måste innehålla numrerade steg');
 instructionLines.forEach((line, index) => {

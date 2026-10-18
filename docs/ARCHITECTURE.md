@@ -141,7 +141,7 @@ Godkännande jämför `base_version` med aktuell version. Konflikt ger `409 VERS
 
 ### Klientbaserad portionsskalning
 
-Portionsskalaren är en ren presentationsfunktion. Klienten utgår alltid från receptets ursprungliga ingredienssträngar och multiplicerar tydliga mängder med `vald portion / originalportion`. Receptfil, API-data, tillagningssteg, tider och makron muteras inte. Procent, temperatur, minuter och fria uttryck utan exakt tal lämnas oförändrade.
+Portionsskalaren är en ren presentationsfunktion. Klienten utgår alltid från receptets ursprungliga ingredienssträngar och multiplicerar tydliga mängder med `vald portion / originalportion`. Receptfil, API-data, tider och makron muteras inte. I konverterade recept renderas steg med samma mängdreferenser som ingredienslistan. Procent, temperatur, minuter och fria uttryck utan exakt tal lämnas oförändrade.
 
 ### Uppdatering via chatten
 
@@ -208,3 +208,5 @@ Publik åtkomst, extern databas, molnpublicering, produkt-/varumärkesdatabas, n
 ## Valfria stegillustrationer, version 1.4.0
 
 `/data/recipes/<slug>/illustrations.json` är en bakåtkompatibel sidecar med en ordnad lista av 1-baserade stegindex, bildtyp, lokala filnamn, alt och caption. `parse_recipe` läser och validerar manifestet vid synk och bygger bildobjekt under respektive steg i API-svaret. Bilder nås via redan existerande `/recipe-assets/` och cachebryts av GitHub-revisionen. React bygger en illustrationstoggle som endast monterar `img` när användaren öppnar den. Inga nya databastabeller, fjärr-API:er eller separata bildservrar behövs. Se `ILLUSTRATIONS.md`.
+
+Gemensamma mängdreferenser i app 1.5.0: servern läser och validerar quantities.json och skickar grunddata tillsammans med oförändrade textmallar. Klienten renderar lista, stegrubriker och stegtext med samma rena modul. Äldre recept behåller textskalning i listan. Ingen databasändring krävs. Se [PORTION-SCALING.md](PORTION-SCALING.md).

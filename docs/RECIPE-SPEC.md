@@ -1,6 +1,6 @@
 # Receptspecifikation — Le Carnet du Nord
 
-Version: 1.0.0  
+Version: 1.1.0
 Språk: svenska (sv-SE)  
 Källformat: en katalog per recept med `recipe.md` och bilder.
 
@@ -115,3 +115,7 @@ Bakåtkompatibelt med `schema_version: 1`. Vid stegillustrationer läggs `illust
 ## Stegillustrationer – fast standard 1.0 (2026-10-17)
 
 En ny receptbildserie blandar klassiska franska kokboksillustrationer med rena moderna instruktionsbilder. Bilderna är svartvita, med tunna tuschlinjer och lätt skraffering; **endast mat och råvaror får dämpade naturliga färger**. Det får **aldrig finnas text, siffror eller handskrivna noteringar inne i bilden**. Använd separat `caption` under bilden om förklaring behövs. Tre bildtyper: `action` (teknik), `result` (hur det ska se ut), `detail` (viktigt utsnitt). Ingen maxgräns, flera bilder per steg tillåtna. Se `docs/ILLUSTRATIONS.md`.
+
+## Gemensamma mängdreferenser
+
+Valfria `quantities.json` version 1 delar ingrediensmängder mellan lista och steg, utan ändring av `schema_version: 1`. Format, språkformer, antalnotis, validering och migrationsordning är normativa i [PORTION-SCALING.md](PORTION-SCALING.md). Äldre recept fortsätter läsas.

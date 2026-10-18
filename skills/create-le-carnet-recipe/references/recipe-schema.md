@@ -33,3 +33,7 @@ Vid uppdatering av ett publicerat recept är katalognamn, `id`, `slug`, `schema_
 ## Stegillustrationer (bakåtkompatibelt tillägg v1.0)
 
 Ett recept kan valfritt ha `illustrations.json` bredvid `recipe.md` och Hero. Formen är `{"version":1,"illustrations":[{"step":2,"kind":"result","file":"step-02-result-01.webp","alt":"...","caption":"..."}]}`. Stegindex är 1-baserat; kind=action/result/detail; flera bilder per steg och inget maxantal. Bilden saknar text, caption hålls utanför, bara råvaror/mat har subtila färger. Alla bilder ska visas för användaren och godkännas innan publicering; tomt eller uteblivet manifest fungerar för bildlösa recept. Full standard i projektets `docs/ILLUSTRATIONS.md`.
+
+## Gemensamma mängder (app 1.5.0, skill v8)
+
+Valfria quantities.json version 1 stöds utan att schema_version ändras. Läs `portion-scaling.md` för format, referenser, ordformer och validering. Varje känd mängd i ett konverterat recept har en källa och delas av lista och steg. Installera appstödet före referensrecept. Konvertera inte andra recept utan användarens begäran.

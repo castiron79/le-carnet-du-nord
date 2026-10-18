@@ -21,6 +21,6 @@ Kommentarer från sajten är anteckningar och blir inte automatiskt ändringsins
 
 
 
-## Uppdatering av illustrationer
+## Uppdaterade stegillustrationer
 
-Hämta hela det publicerade baspaketet, inklusive alla stegillustrationer. Visa i diffen vilka bilder som tillkommit, ändrats eller tagits bort och kontrollera stegkopplingar när instruktioner ändrats. Visa den kompletta bildserien för användaren före ett nytt separat godkännande. Aldrig tyst bildbyte.
+Hämta hela originalpaketet med eventuell `illustrations.json` och bildbytes. Ändrade stegnummer kräver nya referenser; visa i diff vilka filer som tas bort, tillkommer eller får nytt innehåll. Visa den kompletta slutliga bildserien för nytt uttryckligt godkännande innan publicering. Ingen tyst automatisk regenerering.

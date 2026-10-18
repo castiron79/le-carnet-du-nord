@@ -153,3 +153,5 @@ Ingen framtida funktion får göra internet, extern databas eller molnkonto obli
 ## M6+ – Illustrationer för nya recept
 
 Utbyggnaden omfattar ett valfritt illustrationsmanifest och en inline-vy, de gemensamma knapparna, lazy loading, validatorn i båda arkiven och uppdaterad publiceringsskill. Vid nytt eller ändrat recept ska alla föreslagna Hero- och stegbilder visas och godkännas före GitHub-commit. Äldre recept migreras inte automatiskt. Båda CI-flödena ska vara gröna innan appversion 1.4.0 releasas. Se `ILLUSTRATIONS.md`.
+
+Portionspilot 2026-10-18: inför quantities.json utan massmigration. Först verifieras app 1.5.0; därefter godkänns och publiceras potatis- och purjolökssoppa samt långkokt fransk lökbiff med potatispuré. Se PORTION-SCALING.md för acceptans och återgång.

@@ -57,3 +57,16 @@ Gränssnittet, lokal v1-lagring och Markdown-import är lämpliga för intern pr
 ## Tillagda acceptansfall för illustrationsfunktion (1.4.0)
 
 Regressionskontroll: äldre recept utan manifest; flera illustrationer i ett enda steg; många steg utan teknisk gräns; fel stegnummer; saknad eller extra bildfil; osäker sökväg; fel bildsignatur. Webbtest: enstaka visa/dölj, globala Visa alla/Dölj alla, bilder dolda och nätverksladdning uppskjuten, mobil, surfplatta, tangentbord och ARIA. Den faktiska CI-statusen ska kontrolleras innan release; manuell mobil-/HA Green-kontroll ska inte rapporteras som genomförd utan observation. Norm: `ILLUSTRATIONS.md`.
+
+
+## Portionspilot 1.5.0 — verifierad lokalt 2026-10-18
+
+- Webbbygge och separat statiskt HA-bygge godkända. JS/CSS sammanlagt cirka 254 KB.
+- 28 Node-tester för app/validator/paket och 10 Python-servertester godkända.
+- Receptarkivet: 9 Node-tester och samtliga 13 recept godkända utan validatorvarningar.
+- Skill v8 validerad med skill-creator; ZIP med 12 filer och synkroniserad mängdmodul.
+- Berörda klientfiler typkontrollerade separat utan fel. Ny JS och ändrade skalningsfunktioner lintkontrollerade utan fel.
+- Webbläsare mot den faktiska Python-servern och det byggda HA-paketet: soppa 1/2/4 portioner, lökbiff 1/2/4/20, maxknapp spärrad vid 20, minus spärrad vid 1, notis bara vid ändring, återställning till grundantal, oförändrade tider och makron. Inga råa mängdreferenser visas.
+- Mobilkontroll 390 px: notisen är läsbar med 13 px text. Befintlig faktarad sticker ut cirka 8 px vid denna bredd; övrig layout ändrades inte inom portionspiloten.
+- Projektets globala lintkontroll har samma tre befintliga fel som basrevisionen: set-state-in-effect och två no-empty i arkivvyns lagring. Global TypeScript-kontroll saknar Cloudflare-typer i db/index.ts och worker/index.ts; berörda klientfiler passerar separat. Dessa befintliga förvaltningsfel ingår inte i denna ändring.
+- Ingen körning eller installation på HA Green, ingen ny CI-körning på GitHub och ingen publicering är genomförd. Appen måste uppdateras före referensrecepten. Se PORTION-SCALING.md.

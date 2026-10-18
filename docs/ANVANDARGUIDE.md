@@ -107,7 +107,7 @@ På receptsidan kan du trycka **Kopiera för uppdatering** och klistra in texten
 4. Granska den exakta diffen och skriv **Godkänn och publicera denna diff**.
 5. Kandidaten valideras, låses och publiceras utan fler ändringar.
 
-Knappen **Anpassa mängder** på receptsidan skalar ingredienslistan till 1–20 portioner. Skalningen är en tillfällig lokal visning. Receptfilen, GitHub, tillagningsstegen, tiderna och näringsvärdena per portion ändras inte.
+Plus och minus på receptsidan anpassar mängderna till 1–20 portioner. Recept med gemensamma mängdreferenser anpassar både ingredienslista och mängder i instruktionerna. Antal bakverk, bitar och serveringskärl gäller grundreceptet; en notis visas vid ändrat portionsantal. Äldre recept anpassar bara ingredienslistan, vilket deras notis förklarar. Receptfilen, GitHub, tider och näringsvärden per portion ändras inte.
 
 ## Senaste recept och favoriter
 

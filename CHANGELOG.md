@@ -4,6 +4,15 @@ Alla märkbara ändringar i Le Carnet du Nord dokumenteras här. Versionsnumret
 följer Home Assistant-appens version i `home-assistant-addon/config.yaml`.
 
 
+## 1.5.0 – 2026-10-18
+
+- Synkroniserar ingredienslistor och steg med gemensamma mängdreferenser i quantities.json.
+- Böjer uttryckliga råvaru- och måttformer efter skalad mängd; antal portioner visas korrekt.
+- Visar en notis om att antal bakverk, bitar och serveringskärl gäller grundreceptet.
+- Bevarar äldre recept och rättar skalning av bråk och fasta styckvikter efter à/per.
+- Utökar server- och publiceringsvalidering, tester och CI samt paketerar receptskill v8.
+- Bygger om HA-vyn från aktuell källkod, inklusive stegillustrationer.
+
 ## 1.4.0 – 2026-10-17
 
 - Stöder valfria, utfällbara illustrationer per matlagningssteg med Visa alla / Dölj alla.

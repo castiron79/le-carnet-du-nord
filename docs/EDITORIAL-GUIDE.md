@@ -42,3 +42,5 @@ En ny receptbildserie blandar klassiska franska kokboksillustrationer med rena m
 ## Obligatorisk bildgrind
 
 Generera Hero och **alla** föreslagna stegillustrationer innan ägaren ombeds publicera. Visa hela serien med stegnummer, bildtyp och caption. Ägaren får lägga till, ta bort eller göra om hur många bilder som önskas. Först efter uttryckligt godkännande av slutlig recepttext **och samtliga bilder** kan ett paket låsas, valideras och publiceras. Ändras en bild efter godkännande krävs ny granskning. Publicering får aldrig användas för förhandsvisning.
+
+Vid nya eller konverterade recept används gemensamma mängdreferenser enligt [PORTION-SCALING.md](PORTION-SCALING.md). Råvarumängder får inte dubbleras som fasta tal i stegen. Antal bakverk, bitar och kärl får stå enligt grundreceptet; notisen hanterar skalningen. Skriv övrig text portionsneutralt och ange böjliga råvaru- och måttformer uttryckligen.
