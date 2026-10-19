@@ -4,7 +4,7 @@ Aktivera detta läge endast när användaren uttryckligen vill uppdatera ett bef
 
 ## Obligatoriskt flöde
 
-1. Läs `recipes/<id>/` från `castiron79/le-carnet-recipes` på `main` innan ett utkast skapas. Om katalogen saknas, GitHub inte kan läsas eller ID:t är tvetydigt: stoppa. Skapa aldrig ett nytt recept som reservåtgärd.
+1. Läs `recipes/<id>/` från `castiron79/le-carnet-recipes` på `main` innan ett utkast skapas. Hämta hela paketet inklusive ursprungliga bildbytes enligt avsnittet om hämtning i `github-publicering.md`. Om katalogen saknas, GitHub inte kan läsas eller ID:t är tvetydigt: stoppa. Skapa aldrig ett nytt recept som reservåtgärd.
 2. Spara basrevisionens commit-SHA och SHA-256 för hela receptpaketet.
 3. Skapa kandidaten som en fullständig kopia av baspaketet. Börja aldrig från en ny receptmall.
 4. Lås katalognamn, `id`, `slug`, `schema_version` och `published_at`. Ett publicerat recept behåller `status: published`. Sätt `updated_at` före slutvalideringen.

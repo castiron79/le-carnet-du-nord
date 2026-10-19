@@ -2,6 +2,12 @@
 
 Standardarkivet för Le Carnet du Nord är det privata GitHub-repot `castiron79/le-carnet-recipes` på grenen `main`.
 
+## Hämta ett befintligt paket med bilder (v13)
+
+Lås hämtningen till samma commit-SHA för samtliga filer. För binära bilder använder GitHub-pluginen `fetch_file` med `encoding: "base64"`; avkoda svarets base64 till ursprungliga filbytes i arbetskopian. Textavkodning med UTF-8 gäller endast textfiler. Kontrollera hämtade bytes mot GitHub-blobens SHA och beräkna paketets SHA-256 före ändring.
+
+I den verifierade anslutningen kan `fetch_blob` ge `UnicodeDecodeError` för en giltig WebP-bild eftersom den försöker läsa binärdata som text. Använd då filhämtningen med uttrycklig base64-kodning. Felet betyder inte att bilden saknas eller är trasig. Om inte heller den vägen är tillgänglig: redovisa att fullständig paketvalidering inte kunnat slutföras. Hoppa inte över bildkontrollen och ersätt eller generera inte om originalbilderna. Telefonen behöver ingen lokal Git-klon eller åtkomst till Green; GitHub-anslutningen och körmiljön i aktuell Work-session hämtar och validerar paketet.
+
 ## Välj publiceringsväg
 
 1. Om GitHub-anslutningen är tillgänglig i den aktuella ChatGPT Work-sessionen ska den användas direkt. Kräv då aldrig en lokal klon och försök inte köra det lokala publiceringsskriptet.

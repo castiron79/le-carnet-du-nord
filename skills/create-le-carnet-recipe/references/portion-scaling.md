@@ -92,4 +92,4 @@ tidigare revision återställas före nedgradering av appen. SQLite berörs inte
 
 Skillpaketet byggs med `python scripts/package-recipe-skill.py`; det synkroniserar
 validatorns fristående modul med appens kontrakt och skapar v12. Den installerade
-ChatGPT-skillen ersätts separat med `skill-packages/create-le-carnet-recipe-v12.zip`.
+ChatGPT-skillen ersätts separat med `skill-packages/create-le-carnet-recipe-v13.zip`.

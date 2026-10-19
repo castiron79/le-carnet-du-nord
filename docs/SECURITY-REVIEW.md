@@ -7,6 +7,7 @@
 - WebP och AVIF stöds som huvudbild via hero_image. Befintliga storleksgränser och runtime-stöd för äldre recept utan mängd-/timerfiler behålls. Bildsignaturkontroll är inte full bildavkodning.
 - App 1.6.5 kontrollerar verklig TCP-motpart före HTTP-metodhantering: endast Supervisor 172.30.32.2 tillåts. Det omfattar även HEAD och /health. Proxyhuvuden kan inte ge åtkomst. Ingress och Supervisors watchdog använder samma källa; inga nya portar eller behörigheter införs. Se HOME-ASSISTANT.md för transportgränsen.
 - App 1.6.6 skriver dessa anslutnings-/hälsologgar utan buffringsdröjsmål. Hälsologgen visar käll-IP och om Ingress-sökvägsrubriken finns, aldrig dess innehåll eller sessionsuppgifter. Rubrikens närvaro används enbart för diagnostik, inte för åtkomstbeslut.
+- Skillpaket v13 dokumenterar verifierad binär bildhämtning via GitHub med uttrycklig base64-kodning; ett fullständigt hämtat sconespaket validerades utan att ändra receptfiler. Telefonens omprov redovisas separat i slutkontrollen nedan.
 - Byggberoenden hanteras separat. Backup/restore har uttryckligen skjutits upp av användaren och är inte verifierat.
 - Följande äldre avsnitt är historik. Klientens API-adresser är numera relativa; manifestet innehåller addon_config:rw. Historiska påståenden om motsatsen beskriver inte nuvarande kod. Denna uppföljning ändrar inte konfigurationsmappningen.
 

@@ -16,6 +16,8 @@ description: Skapa, bearbeta, paketera och validera svenska recept för Le Carne
 
 ## Arbetsflöde
 
+Vid hämtning eller validering av ett befintligt paket via GitHub, läs hämtningsavsnittet i `references/github-publicering.md`: bilder hämtas med uttrycklig base64-kodning och avkodas till ursprungliga bytes.
+
 1. Läs `references/recipe-schema.md` innan du skapar eller ändrar recept.
    Om användaren vill uppdatera ett befintligt recept ska du även läsa och följa `references/uppdatera-befintligt-recept.md` innan något utkast skapas.
 2. Samla receptets råvaror, råvikter, portioner, tider och separata bilder. Fråga endast efter uppgifter som blockerar en rimlig beräkning eller säker instruktion.

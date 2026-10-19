@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## Receptskill v13 – 2026-10-19
+
+- Befintliga receptbilder hämtas via GitHub med uttrycklig base64-kodning och avkodas till ursprungliga bytes. Undviker den verifierade anslutningens UTF-8-fel vid blobhämtning.
+- Hela sconespaketet har hämtats genom GitHub-pluginen och validerats med oförändrade filbytes. Slutkontrollens dokumentation skiljer detta från verklig mobilpublicering.
+- Endast skillanvisningar, paketering och dokumentation ändras. Appen ligger kvar på 1.6.6; ingen ny Green-installation.
+
 ## 1.6.6 – 2026-10-19
 
 - Skriver anslutnings- och hälsologgar omedelbart så att Ingress och automatiska watchdog-anrop kan verifieras utan att invänta Python-bufferten. Åtkomstregeln från 1.6.5 är oförändrad.
