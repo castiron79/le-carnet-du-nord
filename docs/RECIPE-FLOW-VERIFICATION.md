@@ -33,13 +33,14 @@ har inte aktiverats eller provats.
 | GitHub → Green | Riktig manuell synk genom befintlig Ingress/MCP-väg gav current, 14 recept, revision c019d71. Recept-API visar 14 recept, 47 timers och 34 bildreferenser. Scones har fyra grundportioner, gemensamma mängdreferenser, tre bilder och en timer. |
 | Drift | Installerad/senaste appversion är 1.6.6. Ingress, automatisk watchdog och HA:s uppdateringsvisning verifierades i etapp 5. Ingen ny appinstallation behövdes i etapp 6. |
 | Verkliga enheter | Användaren bekräftade i etapp 5 att scones bilder, illustrationsknappar och timerreglage fungerar från dator, surfplatta och telefon på hemnätverket. |
+| Telefon via mobildata | Användaren bekräftade i omprovet att hela v12-validatorn passerar med giltigt paket och 0 varningar. Alla tre bilder hämtades med fetch_file, encoding=base64, från c019d71 och avkodade bytes verifierades mot respektive Git-blob-SHA. Inga arkivfiler ändrades eller publicerades. |
 
 GitHubs automatiska kontroller för apprevision
 `5d315bb03107c94b2d3e74387fbf3e2375cb1e4c` och receptrevisionen ovan var
 godkända vid slutkontrollen. Dessa tidigare körningar ska inte beskrivas som
 ett nytt publiceringsprov från telefonen.
 
-## Återstående verkligt mobilprov
+## Mobilprov och kvarvarande avgränsning
 
 Användaren rapporterade från det första mobilprovet att textdata kunde hämtas
 från c019d71 och att mängd-/timerkontroller passerade, men att fullständig
@@ -49,8 +50,11 @@ gjordes. Detta är ett delvis lyckat mobilprov, inte ett fullständigt godkänt 
 Felet reproducerades i denna anslutning: fetch_blob gav UnicodeDecodeError för
 en giltig WebP-bild. fetch_file med encoding=base64 fungerade för alla sju filer
 och gav ett byte-identiskt paket som passerar hela validatorn. Denna lösning
-finns i skill v13. Omprov med samma metod i användarens mobilchatt inväntas;
-lokal framgång ersätter inte det verkliga mobilprovet.
+finns i skill v13. Användarens efterföljande omprov på telefon via mobildata
+passerade hela v12-validatorn med 0 varningar. Alla tre bilder hämtades med
+uttrycklig base64-kodning från c019d71 och kontrollerades mot Git-blob-SHA.
+Det verifierar hämtning och fullständig paketvalidering i mobilmiljön med den
+korrigerade metoden; det bevisar inte en separat installation av v13 där.
 
 En ny, godkänd receptpublicering från telefon via mobildata till riktiga GitHub
 och vidare till Green har inte genomförts inom denna slutkontroll. Det är ett
