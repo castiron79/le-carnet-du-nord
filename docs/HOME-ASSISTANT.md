@@ -60,8 +60,12 @@ Home Assistant sköter inloggning och proxy. Appen ska:
 - lyssna endast på internport `8099`;
 - använda relativa URL:er och respektera dynamisk Ingress-bassökväg;
 - inte erbjuda egen login eller lagra Home Assistant-token;
-- avvisa direktanrop utanför förväntad Ingress-kontext när detta kan verifieras säkert;
-- kontrollera same-origin och en appspecifik rubrik på varje skrivande anrop.
+- avvisa HTTP-anrop vars verkliga TCP-motpart inte är Supervisor `172.30.32.2`, före metodhantering (även HEAD);
+- kräva den appspecifika rubriken `X-Carnet-Request: 1` för skrivningar och behålla befintlig JSON-validering; inga CORS-tillstånd ges.
+
+Källkontrollen infördes i 1.6.5 och litar inte på Host, User-Agent eller vidarebefordrade proxyhuvuden. Supervisors watchdog använder samma tillåtna adress för `/health` utan Ingress-cookie eller proxyhuvuden. Appens egen container-IP kan ändras och används inte som tillstånd. Hela hemnätet, containernätet och loopback tillåts inte. Ingen avstängningsinställning finns.
+
+Den verifierade MCP-anslutningen använder HA:s Ingress-proxy och omfattas av samma regel. Om transporten ändras till direktanslutning mellan appar måste den granskas på nytt. Utgående GitHub-synk och receptskapande via GitHub påverkas inte.
 
 Eftersom endast ägaren använder installationen behövs ingen intern rollmodell i version 1. Framtida fleranvändarstöd kräver explicit verifierad identitet och serverbaserad auktorisering; det får inte antas finnas nu.
 

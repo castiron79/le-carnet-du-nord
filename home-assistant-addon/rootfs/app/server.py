@@ -458,12 +458,28 @@ def connect():
     return db
 
 
+def is_supervisor_peer(address):
+    # Supervisor Ingress and its watchdog use this documented internal address.
+    # Never authorize forwarded headers or the app's own changing container IP.
+    return address == "172.30.32.2"
+
+
 class Handler(SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=ROOT, **kwargs)
 
     def log_message(self, fmt, *args):
-        print("carnet:", fmt % args)
+        print("carnet peer=%s:" % self.client_address[0], fmt % args)
+
+    def parse_request(self):
+        if not super().parse_request():
+            return False
+        # Apply before dispatch, including inherited HEAD and unsupported methods.
+        if not is_supervisor_peer(self.client_address[0]):
+            self.close_connection = True
+            self.send_error(403, "Supervisor access required")
+            return False
+        return True
 
     def end_headers(self):
         path = urlparse(self.path).path
@@ -533,6 +549,7 @@ class Handler(SimpleHTTPRequestHandler):
             notes = [{"text": (("Ändringsförslag: " if x["kind"] == "change" else "") + x["text"]), "date": x["created_at"][:10]} for x in rows]
             return self.send_json({"rating": row["rating"] if row else 0, "favorite": bool(favorite), "favorite_updated_at": favorite["updated_at"] if favorite else None, "notes": notes})
         if path == "/health":
+            self.log_message("health ingress=%s", bool(self.headers.get("X-Ingress-Path")))
             return self.send_json({"status": "ok"})
         if path == "/":
             self.path = "/index.html"

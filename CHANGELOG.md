@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.6.5 – 2026-10-19
+
+- Tillåter inkommande HTTP endast från Supervisors verkliga nätverksadress, före läsning och skrivning. Förfalskade proxyhuvuden ger ingen åtkomst.
+- Samma kontroll omfattar webbgränssnitt, API, bilder och HEAD. Ingress, befintlig MCP-proxy och Supervisors hälsokontroll använder samma tillåtna källa.
+- Uppdaterar åtkomstdokumentation och tester utan nya portar, behörigheter eller inloggningskrav.
+
 ## 1.6.4 – 2026-10-18
 
 - Kontrollerar receptpaketets tillåtna filer och bildsignaturer före import; felaktiga paket avvisas innan fungerande recept ersätts.

@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.6.5 – 2026-10-19
+
+- Skyddar appen mot direktanrop från andra interna appar. Endast Supervisor får ansluta; Home Assistant sköter fortsatt inloggningen via Ingress.
+- Behåller Supervisors hälsokontroll och befintlig administration utan nya portar eller behörigheter.
+
 ## 1.6.4 – 2026-10-18
 
 - Säkerhetskontroll av receptfiler och bildformat vid synk. Ett felaktigt receptpaket lämnar tidigare fungerande recept kvar.

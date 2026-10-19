@@ -1,12 +1,13 @@
 # Säkerhets- och driftgranskning
 
-## Aktuell avgränsad uppföljning – app 1.6.4, 2026-10-18
+## Aktuell avgränsad uppföljning – app 1.6.5, 2026-10-19
 
 - Skillpaket v12 stoppar otillåtna paketfiler före publicering. App 1.6.4 kontrollerar nu också platta paket, vanliga filer, UTF-8/JSON, valda/refererade bilder och bildsignaturer före import. Alla paket valideras innan något tidigare recept ersätts.
 - Bild-API:t lämnar enbart ut vald huvudbild och refererade stegillustrationer med explicit image/webp eller image/avif. Markdown, JSON, HTML, JavaScript, okända filer, länkar och osäkra sökvägar lämnas inte ut där.
 - WebP och AVIF stöds som huvudbild via hero_image. Befintliga storleksgränser och runtime-stöd för äldre recept utan mängd-/timerfiler behålls. Bildsignaturkontroll är inte full bildavkodning.
-- Ingress-källkontroll är inte införd: den hör till senare etapper 4–5. Byggberoenden hanteras separat. Backup/restore har uttryckligen skjutits upp av användaren och är inte verifierat.
-- Följande äldre avsnitt är historik. Klientens API-adresser är numera relativa; manifestet innehåller addon_config:rw. Historiska påståenden om motsatsen beskriver inte nuvarande kod. Denna uppföljning ändrar inte konfigurationsmappningen eller nätverksåtkomsten.
+- App 1.6.5 kontrollerar verklig TCP-motpart före HTTP-metodhantering: endast Supervisor 172.30.32.2 tillåts. Det omfattar även HEAD och /health. Proxyhuvuden kan inte ge åtkomst. Ingress och Supervisors watchdog använder samma källa; inga nya portar eller behörigheter införs. Se HOME-ASSISTANT.md för transportgränsen.
+- Byggberoenden hanteras separat. Backup/restore har uttryckligen skjutits upp av användaren och är inte verifierat.
+- Följande äldre avsnitt är historik. Klientens API-adresser är numera relativa; manifestet innehåller addon_config:rw. Historiska påståenden om motsatsen beskriver inte nuvarande kod. Denna uppföljning ändrar inte konfigurationsmappningen.
 
 Regler och kompatibilitet: `RECIPE-PACKAGE-FILES.md`. Verifiering: isolerade import-/HTTP-tester, oförändrade verkliga receptpaket samt efterföljande driftkontroll; faktiska enhetsprov ska redovisas separat och inte härledas från lokala tester.
 

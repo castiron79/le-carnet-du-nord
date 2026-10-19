@@ -123,6 +123,9 @@ class RecipeFileServerTests(unittest.TestCase):
         self.app.install_synced_recipes(self.incoming, "a" * 40)
         class QuietHandler(self.app.Handler):
             def log_message(self, *args): pass
+            def parse_request(self):
+                self.client_address = ("172.30.32.2", self.client_address[1])
+                return super().parse_request()
         server = ThreadingHTTPServer(("127.0.0.1", 0), QuietHandler)
         worker = threading.Thread(target=server.serve_forever, daemon=True)
         worker.start()
