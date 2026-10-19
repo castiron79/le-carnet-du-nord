@@ -7,13 +7,13 @@
 - WebP och AVIF stöds som huvudbild via hero_image. Befintliga storleksgränser och runtime-stöd för äldre recept utan mängd-/timerfiler behålls. Bildsignaturkontroll är inte full bildavkodning.
 - App 1.6.5 kontrollerar verklig TCP-motpart före HTTP-metodhantering: endast Supervisor 172.30.32.2 tillåts. Det omfattar även HEAD och /health. Proxyhuvuden kan inte ge åtkomst. Ingress och Supervisors watchdog använder samma källa; inga nya portar eller behörigheter införs. Se HOME-ASSISTANT.md för transportgränsen.
 - App 1.6.6 skriver dessa anslutnings-/hälsologgar utan buffringsdröjsmål. Hälsologgen visar käll-IP och om Ingress-sökvägsrubriken finns, aldrig dess innehåll eller sessionsuppgifter. Rubrikens närvaro används enbart för diagnostik, inte för åtkomstbeslut.
-- Skillpaket v13 dokumenterar verifierad binär bildhämtning via GitHub med uttrycklig base64-kodning. Användarens omprov via mobildata bekräftar fullständig paketvalidering med 0 varningar och verifierade bildbytes. Ny publicering från telefon är fortsatt oprövad; se slutkontrollen nedan.
+- Skillpaket v13 dokumenterar verifierad binär bildhämtning via GitHub med uttrycklig base64-kodning. Användarens omprov via mobildata bekräftar fullständig paketvalidering med 0 varningar och verifierade bildbytes. Därefter verifierades även en verklig mobilpublicering av älggryta: GitHub och Green matchar revision 598fcd1, receptkontrollen är godkänd och alla tre bilder fungerar.
 - Byggberoenden hanteras separat. Backup/restore har uttryckligen skjutits upp av användaren och är inte verifierat.
 - Följande äldre avsnitt är historik. Klientens API-adresser är numera relativa; manifestet innehåller addon_config:rw. Historiska påståenden om motsatsen beskriver inte nuvarande kod. Denna uppföljning ändrar inte konfigurationsmappningen.
 
 Regler och kompatibilitet: `RECIPE-PACKAGE-FILES.md`. Verifiering: isolerade import-/HTTP-tester, oförändrade verkliga receptpaket samt efterföljande driftkontroll; faktiska enhetsprov ska redovisas separat och inte härledas från lokala tester.
 
-Etapp 6: [slutkontroll av receptflödet](RECIPE-FLOW-VERIFICATION.md) skiljer verifierad validering, isolerad publicering och verklig GitHub-synk från ännu oprövad ny publicering från telefon via mobildata. Ingen ny appversion eller receptändring ingår.
+Etapp 6: [slutkontroll av receptflödet](RECIPE-FLOW-VERIFICATION.md) redovisar validering, isolerat publiceringsprov och slutligen verklig publicering från telefon via mobildata till GitHub och vidare till Green. Ingen ny appversion krävdes; älggrytan publicerades i användarens separata receptärende.
 
 ## Historiska granskningar
 

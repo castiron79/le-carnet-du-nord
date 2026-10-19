@@ -1,7 +1,9 @@
 # Slutkontroll av receptflödet – etapp 6
 
-Kontrollerad 2026-10-19. App 1.6.6, skillpaket v13 (utgångsläge v12), receptrevision
-`c019d71adcb5d8eb03097e483a78448e35b8d18c`.
+Slutverifierad 2026-10-19. App 1.6.6, skillpaket v13 (utgångsläge v12).
+Baslinjen var receptrevision `c019d71adcb5d8eb03097e483a78448e35b8d18c`;
+verklig mobilpublicering och Green-synk verifierades därefter på
+`598fcd12c8adb4324d5c9be633725013f95c6be2`.
 
 ## Flöde och nätverk
 
@@ -34,13 +36,17 @@ har inte aktiverats eller provats.
 | Drift | Installerad/senaste appversion är 1.6.6. Ingress, automatisk watchdog och HA:s uppdateringsvisning verifierades i etapp 5. Ingen ny appinstallation behövdes i etapp 6. |
 | Verkliga enheter | Användaren bekräftade i etapp 5 att scones bilder, illustrationsknappar och timerreglage fungerar från dator, surfplatta och telefon på hemnätverket. |
 | Telefon via mobildata | Användaren bekräftade i omprovet att hela v12-validatorn passerar med giltigt paket och 0 varningar. Alla tre bilder hämtades med fetch_file, encoding=base64, från c019d71 och avkodade bytes verifierades mot respektive Git-blob-SHA. Inga arkivfiler ändrades eller publicerades. |
+| Verklig mobilpublicering → Green | Användaren publicerade älggryta med trattkantareller från telefon utan wifi. GitHub-main och Greens synkrevision matchar 598fcd1. Recept-API visar det nya receptet med fyra timers; huvudbild och båda stegillustrationerna gav 200/image-webp. GitHubs receptkontroll är godkänd. |
+
+Antalen 14 recept och 90 paketfiler ovan avser baslinjen före användarens nya
+älggryta. Efter den verkliga publiceringen visar Green 15 synkroniserade recept.
 
 GitHubs automatiska kontroller för apprevision
 `5d315bb03107c94b2d3e74387fbf3e2375cb1e4c` och receptrevisionen ovan var
 godkända vid slutkontrollen. Dessa tidigare körningar ska inte beskrivas som
 ett nytt publiceringsprov från telefonen.
 
-## Mobilprov och kvarvarande avgränsning
+## Mobilprov och slutverifiering
 
 Användaren rapporterade från det första mobilprovet att textdata kunde hämtas
 från c019d71 och att mängd-/timerkontroller passerade, men att fullständig
@@ -56,14 +62,17 @@ uttrycklig base64-kodning från c019d71 och kontrollerades mot Git-blob-SHA.
 Det verifierar hämtning och fullständig paketvalidering i mobilmiljön med den
 korrigerade metoden; det bevisar inte en separat installation av v13 där.
 
-En ny, godkänd receptpublicering från telefon via mobildata till riktiga GitHub
-och vidare till Green har inte genomförts inom denna slutkontroll. Det är ett
-separat, oprövat led; ett läsprov och ett isolerat lokalt pushprov får inte
-redovisas som ett sådant komplett verkligt publiceringsprov. Nästa vanliga
-receptpublicering kan användas för den kontrollen genom att notera skapad
-GitHub-revision och sedan jämföra med Greens synkrevision.
+Användaren genomförde därefter en verklig publicering av
+`alggryta-med-trattkantareller` från mobiltelefon utan wifi. GitHub-main är
+`598fcd12c8adb4324d5c9be633725013f95c6be2` och Greens befintliga synk visar
+current, 15 recept och samma revision 598fcd1. Receptet finns i appens API med
+fyra timers. Samtliga tre bild-URL:er gav 200/image-webp.
+[GitHubs receptkontroll](https://github.com/castiron79/le-carnet-recipes/actions/runs/39199235982)
+är godkänd. Användarens verkliga mobilpublicering och den oberoende kontrollen
+av GitHub/Green slutför därmed flödesprovet. Inget separat testrecept behövdes.
 
-Endast skillanvisningar, paketering och dokumentation ändrades. Inga recepttexter,
-bilder, appfunktioner, behörigheter, portar eller Green-inställningar ändrades.
+Agentens säkerhetsarbete ändrade endast skillanvisningar, paketering och
+dokumentation. Det nya receptet publicerades av användaren i ett separat
+receptärende. Inga appfunktioner, behörigheter, portar eller Green-inställningar ändrades.
 Backup, byggberoenden och MFA
 ligger utanför den beslutade sexetappsplanen.
