@@ -1,11 +1,12 @@
 # Säkerhets- och driftgranskning
 
-## Aktuell avgränsad uppföljning – app 1.6.5, 2026-10-19
+## Aktuell avgränsad uppföljning – app 1.6.6, 2026-10-19
 
 - Skillpaket v12 stoppar otillåtna paketfiler före publicering. App 1.6.4 kontrollerar nu också platta paket, vanliga filer, UTF-8/JSON, valda/refererade bilder och bildsignaturer före import. Alla paket valideras innan något tidigare recept ersätts.
 - Bild-API:t lämnar enbart ut vald huvudbild och refererade stegillustrationer med explicit image/webp eller image/avif. Markdown, JSON, HTML, JavaScript, okända filer, länkar och osäkra sökvägar lämnas inte ut där.
 - WebP och AVIF stöds som huvudbild via hero_image. Befintliga storleksgränser och runtime-stöd för äldre recept utan mängd-/timerfiler behålls. Bildsignaturkontroll är inte full bildavkodning.
 - App 1.6.5 kontrollerar verklig TCP-motpart före HTTP-metodhantering: endast Supervisor 172.30.32.2 tillåts. Det omfattar även HEAD och /health. Proxyhuvuden kan inte ge åtkomst. Ingress och Supervisors watchdog använder samma källa; inga nya portar eller behörigheter införs. Se HOME-ASSISTANT.md för transportgränsen.
+- App 1.6.6 skriver dessa anslutnings-/hälsologgar utan buffringsdröjsmål. Hälsologgen visar käll-IP och om Ingress-sökvägsrubriken finns, aldrig dess innehåll eller sessionsuppgifter. Rubrikens närvaro används enbart för diagnostik, inte för åtkomstbeslut.
 - Byggberoenden hanteras separat. Backup/restore har uttryckligen skjutits upp av användaren och är inte verifierat.
 - Följande äldre avsnitt är historik. Klientens API-adresser är numera relativa; manifestet innehåller addon_config:rw. Historiska påståenden om motsatsen beskriver inte nuvarande kod. Denna uppföljning ändrar inte konfigurationsmappningen.
 

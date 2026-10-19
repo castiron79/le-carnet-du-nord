@@ -469,7 +469,7 @@ class Handler(SimpleHTTPRequestHandler):
         super().__init__(*args, directory=ROOT, **kwargs)
 
     def log_message(self, fmt, *args):
-        print("carnet peer=%s:" % self.client_address[0], fmt % args)
+        print("carnet peer=%s:" % self.client_address[0], fmt % args, flush=True)
 
     def parse_request(self):
         if not super().parse_request():

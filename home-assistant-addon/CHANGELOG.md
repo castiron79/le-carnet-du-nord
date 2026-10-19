@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.6.6 – 2026-10-19
+
+- Gör hälsologgningen omedelbar för verifiering av åtkomstskyddet från 1.6.5.
+
 ## 1.6.5 – 2026-10-19
 
 - Skyddar appen mot direktanrop från andra interna appar. Endast Supervisor får ansluta; Home Assistant sköter fortsatt inloggningen via Ingress.

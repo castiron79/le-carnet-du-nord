@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.6.6 – 2026-10-19
+
+- Skriver anslutnings- och hälsologgar omedelbart så att Ingress och automatiska watchdog-anrop kan verifieras utan att invänta Python-bufferten. Åtkomstregeln från 1.6.5 är oförändrad.
+
 ## 1.6.5 – 2026-10-19
 
 - Tillåter inkommande HTTP endast från Supervisors verkliga nätverksadress, före läsning och skrivning. Förfalskade proxyhuvuden ger ingen åtkomst.
