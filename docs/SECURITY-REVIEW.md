@@ -12,6 +12,8 @@
 
 Regler och kompatibilitet: `RECIPE-PACKAGE-FILES.md`. Verifiering: isolerade import-/HTTP-tester, oförändrade verkliga receptpaket samt efterföljande driftkontroll; faktiska enhetsprov ska redovisas separat och inte härledas från lokala tester.
 
+Etapp 6: [slutkontroll av receptflödet](RECIPE-FLOW-VERIFICATION.md) skiljer verifierad validering, isolerad publicering och verklig GitHub-synk från ännu oprövad ny publicering från telefon via mobildata. Ingen ny appversion eller receptändring ingår.
+
 ## Historiska granskningar
 
 Datum: 2026-08-11  
