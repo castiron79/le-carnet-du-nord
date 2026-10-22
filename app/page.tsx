@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { scaleIngredientText, updateRecipePrompt } from "./portion-scaling.mjs";
 import { renderQuantityText, portionNotice, type QuantityManifest } from "./quantity-references.mjs";
+import SpotifyButton from "./SpotifyButton";
 import StepTimer from './StepTimer';
 import type {StepTimerDefinition} from './step-timers.mjs';
 
@@ -129,7 +130,7 @@ export default function Home() {
       <section className="community"><div><p className="kicker">MINA ANTECKNINGAR</p><h2>Smaka, minns, förbättra.</h2></div><div className="recipeReactions"><div className="rating"><span>MITT BETYG</span><div>{[1,2,3,4,5].map(n=><button key={n} onClick={()=>rate(selected.id,n)} className={(ratings[selected.id]||0)>=n?"on":""} aria-label={`${n} stjärnor`}>★</button>)}</div></div><div className="favoriteControl"><span>SPARA SOM FAVORIT</span><FavoriteButton active={Boolean(favorites[selected.id])} onClick={()=>toggleFavorite(selected.id)}/></div></div><div className="actions"><button onClick={()=>setCommentOpen(true)}>Lägg till kommentar</button><button className="copyUpdate" onClick={copyUpdateContext} aria-live="polite">{copyState==="copied"?"Kopierat ✓":"Kopiera för uppdatering"}</button></div>{commentOpen&&<form onSubmit={submitNote}><label>Kommentar<textarea value={draft} onChange={e=>setDraft(e.target.value)} placeholder="Skriv din anteckning här…"/></label><div><button type="button" onClick={()=>setCommentOpen(false)}>Avbryt</button><button type="submit">Spara</button></div></form>}{copyState==="fallback"&&<div className="copyFallback"><label>Markera och kopiera texten till chatten<textarea readOnly value={updateRecipePrompt(selected)} onFocus={event=>event.currentTarget.select()}/></label></div>}{(notes[selected.id]||[]).length>0&&<div className="notes">{notes[selected.id].map((n,i)=><p key={i}><span>{n.date}</span>{n.text}</p>)}</div>}</section>
       <button className="back" onClick={()=>{selectRecipe(null);scrollTo(0,0)}}>← Till receptarkivet</button>
     </article>}
-    <footer><b>LE CARNET DU NORD</b><span>Lokalt i ditt hem · Aldrig publikt</span></footer>
+    <footer><b>LE CARNET DU NORD</b><SpotifyButton/></footer>
   </main>
 }
 

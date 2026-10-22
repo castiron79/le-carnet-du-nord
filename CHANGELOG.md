@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.6.7 – 2026-10-22
+
+- Spotify play/paus i den gröna sidfoten med synkroniserad status och Kitchen Sonos som enda mål.
+- Återanvänder SpotifyPlus-sessionen utan nya hjälpare, tvångsaktivering eller reservspelare. HA-behörighet aktiveras för servern; inga autentiseringsuppgifter skickas till webbläsaren.
+
+
 ## Receptskill v13 – 2026-10-19
 
 - Befintliga receptbilder hämtas via GitHub med uttrycklig base64-kodning och avkodas till ursprungliga bytes. Undviker den verifierade anslutningens UTF-8-fel vid blobhämtning.

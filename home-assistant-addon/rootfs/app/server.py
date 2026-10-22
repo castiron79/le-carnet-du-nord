@@ -30,6 +30,75 @@ SYNC_LOCK = threading.Lock()
 sync_status = {"state": "idle", "message": "Inte synkroniserad ännu", "last_sync": None, "revision": None}
 
 
+# Fixed-target Spotify bridge. Credentials never leave the server.
+
+ENTITY = "media_player.spotifyplus_bo_thysell"
+KITCHEN = "media_player.kitchen"
+DEVICE = "Kitchen"
+LOCK = threading.Lock()
+
+
+def ha_request(path, data=None):
+    token = os.environ.get("SUPERVISOR_TOKEN")
+    if not token:
+        raise RuntimeError("Home Assistant unavailable")
+    request = urllib.request.Request(
+        "http://supervisor/core/api/" + path,
+        data=json.dumps(data).encode() if data is not None else None,
+        headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
+    )
+    with urllib.request.urlopen(request, timeout=15) as response:
+        return json.load(response)
+
+
+def snapshot():
+    player = ha_request("states/" + ENTITY)
+    kitchen = ha_request("states/" + KITCHEN)
+    attrs = player.get("attributes", {})
+    available = (player.get("state") in ("playing", "paused")
+                 and kitchen.get("state") not in (None, "unknown", "unavailable")
+                 and DEVICE in attrs.get("source_list", []))
+    on_kitchen = attrs.get("source") == DEVICE
+    return {"state": ("playing" if on_kitchen and player["state"] == "playing"
+                      else "paused") if available else "unavailable"}
+
+
+def status():
+    try:
+        return snapshot()
+    except (OSError, ValueError, RuntimeError):
+        return {"state": "unavailable"}
+
+
+def command(action):
+    # Explicit desired action avoids double toggles from stale pages or retries.
+    if action not in ("play", "pause"):
+        return {"error": "Ogiltig åtgärd"}, 400
+    if not LOCK.acquire(blocking=False):
+        return {"error": "Vänta tills föregående tryck är klart"}, 409
+    try:
+        if snapshot()["state"] == "unavailable":
+            return {"state": "unavailable", "error": "Starta Spotify manuellt och försök igen"}, 503
+        player = ha_request("states/" + ENTITY)
+        on_kitchen = player.get("attributes", {}).get("source") == DEVICE
+        data = {"entity_id": ENTITY, "device_id": DEVICE}
+        if action == "pause":
+            # Never pause playback in another room.
+            if on_kitchen and player.get("state") == "playing":
+                ha_request("services/spotifyplus/player_media_pause", data)
+        elif on_kitchen:
+            if player.get("state") != "playing":
+                ha_request("services/spotifyplus/player_media_resume", data)
+        else:
+            ha_request("services/spotifyplus/player_transfer_playback",
+                       {**data, "play": True, "force_activate_device": False})
+        return {"ok": True}, 200
+    except (OSError, ValueError, RuntimeError):
+        return {"state": "unavailable", "error": "Kunde inte styra Spotify. Starta manuellt och försök igen"}, 502
+    finally:
+        LOCK.release()
+
+
 def read_options():
     try:
         return json.loads(OPTIONS.read_text(encoding="utf-8"))
@@ -506,6 +575,8 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
+        if path == "/api/spotify":
+            return self.send_json(status())
         if path == "/api/recipes":
             return self.send_json(load_recipes())
         if path == "/api/sync":
@@ -570,6 +641,9 @@ class Handler(SimpleHTTPRequestHandler):
             data = json.loads(self.rfile.read(length))
             if not isinstance(data, dict):
                 raise ValueError("JSON-objekt krävs")
+            if self.path == "/api/spotify":
+                result, code = command(data.get("action"))
+                return self.send_json(result, code)
             recipe_id = str(data.get("recipe_id", ""))
             if not RECIPE_ID.fullmatch(recipe_id):
                 raise ValueError("Ogiltigt recept-id")

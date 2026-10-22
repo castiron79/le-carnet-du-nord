@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.6.7 – 2026-10-22
+
+- Spotify play/paus i den gröna sidfoten med synkroniserad status och Kitchen Sonos som enda mål.
+- Återanvänder SpotifyPlus-sessionen utan nya hjälpare, tvångsaktivering eller reservspelare. HA-behörighet aktiveras för servern; inga autentiseringsuppgifter skickas till webbläsaren.
+
+
 ## 1.6.6 – 2026-10-19
 
 - Gör hälsologgningen omedelbar för verifiering av åtkomstskyddet från 1.6.5.

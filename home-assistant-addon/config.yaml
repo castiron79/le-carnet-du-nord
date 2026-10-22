@@ -1,5 +1,5 @@
 name: "Le Carnet du Nord"
-version: "1.6.6"
+version: "1.6.7"
 slug: "le_carnet_du_nord"
 description: "Privat receptarkiv med kommentarer, betyg och portionsanpassning"
 arch:
@@ -11,7 +11,7 @@ ingress: true
 ingress_port: 8099
 panel_icon: mdi:silverware-fork-knife
 panel_title: "Le Carnet du Nord"
-homeassistant_api: false
+homeassistant_api: true
 ports: {}
 ports_description: {}
 backup: cold
