@@ -1,0 +1,329 @@
+{
+  "helpers": [
+    {
+      "helper_type": "input_text",
+      "helper_id": "le_carnet_larm_id",
+      "name": "Le Carnet larm-ID",
+      "config": {
+        "max": 100
+      }
+    },
+    {
+      "helper_type": "input_datetime",
+      "helper_id": "le_carnet_larm_slut",
+      "name": "Le Carnet larm slut",
+      "config": {
+        "has_date": true,
+        "has_time": true
+      }
+    },
+    {
+      "helper_type": "input_boolean",
+      "helper_id": "le_carnet_larm_aktiv",
+      "name": "Le Carnet larm aktiv",
+      "config": {}
+    }
+  ],
+  "scripts": {
+    "le_carnet_starta_timerlarm": {
+      "alias": "Le Carnet – starta timerlarm",
+      "description": "Fast 30-sekundersfönster, deduplicerat larm-ID, endast Nest Audio och kökets Mini. Ingen musikåterställning.",
+      "mode": "single",
+      "max_exceeded": "silent",
+      "fields": {
+        "alarm_id": {
+          "required": true,
+          "selector": {
+            "text": {}
+          }
+        },
+        "ends_at": {
+          "required": true,
+          "selector": {
+            "number": {
+              "min": 0,
+              "max": 9999999999,
+              "mode": "box"
+            }
+          }
+        }
+      },
+      "sequence": [
+        {
+          "condition": "template",
+          "value_template": "{{ alarm_id is string and alarm_id | length == 32 and alarm_id != states('input_text.le_carnet_larm_id') and ends_at | float(0) > now().timestamp() and ends_at | float(0) <= now().timestamp() + 31 }}"
+        },
+        {
+          "condition": "state",
+          "entity_id": "input_boolean.le_carnet_larm_aktiv",
+          "state": "off"
+        },
+        {
+          "condition": "state",
+          "entity_id": "script.le_carnet_stoppa_timerlarm",
+          "state": "off"
+        },
+        {
+          "action": "input_text.set_value",
+          "target": {
+            "entity_id": "input_text.le_carnet_larm_id"
+          },
+          "data": {
+            "value": "{{ alarm_id }}"
+          }
+        },
+        {
+          "action": "input_datetime.set_datetime",
+          "target": {
+            "entity_id": "input_datetime.le_carnet_larm_slut"
+          },
+          "data": {
+            "timestamp": "{{ ends_at | float }}"
+          }
+        },
+        {
+          "action": "input_boolean.turn_on",
+          "target": {
+            "entity_id": "input_boolean.le_carnet_larm_aktiv"
+          }
+        },
+        {
+          "parallel": [
+            {
+              "sequence": [
+                {
+                  "condition": "not",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity_id": "media_player.big_speaker",
+                      "state": [
+                        "unavailable",
+                        "unknown"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "action": "media_player.volume_set",
+                  "target": {
+                    "entity_id": "media_player.big_speaker"
+                  },
+                  "data": {
+                    "volume_level": 0.45
+                  },
+                  "continue_on_error": true
+                },
+                {
+                  "action": "media_player.volume_mute",
+                  "target": {
+                    "entity_id": "media_player.big_speaker"
+                  },
+                  "data": {
+                    "is_volume_muted": false
+                  },
+                  "continue_on_error": true
+                },
+                {
+                  "condition": "template",
+                  "value_template": "{{ is_state('input_boolean.le_carnet_larm_aktiv','on') and states('input_text.le_carnet_larm_id') == alarm_id and now().timestamp() < (state_attr('input_datetime.le_carnet_larm_slut','timestamp') | float(0)) }}"
+                },
+                {
+                  "action": "media_player.play_media",
+                  "target": {
+                    "entity_id": "media_player.big_speaker"
+                  },
+                  "data": {
+                    "media": {
+                      "media_content_id": "media-source://media_source/local/le-carnet/timer-alarm-v1.mp3",
+                      "media_content_type": "audio/mpeg",
+                      "metadata": {
+                        "title": "Le Carnet timerlarm"
+                      }
+                    }
+                  },
+                  "continue_on_error": true
+                }
+              ]
+            },
+            {
+              "sequence": [
+                {
+                  "condition": "not",
+                  "conditions": [
+                    {
+                      "condition": "state",
+                      "entity_id": "media_player.kitchen_speaker",
+                      "state": [
+                        "unavailable",
+                        "unknown"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "action": "media_player.volume_set",
+                  "target": {
+                    "entity_id": "media_player.kitchen_speaker"
+                  },
+                  "data": {
+                    "volume_level": 0.45
+                  },
+                  "continue_on_error": true
+                },
+                {
+                  "action": "media_player.volume_mute",
+                  "target": {
+                    "entity_id": "media_player.kitchen_speaker"
+                  },
+                  "data": {
+                    "is_volume_muted": false
+                  },
+                  "continue_on_error": true
+                },
+                {
+                  "condition": "template",
+                  "value_template": "{{ is_state('input_boolean.le_carnet_larm_aktiv','on') and states('input_text.le_carnet_larm_id') == alarm_id and now().timestamp() < (state_attr('input_datetime.le_carnet_larm_slut','timestamp') | float(0)) }}"
+                },
+                {
+                  "action": "media_player.play_media",
+                  "target": {
+                    "entity_id": "media_player.kitchen_speaker"
+                  },
+                  "data": {
+                    "media": {
+                      "media_content_id": "media-source://media_source/local/le-carnet/timer-alarm-v1.mp3",
+                      "media_content_type": "audio/mpeg",
+                      "metadata": {
+                        "title": "Le Carnet timerlarm"
+                      }
+                    }
+                  },
+                  "continue_on_error": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "wait_template": "{{ is_state('input_boolean.le_carnet_larm_aktiv','off') or now().timestamp() >= (state_attr('input_datetime.le_carnet_larm_slut','timestamp') | float(0)) }}",
+          "timeout": {
+            "seconds": "{{ [0, ends_at | float - now().timestamp()] | max }}"
+          },
+          "continue_on_timeout": true
+        }
+      ]
+    },
+    "le_carnet_stoppa_timerlarm": {
+      "alias": "Le Carnet – stäng av timerlarm",
+      "description": "Stoppar bara Le Carnets eget ljud. En gammal larmidentitet påverkar inte ett nytt larm.",
+      "mode": "single",
+      "max_exceeded": "silent",
+      "fields": {
+        "alarm_id": {
+          "required": false,
+          "selector": {
+            "text": {}
+          }
+        }
+      },
+      "sequence": [
+        {
+          "variables": {
+            "stop_id": "{{ alarm_id | default(states('input_text.le_carnet_larm_id'), true) }}"
+          }
+        },
+        {
+          "condition": "template",
+          "value_template": "{{ stop_id == states('input_text.le_carnet_larm_id') }}"
+        },
+        {
+          "action": "input_boolean.turn_off",
+          "target": {
+            "entity_id": "input_boolean.le_carnet_larm_aktiv"
+          }
+        },
+        {
+          "action": "script.turn_off",
+          "target": {
+            "entity_id": "script.le_carnet_starta_timerlarm"
+          },
+          "continue_on_error": true
+        },
+        {
+          "repeat": {
+            "count": 3,
+            "sequence": [
+              {
+                "parallel": [
+                  {
+                    "sequence": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ 'timer-alarm-v1.mp3' in (state_attr('media_player.big_speaker', 'media_content_id') | default('', true) | string) or state_attr('media_player.big_speaker', 'media_title') == 'Le Carnet timerlarm' }}"
+                      },
+                      {
+                        "action": "media_player.media_stop",
+                        "target": {
+                          "entity_id": "media_player.big_speaker"
+                        },
+                        "continue_on_error": true
+                      }
+                    ]
+                  },
+                  {
+                    "sequence": [
+                      {
+                        "condition": "template",
+                        "value_template": "{{ 'timer-alarm-v1.mp3' in (state_attr('media_player.kitchen_speaker', 'media_content_id') | default('', true) | string) or state_attr('media_player.kitchen_speaker', 'media_title') == 'Le Carnet timerlarm' }}"
+                      },
+                      {
+                        "action": "media_player.media_stop",
+                        "target": {
+                          "entity_id": "media_player.kitchen_speaker"
+                        },
+                        "continue_on_error": true
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "delay": {
+                  "seconds": 1
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "automation": {
+    "alias": "Le Carnet – timerlarm säkerhetsstopp",
+    "description": "Absolut stopp oberoende av receptappen. Vid HA-start stängs föregående larm utan omspelning.",
+    "mode": "single",
+    "triggers": [
+      {
+        "trigger": "time",
+        "at": "input_datetime.le_carnet_larm_slut"
+      },
+      {
+        "trigger": "homeassistant",
+        "event": "start"
+      }
+    ],
+    "conditions": [
+      {
+        "condition": "state",
+        "entity_id": "input_boolean.le_carnet_larm_aktiv",
+        "state": "on"
+      }
+    ],
+    "actions": [
+      {
+        "action": "script.le_carnet_stoppa_timerlarm"
+      }
+    ]
+  }
+}

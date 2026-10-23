@@ -1,5 +1,5 @@
 name: "Le Carnet du Nord"
-version: "1.6.7"
+version: "1.7.0"
 slug: "le_carnet_du_nord"
 description: "Privat receptarkiv med kommentarer, betyg och portionsanpassning"
 arch:
@@ -18,6 +18,7 @@ backup: cold
 watchdog: "http://[HOST]:[PORT:8099]/health"
 map:
   - addon_config:rw
+  - media:rw
 options:
   github_owner: "castiron79"
   github_repository: "le-carnet-recipes"

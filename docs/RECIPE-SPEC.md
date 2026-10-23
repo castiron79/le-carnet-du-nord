@@ -127,3 +127,5 @@ Alla nya eller uppdaterade receptpaket ska innehålla `timers.json`, även om `t
 ## Paketkontroll vid publicering (skillpaket v12)
 
 Endast filer enligt `RECIPE-PACKAGE-FILES.md` får ingå. Kontrollen körs före övrig publiceringsvalidering och inför inga nya storleks- eller bildantalsgränser. Från app 1.6.4 finns motsvarande kontroll vid serverimport och bildutlämning. Bildfunktionen lämnar endast ut vald huvudbild och manifestrefererade stegbilder.
+
+Från app 1.7.0 är körningstillstånd och ljudlarm centrala på Green. Timerformat, grundtider och redaktionell täckning är oförändrade; se TIMER-ALARMS.md.

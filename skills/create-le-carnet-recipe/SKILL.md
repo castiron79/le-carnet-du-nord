@@ -50,7 +50,7 @@ Läs `references/illustrations.md` och `references/recipe-schema.md`. När proje
 
 ## Visuella steg-timers
 
-Receptstandard v10 kräver timers.json i varje nytt eller uppdaterat receptpaket. Använd en tom timers-lista när stegen saknar uttryckliga tider. App 1.6.0 visar timrarna; äldre recept utan fil kan fortfarande läsas. Märk endast upp uttryckliga tillagningstider manuellt. Använd stabila ID:n, 1-baserat steg, label och seconds (10–86400). Intervall får nedre gränsen som kontrolltimer och hela intervallet i note. Flera faser får separata tydligt namngivna timers. Skala aldrig tid med portioner. Ingen ljudfunktion ingår. Se references/timers.md och kör validatorn. Vid ändrad stegföljd ska timrarnas stegkoppling granskas.
+Receptstandard v10 kräver timers.json i varje nytt eller uppdaterat receptpaket. Använd en tom timers-lista när stegen saknar uttryckliga tider. App 1.6.0 visar timrarna; äldre recept utan fil kan fortfarande läsas. Märk endast upp uttryckliga tillagningstider manuellt. Använd stabila ID:n, 1-baserat steg, label och seconds (10–86400). Intervall får nedre gränsen som kontrolltimer och hela intervallet i note. Flera faser får separata tydligt namngivna timers. Skala aldrig tid med portioner. Från app 1.7.0 körs timers gemensamt på Green med ljudlarm; äldre appversioner har enbart lokala visuella timers. Receptets timerformat ändras inte. Se references/timers.md och kör validatorn. Vid ändrad stegföljd ska timrarnas stegkoppling granskas.
 
 ## Gemensamma mängder – arbetsflöde
 

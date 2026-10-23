@@ -1,0 +1,14 @@
+{
+  "file": "timer-alarm-v1.mp3",
+  "sha256": "00f8b66abce4fd1d884f8aa459a1a450769da1955f3899239cffcad8015894a7",
+  "pcm_seconds": 29,
+  "max_seconds": 30,
+  "sample_rate": 44100,
+  "bit_rate": 128000,
+  "channels": 1,
+  "peak_dbfs": -12.38,
+  "rms_dbfs": -20.41,
+  "license": "CC0-1.0",
+  "source": "Original synthesised three-tone signal; scripts/generate-timer-alarm.py",
+  "encoder": "lameenc 1.9.0"
+}

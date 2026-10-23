@@ -73,7 +73,9 @@ class IngressServerTests(unittest.TestCase):
                                  ("POST", "/api/sync"), ("POST", "/api/ratings"),
                                  ("POST", "/api/favorites"), ("POST", "/api/notes"), ("PUT", "/")):
                 with self.subTest(method=method, path=path):
-                    status, body, _ = self.request(port, method, path, headers, '{}')
+                    # No request payload is needed to test the transport guard.
+                    # Closing a rejected request with unread bytes races Windows TCP resets.
+                    status, body, _ = self.request(port, method, path, headers)
                     self.assertEqual(status, 403)
                     self.assertNotIn(b"private page", body)
                     if method == "HEAD": self.assertEqual(body, b"")

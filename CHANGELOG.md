@@ -1,5 +1,12 @@
 # Ändringslogg
 
+## 1.7.0 – 2026-10-23
+
+- Gemensamma recepttimers på Green med beständig lagring och återhämtning efter omstart.
+- Lokalt timerlarm på Nest Audio och kökets Mini, med gemensam avstängning och 30-sekundersgräns. Sonos och Spotify lämnas utanför larmstyrningen.
+- Utökar appens mappning till det lokala mediebiblioteket för den paketerade larmfilen.
+
+
 ## 1.6.7 – 2026-10-22
 
 - Spotify play/paus i den gröna sidfoten med synkroniserad status och Kitchen Sonos som enda mål.

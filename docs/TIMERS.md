@@ -16,9 +16,7 @@ Märk upp tider manuellt. Intervall föreslår nedre gränsen som kontrolltid; v
 
 Från app 1.6.1 ändrar plus/minus 10 sekunder upp till 2 minuter, 30 sekunder upp till 5 minuter och hela minuter därefter. Vid exakt 2:00 ger minus 1:50 och plus 2:30; vid 5:00 ger minus 4:30 och plus 6:00. Justering stannar vid nästa intervallgräns även om nedräkningen ligger mellan jämna steg. Minimum 10 sekunder vid justering, maximum 24 timmar. Justering under gång utgår från aktuell återstående tid. Paus fryser tiden. Avbryt/Återställ går till grundtiden. En utgången timer måste återställas innan en ny start och visar ”Tiden är ute”.
 
-Lokal lagring nycklas med recept-ID, stabilt timer-ID och grundtid. Start sparar absolut sluttid. Status överlever receptbyte/omladdning i samma webbläsare och räknar ikapp vid återöppning. Ändrad grundtid skapar en ny lagringsnyckel. Korrupt lagring ignoreras. Om lokal lagring blockeras fungerar timern i den öppna sidan och visar att den inte kan sparas. Olika enheter synkroniseras inte. Flikar på samma origin uppdateras via storage-event men samtidiga klick har vanlig last-write-wins-semantik.
-
-Ingen ljudkod, notifiering, Spotify-styrning, HA-timerbackend eller utökad HA-behörighet ingår. Ingen garanti om visning när webbläsaren är stängd eller sover: vyn visar rätt återstående/utgången tid när den öppnas. Ljud och säker Spotify-återupptagning är separat framtida arbete. Den tidigare HA-larmpiloten är avstängd.
+Från app 1.7.0 sparas och körs timers gemensamt på Green. De fortsätter utan en aktiv skärm och synkroniseras mellan enheter. Larm spelas på Nest Audio och kökets Mini i högst 30 sekunder, med gemensam avstängning. Äldre lokala timers importeras inte. Se [TIMER-ALARMS.md](TIMER-ALARMS.md) för drift, felpolicy och installation. Den tidigare HA-piloten förblir avstängd.
 
 Utrullning 2026-10-18: samtliga 14 recept är granskade och har totalt 47 timers. Recepttexter, mängder och bilder har behållits. ”Per sida” får två manuellt startade timers.
 

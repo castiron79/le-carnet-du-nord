@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
 import { scaleIngredientText, updateRecipePrompt } from "./portion-scaling.mjs";
 import { renderQuantityText, portionNotice, type QuantityManifest } from "./quantity-references.mjs";
+import TimerOverview from "./TimerOverview";
 import SpotifyButton from "./SpotifyButton";
 import StepTimer from './StepTimer';
 import type {StepTimerDefinition} from './step-timers.mjs';
@@ -47,7 +48,7 @@ function RecipeInstructions({recipeId,steps,quantities,factor,notice}:{recipeId:
   return <>
     <div className="methodHeading"><h3>Gör så här</h3>{pictures.length>0&&<div className="illustrationBulkActions"><button type="button" onClick={()=>setAll(true)}>Visa alla illustrationer</button><button type="button" onClick={()=>setAll(false)}>Dölj alla</button></div>}</div>
     {notice&&<p className="portionNotice" role="status">{notice}</p>}
-    {steps.some(step=>step.timers?.length)&&<p className="visualTimerHint">Visuella timers · inget ljud. Sparas i den här webbläsaren.</p>}
+    {steps.some(step=>step.timers?.length)&&<p className="visualTimerHint">Timern fortsätter på Green även när skärmen är avstängd.</p>}
     {steps.map((step,i)=><section className="step" key={i}><i>{i+1}</i><div className="stepContents"><h4>{renderQuantityText(step.title,quantities,factor)}</h4><ul>{step.items.map((value,j)=><li key={j}>{renderQuantityText(value,quantities,factor)}</li>)}</ul><div className="stepControls">{(step.timers||[]).slice(0,-1).map(timer=><StepTimer key={timer.id} recipeId={recipeId} timer={timer} showLabel/>)}<div className="stepControlRow">{(step.timers||[]).slice(-1).map(timer=><StepTimer key={timer.id} recipeId={recipeId} timer={timer} showLabel={(step.timers?.length||0)>1}/>)}{(step.illustrations||[]).map((picture,j)=>{
       const id=`illustration-${i+1}-${j+1}`,key=`${i}-${j}`,visible=Boolean(expanded[key]);
       const verb=picture.kind==="result"?"Visa hur det ska se ut":"Visa illustration";
@@ -130,7 +131,7 @@ export default function Home() {
       <section className="community"><div><p className="kicker">MINA ANTECKNINGAR</p><h2>Smaka, minns, förbättra.</h2></div><div className="recipeReactions"><div className="rating"><span>MITT BETYG</span><div>{[1,2,3,4,5].map(n=><button key={n} onClick={()=>rate(selected.id,n)} className={(ratings[selected.id]||0)>=n?"on":""} aria-label={`${n} stjärnor`}>★</button>)}</div></div><div className="favoriteControl"><span>SPARA SOM FAVORIT</span><FavoriteButton active={Boolean(favorites[selected.id])} onClick={()=>toggleFavorite(selected.id)}/></div></div><div className="actions"><button onClick={()=>setCommentOpen(true)}>Lägg till kommentar</button><button className="copyUpdate" onClick={copyUpdateContext} aria-live="polite">{copyState==="copied"?"Kopierat ✓":"Kopiera för uppdatering"}</button></div>{commentOpen&&<form onSubmit={submitNote}><label>Kommentar<textarea value={draft} onChange={e=>setDraft(e.target.value)} placeholder="Skriv din anteckning här…"/></label><div><button type="button" onClick={()=>setCommentOpen(false)}>Avbryt</button><button type="submit">Spara</button></div></form>}{copyState==="fallback"&&<div className="copyFallback"><label>Markera och kopiera texten till chatten<textarea readOnly value={updateRecipePrompt(selected)} onFocus={event=>event.currentTarget.select()}/></label></div>}{(notes[selected.id]||[]).length>0&&<div className="notes">{notes[selected.id].map((n,i)=><p key={i}><span>{n.date}</span>{n.text}</p>)}</div>}</section>
       <button className="back" onClick={()=>{selectRecipe(null);scrollTo(0,0)}}>← Till receptarkivet</button>
     </article>}
-    <footer><b>LE CARNET DU NORD</b><SpotifyButton/></footer>
+    <TimerOverview/><footer><b>LE CARNET DU NORD</b><SpotifyButton/></footer>
   </main>
 }
 

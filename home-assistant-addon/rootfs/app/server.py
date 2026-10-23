@@ -12,10 +12,17 @@ import time
 import urllib.error
 import urllib.request
 import zipfile
+import sys
 from datetime import datetime, timezone
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from timer_engine import TimerEngine, TimerError
+from timer_alarm import AlarmBridge, install_sound
+
+TIMER_ENGINE = None
 
 ROOT = Path(os.environ.get("CARNET_WEB_DIR", "/app/www"))
 DATA = Path(os.environ.get("CARNET_DATA_DIR", "/data"))
@@ -38,7 +45,7 @@ DEVICE = "Kitchen"
 LOCK = threading.Lock()
 
 
-def ha_request(path, data=None):
+def ha_request(path, data=None, timeout=15):
     token = os.environ.get("SUPERVISOR_TOKEN")
     if not token:
         raise RuntimeError("Home Assistant unavailable")
@@ -47,7 +54,7 @@ def ha_request(path, data=None):
         data=json.dumps(data).encode() if data is not None else None,
         headers={"Authorization": "Bearer " + token, "Content-Type": "application/json"},
     )
-    with urllib.request.urlopen(request, timeout=15) as response:
+    with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.load(response)
 
 
@@ -342,6 +349,16 @@ def recipe_folders(root):
     return sorted({p.parent for p in root.rglob("recipe.md") if ".git" not in p.parts}, key=lambda p: p.name)
 
 
+def timer_definition(key):
+    for recipe in load_recipes():
+        for step in recipe['steps']:
+            for timer in step.get('timers', []):
+                if TimerEngine.key(recipe['id'], timer['id'], timer['seconds']) == key:
+                    return {'recipe_id': recipe['id'], 'timer_id': timer['id'], 'initial': timer['seconds'],
+                            'title': recipe['swedishTitle'], 'label': timer['label'], 'step': timer['step']}
+    return None
+
+
 def validate_recipe_files(folder):
     """Flat package boundary; return only the declared image filenames."""
     if folder.is_symlink() or not folder.is_dir():
@@ -575,6 +592,17 @@ class Handler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         path = urlparse(self.path).path
+        if path.startswith('/api/timer-requests/'):
+            if TIMER_ENGINE is None:
+                return self.send_json({'error': 'Timerdriften är inte startad'}, 503)
+            try:
+                return self.send_json(TIMER_ENGINE.request_result(path.removeprefix('/api/timer-requests/')))
+            except TimerError as exc:
+                return self.send_json({'error': str(exc)}, exc.status)
+        if path == '/api/timers':
+            if TIMER_ENGINE is None:
+                return self.send_json({'error': 'Timerdriften är inte startad'}, 503)
+            return self.send_json(TIMER_ENGINE.view())
         if path == "/api/spotify":
             return self.send_json(status())
         if path == "/api/recipes":
@@ -621,6 +649,9 @@ class Handler(SimpleHTTPRequestHandler):
             return self.send_json({"rating": row["rating"] if row else 0, "favorite": bool(favorite), "favorite_updated_at": favorite["updated_at"] if favorite else None, "notes": notes})
         if path == "/health":
             self.log_message("health ingress=%s", bool(self.headers.get("X-Ingress-Path")))
+            if TIMER_ENGINE is not None:
+                health = TIMER_ENGINE.health()
+                return self.send_json({'status': 'ok' if health['ok'] else 'error', 'timers': health}, 200 if health['ok'] else 503)
             return self.send_json({"status": "ok"})
         if path == "/":
             self.path = "/index.html"
@@ -641,6 +672,13 @@ class Handler(SimpleHTTPRequestHandler):
             data = json.loads(self.rfile.read(length))
             if not isinstance(data, dict):
                 raise ValueError("JSON-objekt krävs")
+            if self.path == '/api/timers':
+                if TIMER_ENGINE is None:
+                    return self.send_json({'error': 'Timerdriften är inte startad'}, 503)
+                try:
+                    return self.send_json(TIMER_ENGINE.change(data))
+                except TimerError as exc:
+                    return self.send_json({'error': str(exc)}, exc.status)
             if self.path == "/api/spotify":
                 result, code = command(data.get("action"))
                 return self.send_json(result, code)
@@ -681,6 +719,9 @@ class Handler(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     connect().close()
+    install_sound()
+    TIMER_ENGINE = TimerEngine(DB, timer_definition)
+    TIMER_ENGINE.start(AlarmBridge(ha_request))
     threading.Thread(target=sync_loop, daemon=True).start()
     ThreadingHTTPServer(("0.0.0.0", 8099), Handler).serve_forever()
 
