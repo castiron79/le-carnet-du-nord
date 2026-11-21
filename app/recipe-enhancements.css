@@ -338,14 +338,13 @@ main > footer { margin-top: auto; }
 }
 
 .clearFilters {
-  min-height: 41px;
-  padding: 9px 13px;
+  padding: 10px 14px;
   border: 1px solid #cdbd9d;
   background: transparent;
   cursor: pointer;
   color: var(--muted);
   font: 700 9px Arial, sans-serif;
-  letter-spacing: .09em;
+  letter-spacing: .11em;
   text-transform: uppercase;
 }
 

@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.7.4 – 2026-11-21
+
+- Fixar tagg-parsningen från `recipe.md` så riktiga taggar visas i `Taggar`-filtret, och ger `✕ Rensa filter`-knappen samma höjd som sorteringsknapparna.
+
+
 ## 1.7.3 – 2026-11-21
 
 - Lägger till *L’accord du sommelier* (dryckesrekommendation under *Serveringstips*), knappen **Lagad idag ✓** med beständig tillagningsräknare i databasen samt **Taggar**-filter under *Alla recept*.

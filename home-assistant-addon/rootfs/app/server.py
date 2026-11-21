@@ -206,7 +206,11 @@ def parse_recipe(folder):
     for line in parts[1].splitlines():
         if not line.strip():
             continue
-        if line.startswith("  ") and nested and ":" in line:
+        if line.lstrip().startswith("- ") and nested:
+            if not isinstance(meta.get(nested), list):
+                meta[nested] = []
+            meta[nested].append(scalar(line.lstrip()[2:]))
+        elif line.startswith("  ") and nested and ":" in line:
             key, value = line.strip().split(":", 1)
             meta[nested][key] = scalar(value)
         elif ":" in line:
@@ -303,7 +307,13 @@ def parse_recipe(folder):
     if revision:
         image = f"{image}?v={revision}"
     raw_tags = meta.get("tags", [])
-    tags = [str(t).strip() for t in raw_tags if str(t).strip()] if isinstance(raw_tags, list) else [x.strip() for x in str(raw_tags).split(",") if x.strip()]
+    if isinstance(raw_tags, list):
+        tags = [str(t).strip() for t in raw_tags if str(t).strip()]
+    elif isinstance(raw_tags, str):
+        cleaned = raw_tags.strip().strip("[]")
+        tags = [x.strip().strip("\"'") for x in cleaned.split(",") if x.strip()]
+    else:
+        tags = []
     sommelier = str(meta.get("sommelier", "")).strip()
     return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "tags": tags, **({"sommelier": sommelier} if sommelier else {}), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
 

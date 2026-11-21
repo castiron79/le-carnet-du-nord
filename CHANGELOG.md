@@ -1,5 +1,12 @@
 # Ändringslogg
 
+## 1.7.4 – 2026-11-21
+
+- Fixar parsning av YAML-listor i `recipe.md` så `tags` visas korrekt i Tagg-filtret istället för `{}`.
+- Ger `✕ Rensa filter`-knappen samma storlek som övriga sorteringsknappar i `Alla recept`.
+- Breddar dryckesexemplen i skillen (`create-le-carnet-recipe-v14.zip`) till t.ex. vin, öl, cider, must, kaffe, te eller alkoholfritt.
+
+
 ## 1.7.3 – 2026-11-21
 
 - Lägger till *L’accord du sommelier* som egen dryckesrekommendation under *Serveringstips* (via frontmatter-fältet `sommelier`) och uppdaterar receptskillen till v14 så att dryckesförslag inte dubbleras i *Serveringstips*.
