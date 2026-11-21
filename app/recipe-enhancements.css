@@ -791,4 +791,6 @@ html[data-theme="dark"] .syncArea button {
   color: var(--ink);
 }
 html[data-theme="dark"] .ingredients li:hover { color: var(--gold); }
+.facts .factIcon svg { width: 24px; height: 24px; display: block; }
+html[data-theme="dark"] .facts .factIcon { color: var(--ink); border-color: var(--gold); }
 

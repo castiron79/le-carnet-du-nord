@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.7.2 – 2026-11-21
+
+- Byter receptsidans fem faktradsikoner från Unicode-tecken till skarpa inline-SVG-ikoner (urtavla för total tid, timglas för aktiv tid, skål med sked för portioner, eldslåga för energi och serveringskupa för måltidstyp) med stöd för både ljust och mörkt tema.
+
+
 ## 1.7.1 – 2026-11-21
 
 - Uppdaterar franska receptrubriker på startsidan och receptsidan med kapitäler och kursiva bindeord samt djupare antikguld för bättre läsbarhet på papper.

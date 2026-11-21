@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.7.2 – 2026-11-21
+
+- Uppdaterar receptsidans fem faktradsikoner till enhetliga SVG-ikoner: urtavla (total tid), timglas (aktiv tid), skål med sked (portioner), eldslåga (kalorier) och serveringskupa (passar som).
+
+
 ## 1.7.1 – 2026-11-21
 
 - Förfinad bistrotypografi på franska receptrubriker, djupare antikguld för bättre kontrast och valbart mörkt/ljust tema i sidhuvudet.
