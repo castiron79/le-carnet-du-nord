@@ -1,5 +1,13 @@
 # Ändringslogg
 
+## 1.7.1 – 2026-11-21
+
+- Uppdaterar franska receptrubriker på startsidan och receptsidan med kapitäler och kursiva bindeord samt djupare antikguld för bättre läsbarhet på papper.
+- Lägger till valbart ljust och mörkt tema i sidhuvudet (`localStorage`), avprickningsbara ingredienser utan kryssrutor och lugnare steg-rubriker i vanlig stil.
+- Förbättrar arkivvyn: stabil filterrad med `Rensa filter` på raden under, sortering på namn stigande/fallande (`Namn A–Ö`/`Namn Ö–A`) och favoriter, synliga kolumnrubriker i listvyn även på mobil samt förädlade spelkort med 3-radiga titlar och betyg.
+- Gör hela den gröna välkomstytan på startsidan klickbar för att nollställa sökningen och döljer den i `Alla recept`.
+
+
 ## 1.7.0 – 2026-10-23
 
 - Gemensamma recepttimers på Green med beständig lagring och återhämtning efter omstart.

@@ -11,17 +11,18 @@ main > footer { margin-top: auto; }
 .archiveViewToggle button { padding:9px 14px; border:1px solid #cdbd9d; border-radius:5px; background:transparent; cursor:pointer; font:12px Arial,sans-serif; }
 .archiveViewToggle button[aria-pressed="true"] { background:var(--forest); color:#f8f4eb; border-color:var(--forest); }
 .archiveCardGrid { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:20px; padding:4px 0 20px; }
-.archiveCard { position:relative; min-width:0; height:410px; display:flex; flex-direction:column; padding:7px; border:1px solid #ded4c2; border-radius:12px; background:#faf7ef; box-shadow:0 4px 12px #1837250d; overflow:hidden; transition:box-shadow .18s; }
+.archiveCard { position:relative; min-width:0; height:410px; display:flex; flex-direction:column; padding:7px; border:1px solid #ded4c2; outline:1px solid #e3d6bc; outline-offset:-5px; border-radius:12px; background:#faf7ef; box-shadow:0 4px 12px #1837250d; overflow:hidden; transition:box-shadow .18s; }
 .archiveCard:hover { box-shadow:0 7px 20px #18372520; }
 .cardOpen { position:absolute; inset:0; z-index:1; border:0; border-radius:12px; background:transparent; cursor:pointer; }
 .cardOpen:focus-visible { outline:2px solid var(--gold); outline-offset:-3px; }
 .cardImage { height:205px; flex:0 0 205px; overflow:hidden; border-radius:7px; background:#e4ddcd; display:grid; place-items:center; color:var(--gold); font-size:42px; }
 .cardImage img { width:100%; height:100%; object-fit:cover; object-position:center; }
-.cardCopy { padding:12px 7px 0; min-width:0; }
-.cardCopy h3 { font-size:20px; font-weight:500; line-height:1.16; margin:0; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
-.cardFrench { margin:6px 0 0; color:var(--muted); font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-.cardDescription { margin:10px 0 0; font-size:12px; line-height:1.4; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
+.cardCopy { padding:10px 7px 0; min-width:0; }
+.cardCopy h3 { font-size:18px; font-weight:600; line-height:1.15; margin:0; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:3; overflow:hidden; }
+.cardFrench { margin:3px 0 0; color:var(--gold); font-size:11.5px; font-style:italic; text-transform:none; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cardDescription { margin:6px 0 0; color:var(--muted); font-size:11.5px; line-height:1.35; display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; }
 .cardMeta { margin-top:auto; display:flex; align-items:center; gap:10px; padding:9px 4px 1px 7px; font:11px Arial,sans-serif; white-space:nowrap; }
+.cardRating { color:var(--gold); font-weight:700; }
 .cardMeta .favoriteButton { position:relative; z-index:2; margin-left:auto; width:34px; height:34px; flex:0 0 34px; border:0; font-size:27px; }
 @media(min-width:1600px) { .archiveCardGrid { grid-template-columns:repeat(6,minmax(0,1fr)); } }
 @media(max-width:1100px) { .archiveCardGrid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; } }
@@ -303,7 +304,7 @@ main > footer { margin-top: auto; }
 
 .archiveFilters {
   display: grid;
-  grid-template-columns: minmax(240px, 2fr) minmax(145px, 1fr) minmax(145px, 1fr) auto;
+  grid-template-columns: minmax(240px, 2fr) minmax(145px, 1fr) minmax(145px, 1fr);
   gap: 10px;
   align-items: end;
 }
@@ -562,6 +563,12 @@ main > footer { margin-top: auto; }
   }
 
   .archiveLabels {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 11px 44px 8px 7px;
+  }
+
+  .archiveIngredientsLabel {
     display: none;
   }
 
@@ -657,3 +664,131 @@ main > footer { margin-top: auto; }
 @media (prefers-reduced-motion: reduce) {
   .illustrationBulkActions button,.illustrationToggle { transition:none; }
 }
+
+/* Pretentiös fransk menytypografi & klickbar hero */
+.frenchMenuTitle {
+  font-variant-caps: small-caps;
+  letter-spacing: 0.035em;
+  font-weight: 500;
+}
+.frenchMenuTitle em {
+  font-variant-caps: normal;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+  letter-spacing: 0.01em;
+}
+.tileCopy h3 {
+  line-height: 1.08;
+  text-transform: none;
+}
+.recipeTitle h1 {
+  text-transform: none;
+  line-height: 0.96;
+}
+.homeHero.clickableHero { position: relative; }
+.heroHomeButton {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.heroIntro {
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Temaväxlare i toppfältet */
+.syncArea button.themeToggle {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+/* Avprickningsbara ingredienser & lugnare steg-rubriker */
+.ingredients h3 { margin-bottom: 4px; }
+.ingredientHint {
+  margin: 0 0 16px;
+  font-style: italic;
+  font-size: 12px;
+  color: var(--muted);
+}
+.ingredientButton {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: opacity 0.15s ease;
+}
+.ingredientButton:hover { color: var(--forest); }
+.ingredients li.checked .ingredientButton {
+  opacity: 0.42;
+  text-decoration: line-through;
+}
+.step h4 {
+  text-transform: none;
+  font-weight: 700;
+}
+
+/* Mörkt tema */
+html[data-theme="dark"] {
+  --forest: #1c543c;
+  --forest2: #0b1712;
+  --gold: #d5ab50;
+  --paper: #141816;
+  --ink: #efe9dc;
+  --muted: #9da39a;
+  --line: #3a443c;
+}
+html[data-theme="dark"] .masthead,
+html[data-theme="dark"] .paper,
+html[data-theme="dark"] .community,
+html[data-theme="dark"] .facts,
+html[data-theme="dark"] .recipeHero,
+html[data-theme="dark"] .timerOverview {
+  background: #181e1b;
+  border-color: var(--line);
+}
+html[data-theme="dark"] .recipeTile,
+html[data-theme="dark"] .archiveCard,
+html[data-theme="dark"] .archiveFilters input,
+html[data-theme="dark"] .archiveFilters select,
+html[data-theme="dark"] .community textarea {
+  background: #1b211e;
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="dark"] .archiveCard {
+  outline-color: rgba(213, 171, 80, 0.16);
+}
+html[data-theme="dark"] .recipePage {
+  background: #111513;
+}
+html[data-theme="dark"] .recipeTitle {
+  background: linear-gradient(90deg, #181e1b 0%, #181e1b 43%, rgba(24,30,27,.98) 52%, rgba(24,30,27,.9) 63%, rgba(24,30,27,.68) 74%, rgba(24,30,27,.36) 87%, rgba(24,30,27,0) 100%);
+}
+html[data-theme="dark"] .recipeTitle h1 { color: var(--ink); }
+html[data-theme="dark"] .homeHero { background: #0e2c1f; }
+html[data-theme="dark"] .stepTimer,
+html[data-theme="dark"] .illustrationToggle,
+html[data-theme="dark"] .illustrationBulkActions button:not(:first-child),
+html[data-theme="dark"] .illustrationPanel figure {
+  background: #1b211e;
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="dark"] .illustrationPanel figcaption { color: var(--muted); }
+html[data-theme="dark"] .archiveSort button,
+html[data-theme="dark"] .archiveViewToggle button,
+html[data-theme="dark"] .clearFilters,
+html[data-theme="dark"] .syncArea button {
+  border-color: var(--line);
+  color: var(--ink);
+}
+html[data-theme="dark"] .ingredients li:hover { color: var(--gold); }
+

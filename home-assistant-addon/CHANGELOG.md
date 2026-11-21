@@ -1,5 +1,12 @@
 # Ändringslogg
 
+## 1.7.1 – 2026-11-21
+
+- Förfinad bistrotypografi på franska receptrubriker, djupare antikguld för bättre kontrast och valbart mörkt/ljust tema i sidhuvudet.
+- Avprickningsbara ingredienser i receptvyn, stabil filterrad i `Alla recept`, sortering på namn stigande/fallande, synliga listrubriker på mobil och 3-radiga titlar med betyg på spelkorten.
+- Klickbar välkomstyta på startsidan som återställer sökningen och döljs i `Alla recept`.
+
+
 ## 1.7.0 – 2026-10-23
 
 - Gemensamma recepttimers på Green med beständig lagring och återhämtning efter omstart.
