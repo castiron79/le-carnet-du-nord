@@ -39,6 +39,7 @@ carb_group: bröd
 meal_type: snabb middag
 tags: [grekiskt, vardag]
 allergens: [gluten, mjölk]
+sommelier: "Ett krispigt, kallt mineralvatten med citron eller en torr lager."
 hero_image: hero.webp
 hero_alt: Gyrospita med fetaost, grönsaker och vitlökssås
 nutrition:

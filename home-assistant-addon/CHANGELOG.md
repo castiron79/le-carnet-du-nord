@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.7.3 – 2026-11-21
+
+- Lägger till *L’accord du sommelier* (dryckesrekommendation under *Serveringstips*), knappen **Lagad idag ✓** med beständig tillagningsräknare i databasen samt **Taggar**-filter under *Alla recept*.
+
+
 ## 1.7.2 – 2026-11-21
 
 - Uppdaterar receptsidans fem faktradsikoner till enhetliga SVG-ikoner: urtavla (total tid), timglas (aktiv tid), skål med sked (portioner), eldslåga (kalorier) och serveringskupa (passar som).

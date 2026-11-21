@@ -302,7 +302,10 @@ def parse_recipe(folder):
     revision = synced_revision()
     if revision:
         image = f"{image}?v={revision}"
-    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
+    raw_tags = meta.get("tags", [])
+    tags = [str(t).strip() for t in raw_tags if str(t).strip()] if isinstance(raw_tags, list) else [x.strip() for x in str(raw_tags).split(",") if x.strip()]
+    sommelier = str(meta.get("sommelier", "")).strip()
+    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "tags": tags, **({"sommelier": sommelier} if sommelier else {}), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
 
 
 def load_step_timers(folder, steps):
@@ -538,6 +541,7 @@ def connect():
     db.execute("PRAGMA synchronous=NORMAL")
     db.execute("CREATE TABLE IF NOT EXISTS ratings (recipe_id TEXT PRIMARY KEY, rating INTEGER NOT NULL CHECK(rating BETWEEN 1 AND 5), updated_at TEXT NOT NULL)")
     db.execute("CREATE TABLE IF NOT EXISTS favorites (recipe_id TEXT PRIMARY KEY, updated_at TEXT NOT NULL)")
+    db.execute("CREATE TABLE IF NOT EXISTS cooked (recipe_id TEXT PRIMARY KEY, count INTEGER NOT NULL DEFAULT 0, last_cooked_at TEXT NOT NULL)")
     db.execute("CREATE TABLE IF NOT EXISTS notes (id INTEGER PRIMARY KEY AUTOINCREMENT, recipe_id TEXT NOT NULL, kind TEXT NOT NULL CHECK(kind IN ('comment','change')), text TEXT NOT NULL, status TEXT NOT NULL DEFAULT 'open', created_at TEXT NOT NULL)")
     db.execute("CREATE INDEX IF NOT EXISTS idx_notes_recipe_id ON notes(recipe_id, created_at)")
     db.commit()
@@ -613,9 +617,11 @@ class Handler(SimpleHTTPRequestHandler):
             with connect() as db:
                 rating_rows = db.execute("SELECT recipe_id,rating FROM ratings").fetchall()
                 favorite_rows = db.execute("SELECT recipe_id,updated_at FROM favorites").fetchall()
+                cooked_rows = db.execute("SELECT recipe_id,count,last_cooked_at FROM cooked").fetchall()
             return self.send_json({
                 "ratings": {row["recipe_id"]: row["rating"] for row in rating_rows},
                 "favorites": {row["recipe_id"]: row["updated_at"] for row in favorite_rows},
+                "cooked": {row["recipe_id"]: {"count": row["count"], "lastCookedAt": row["last_cooked_at"]} for row in cooked_rows},
             })
         if path.startswith("/recipe-assets/"):
             parts = path.removeprefix("/recipe-assets/").split("/")
@@ -644,9 +650,10 @@ class Handler(SimpleHTTPRequestHandler):
             with connect() as db:
                 row = db.execute("SELECT rating FROM ratings WHERE recipe_id=?", (recipe_id,)).fetchone()
                 favorite = db.execute("SELECT updated_at FROM favorites WHERE recipe_id=?", (recipe_id,)).fetchone()
+                cooked_row = db.execute("SELECT count,last_cooked_at FROM cooked WHERE recipe_id=?", (recipe_id,)).fetchone()
                 rows = db.execute("SELECT kind,text,created_at FROM notes WHERE recipe_id=? ORDER BY id", (recipe_id,)).fetchall()
             notes = [{"text": (("Ändringsförslag: " if x["kind"] == "change" else "") + x["text"]), "date": x["created_at"][:10]} for x in rows]
-            return self.send_json({"rating": row["rating"] if row else 0, "favorite": bool(favorite), "favorite_updated_at": favorite["updated_at"] if favorite else None, "notes": notes})
+            return self.send_json({"rating": row["rating"] if row else 0, "favorite": bool(favorite), "favorite_updated_at": favorite["updated_at"] if favorite else None, "cooked": {"count": cooked_row["count"], "lastCookedAt": cooked_row["last_cooked_at"]} if cooked_row else {"count": 0, "lastCookedAt": None}, "notes": notes})
         if path == "/health":
             self.log_message("health ingress=%s", bool(self.headers.get("X-Ingress-Path")))
             if TIMER_ENGINE is not None:
@@ -700,6 +707,11 @@ class Handler(SimpleHTTPRequestHandler):
                         db.execute("INSERT INTO favorites(recipe_id,updated_at) VALUES(?,?) ON CONFLICT(recipe_id) DO UPDATE SET updated_at=excluded.updated_at", (recipe_id, now))
                     else:
                         db.execute("DELETE FROM favorites WHERE recipe_id=?", (recipe_id,))
+                elif self.path == "/api/cooked":
+                    db.execute("INSERT INTO cooked(recipe_id,count,last_cooked_at) VALUES(?,1,?) ON CONFLICT(recipe_id) DO UPDATE SET count=cooked.count+1,last_cooked_at=excluded.last_cooked_at", (recipe_id, now))
+                    cooked_row = db.execute("SELECT count,last_cooked_at FROM cooked WHERE recipe_id=?", (recipe_id,)).fetchone()
+                    db.commit()
+                    return self.send_json({"ok": True, "count": cooked_row["count"], "lastCookedAt": cooked_row["last_cooked_at"]}, 201)
                 elif self.path == "/api/notes":
                     kind = str(data.get("kind", ""))
                     text = str(data.get("text", "")).strip()

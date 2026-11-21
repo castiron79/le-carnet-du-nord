@@ -36,6 +36,7 @@ Vid hämtning eller validering av ett befintligt paket via GitHub, läs hämtnin
 - Följ den lokala projektspecifikationen om den är nyare än den bundlade referensen.
 - Använd svenska mått, °C och ISO-datum.
 - Ange allergener efter aktiv kontroll.
+- Ange en kort, passande dryckesrekommendation i frontmatter-fältet `sommelier` (1–2 meningar – vin, öl, must eller te beroende på rätt). Lägg **inte** dryckesförslag i `Serveringstips` så att det inte dubbleras på receptsidan.
 - Bevara `id` efter första publicering och uppdatera `updated_at` vid innehållsändring.
 - När ett befintligt recept uppdateras måste originalet först hämtas från receptarkivet. Skapa aldrig ett nytt recept eller nytt ID som reserv om originalet inte kan hittas.
 - Generera aldrig egna ikonbilder för faktafält. Använd alltid sajtens gemensamma, lokala ikonsystem så att uttryck, tillgänglighet och filstorlek förblir konsekventa.

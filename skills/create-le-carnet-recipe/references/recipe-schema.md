@@ -9,6 +9,7 @@ Den normativa projektspecifikationen finns i `docs/RECIPE-SPEC.md`. När skillen
 - `Gör så här`: ett komplett steg per fysisk rad, obrutet numrerat från `1.`. Inga inbäddade eller överblivna numreringar får förekomma inne i ett steg.
 - `Ingredienser` ska ha minst en `###`-underrubrik och varje ingrediensgrupp ska innehålla en Markdown-punktlista.
 - `Serveringstips` och `Varför det blir så gott` ska vardera innehålla minst en Markdown-punkt. Vanliga löptextstycken är inte giltiga där.
+- Valfri (rekommenderad) dryckesrekommendation anges i frontmatter-fältet `sommelier: "..."` och visas under *L’accord du sommelier* nedanför *Serveringstips*; lägg därför inte dryckesförslag i `Serveringstips`.
 - `nutrition` är per portion och innehåller kcal, protein, kolhydrater, fett, fiber och metod.
 - Hero ska vara WebP/AVIF och finnas i samma katalog.
 

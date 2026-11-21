@@ -1,5 +1,12 @@
 # Ändringslogg
 
+## 1.7.3 – 2026-11-21
+
+- Lägger till *L’accord du sommelier* som egen dryckesrekommendation under *Serveringstips* (via frontmatter-fältet `sommelier`) och uppdaterar receptskillen till v14 så att dryckesförslag inte dubbleras i *Serveringstips*.
+- Lägger till knappen **Lagad idag ✓** med beständig tillagningsräknare och senast lagat datum i SQLite (`/api/cooked`).
+- Lägger till **Taggar** som filter bredvid Protein och Kolhydrat i *Alla recept*.
+
+
 ## 1.7.2 – 2026-11-21
 
 - Byter receptsidans fem faktradsikoner från Unicode-tecken till skarpa inline-SVG-ikoner (urtavla för total tid, timglas för aktiv tid, skål med sked för portioner, eldslåga för energi och serveringskupa för måltidstyp) med stöd för både ljust och mörkt tema.
