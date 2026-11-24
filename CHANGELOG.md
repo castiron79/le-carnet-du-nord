@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.7.6 – 2026-11-24
+
+- Håller Spotify-knappen i sidfoten aktiv även när SpotifyPlus är i `idle`/`standby`/`off` så länge `media_player.kitchen` (Sonos) och SpotifyPlus är nåbara.
+- Använder `force_activate_device: True` och `delay: 2` vid uppspelningsstart/överföring till `"Kitchen"` (Sonos), utan att påverka Dimmer Orb eller dess skript.
+
 ## 1.7.5 – 2026-11-24
 
 - Rättar listvyn i `Alla recept` så rader växer med rubriklängd utan fast höjd eller `overflow: hidden`, vilket förhindrar att favorithjärtan, bilder, franska undertexter och ingredienser kapas eller blir olika på mobil och dator.

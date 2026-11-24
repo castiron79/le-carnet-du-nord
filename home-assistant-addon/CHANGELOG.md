@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.7.6 – 2026-11-24
+
+- Håller sidfotens Spotify-knapp aktiv i `idle`/`standby`/`off` och väcker Sonos (`Kitchen`) med `force_activate_device: True` och `delay: 2` vid start.
+
 ## 1.7.5 – 2026-11-24
 
 - Rättar listvyn i `Alla recept` på mobil och dator så att rader följer samma layout utan fast höjd eller avkapade favorithjärtan, bilder, undertexter och ingredienser, ger alla tillagningssteg samma indrag på mobil oavsett timers/illustrationer, och lägger till mörkt tema för listraderna.

@@ -9,7 +9,7 @@ class SpotifyTests(test_ingress_server.IngressServerTests):
         return {"state": state, "attributes": {"source": source, "source_list": ["Kitchen", "Big speaker"]}}
 
     def bridge(self, source="Kitchen", state="paused"):
-        def request(path, data=None):
+        def request(path, data=None, timeout=15):
             if path == "states/" + self.app.ENTITY:
                 return self.player(source, state)
             if path == "states/" + self.app.KITCHEN:
@@ -21,16 +21,24 @@ class SpotifyTests(test_ingress_server.IngressServerTests):
         for source, state, action, service in (
             ("Kitchen", "playing", "pause", "player_media_pause"),
             ("Kitchen", "paused", "play", "player_media_resume"),
+            ("Kitchen", "idle", "play", "player_transfer_playback"),
             ("Big speaker", "playing", "play", "player_transfer_playback"),
+            ("Big speaker", "idle", "play", "player_transfer_playback"),
         ):
-            with self.subTest(service=service), self.bridge(source, state) as request:
+            with self.subTest(source=source, state=state, service=service), self.bridge(source, state) as request:
                 self.assertEqual(self.app.command(action), ({"ok": True}, 200))
                 path, data = request.call_args.args
                 self.assertEqual(path, "services/spotifyplus/" + service)
                 self.assertEqual(data["device_id"], "Kitchen")
                 self.assertEqual(data["entity_id"], self.app.ENTITY)
                 if service == "player_transfer_playback":
-                    self.assertIs(data["force_activate_device"], False)
+                    self.assertIs(data["force_activate_device"], True)
+                    self.assertEqual(data["delay"], 2)
+                    self.assertEqual(request.call_args.kwargs.get("timeout"), 20)
+
+    def test_idle_spotify_stays_ready_when_kitchen_available(self):
+        with self.bridge("Big speaker", "idle"):
+            self.assertEqual(self.app.status(), {"state": "paused"})
 
     def test_pause_never_controls_other_room_and_play_is_idempotent(self):
         for source, state, action in (("Big speaker", "playing", "pause"), ("Kitchen", "playing", "play")):

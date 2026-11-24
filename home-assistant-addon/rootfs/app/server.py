@@ -62,11 +62,10 @@ def snapshot():
     player = ha_request("states/" + ENTITY)
     kitchen = ha_request("states/" + KITCHEN)
     attrs = player.get("attributes", {})
-    available = (player.get("state") in ("playing", "paused")
-                 and kitchen.get("state") not in (None, "unknown", "unavailable")
-                 and DEVICE in attrs.get("source_list", []))
+    available = (player.get("state") not in (None, "unknown", "unavailable")
+                 and kitchen.get("state") not in (None, "unknown", "unavailable"))
     on_kitchen = attrs.get("source") == DEVICE
-    return {"state": ("playing" if on_kitchen and player["state"] == "playing"
+    return {"state": ("playing" if on_kitchen and player.get("state") == "playing"
                       else "paused") if available else "unavailable"}
 
 
@@ -93,12 +92,12 @@ def command(action):
             # Never pause playback in another room.
             if on_kitchen and player.get("state") == "playing":
                 ha_request("services/spotifyplus/player_media_pause", data)
-        elif on_kitchen:
-            if player.get("state") != "playing":
-                ha_request("services/spotifyplus/player_media_resume", data)
-        else:
+        elif on_kitchen and player.get("state") == "paused":
+            ha_request("services/spotifyplus/player_media_resume", data)
+        elif not (on_kitchen and player.get("state") == "playing"):
             ha_request("services/spotifyplus/player_transfer_playback",
-                       {**data, "play": True, "force_activate_device": False})
+                       {**data, "play": True, "force_activate_device": True, "delay": 2},
+                       timeout=20)
         return {"ok": True}, 200
     except (OSError, ValueError, RuntimeError):
         return {"state": "unavailable", "error": "Kunde inte styra Spotify. Starta manuellt och försök igen"}, 502
