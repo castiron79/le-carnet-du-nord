@@ -1,5 +1,12 @@
 # Ändringslogg
 
+## 1.7.5 – 2026-11-24
+
+- Rättar listvyn i `Alla recept` så rader växer med rubriklängd utan fast höjd eller `overflow: hidden`, vilket förhindrar att favorithjärtan, bilder, franska undertexter och ingredienser kapas eller blir olika på mobil och dator.
+- Ger alla tillagningssteg i receptvyn samma indrag på mobil oavsett om ett steg har timers/illustrationer eller inte.
+- Lägger till stöd för mörkt tema i listvyn.
+
+
 ## 1.7.4 – 2026-11-21
 
 - Fixar parsning av YAML-listor i `recipe.md` så `tags` visas korrekt i Tagg-filtret istället för `{}`.

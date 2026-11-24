@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.7.5 – 2026-11-24
+
+- Rättar listvyn i `Alla recept` på mobil och dator så att rader följer samma layout utan fast höjd eller avkapade favorithjärtan, bilder, undertexter och ingredienser, ger alla tillagningssteg samma indrag på mobil oavsett timers/illustrationer, och lägger till mörkt tema för listraderna.
+
+
 ## 1.7.4 – 2026-11-21
 
 - Fixar tagg-parsningen från `recipe.md` så riktiga taggar visas i `Taggar`-filtret, och ger `✕ Rensa filter`-knappen samma höjd som sorteringsknapparna.

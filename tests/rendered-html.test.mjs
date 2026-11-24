@@ -114,3 +114,17 @@ test("ordmärket återställer alltid vyn med de senaste recepten", async () => 
   assert.match(page, /className="wordmark" onClick=\{goHome\}/);
 });
 
+test("listvyn i Alla recept växer med innehållet utan att kapa symboler eller rader", async () => {
+  const css = await read("app/recipe-enhancements.css");
+  assert.doesNotMatch(css, /\.archiveRow\s*\{[^}]*(?<![-\w])height:\s*\d+px/);
+  assert.doesNotMatch(css, /\.archiveRow\s*\{[^}]*\boverflow:\s*hidden/);
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.archiveIngredients\s*\{[^}]*grid-column:\s*3;[^}]*grid-row:\s*2;/);
+  assert.match(css, /@media \(max-width: 720px\)[\s\S]*\.archiveFavorite\s*\{[^}]*grid-column:\s*4;[^}]*grid-row:\s*2;/);
+});
+
+test("receptets tillagningssteg har samma indrag på mobil oavsett timers eller illustrationer", async () => {
+  const css = await read("app/recipe-enhancements.css");
+  assert.doesNotMatch(css, /\.step:has\(/);
+  assert.match(css, /@media \(max-width:520px\)[\s\S]*\.step \.stepContents\s*\{\s*grid-column:1\/-1;\s*\}/);
+});
+
