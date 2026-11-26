@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.8.1 – 2026-11-26
+
+- Ersätter direkt `window.print()` på knappen **Skriv ut ▾** med en meny som erbjuder både **Skriv ut…** (öppnar fristående utskriftsvy utanför Ingress-ramen med fallback) och **Spara som PDF** (skapar och laddar ned en lokal PDF-fil med anpassat portionsantal, helt utan externa anrop).
+- Rättar versaler/gemener i samtliga filterlistor (*Protein*, *Kolhydrat*, *Taggar* och *Måltidstyp*) så att t.ex. `Nöt- och blandfärs`, `Ost och mejeri`, `Lunch och middag` och alla taggar följer svensk meningsskiftning och sorteras alfabetiskt.
+- Tar bort knappen *Kopiera ingredienser* från receptets ingrediensruta.
+
 ## 1.8.0 – 2026-11-26
 
 - Rättar receptsidans **Aktiv tid** så att `active_minutes` från `recipe.md` används istället för `cook_minutes`, och formaterar total tillagningstid på ≥ 60 minuter som timmar och minuter (t.ex. `3 tim 20 min`).

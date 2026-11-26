@@ -109,10 +109,18 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 ### D-014 — Utökad receptpresentation, hash-navigering och anteckningsstatus (1.8.0)
 
 - **Datum/status:** 2026-11-26 — Godkänt
-- **Beslut:** Receptsidan använder befintliga fält (`active_minutes`, `allergens`, `## Förvaring`, `nutrition.method`), erbjuder hash-navigering (`#recept=<id>`), valfri skärmlåsning (Screen Wake Lock), `@media print`-utskrift, kopiering av skalade ingredienser, utökad filtrering/sortering i arkivet samt statusbyte/logisk radering av anteckningar (`POST /api/notes/status`).
+- **Beslut:** Receptsidan använder befintliga fält (`active_minutes`, `allergens`, `## Förvaring`, `nutrition.method`), erbjuder hash-navigering (`#recept=<id>`), valfri skärmlåsning (Screen Wake Lock), `@media print`-utskrift, utökad filtrering/sortering i arkivet samt statusbyte/logisk radering av anteckningar (`POST /api/notes/status`).
 - **Skäl:** Gör befintlig receptdata synlig, förbättrar mobil köksanvändning under Home Assistant Ingress utan externa beroenden och fullbordar livscykeln för personliga anteckningar i SQLite.
 - **Konsekvens:** Bakåtkompatibilitet med äldre recept utan `active_minutes` bevaras via fallback till `cook_minutes`. Inga nya portar, molntjänster eller receptformatändringar krävs.
 - **Spårar:** REC-002, UX-003, UX-006, UX-008, INT-001, FUT-003.
+
+### D-015 — Utskriftsmeny med fristående utskrift och lokal PDF (1.8.1)
+
+- **Datum/status:** 2026-11-26 — Godkänt
+- **Beslut:** Knappen **Skriv ut ▾** erbjuder val mellan **Skriv ut…** (öppnar fristående utskriftsfönster utanför Ingress-ramen med `window.print()`-fallback) och **Spara som PDF** (lokal PDF 1.4-generering i klienten via `app/recipe-pdf.mjs`). Knappen *Kopiera ingredienser* tas bort.
+- **Skäl:** Direkt `window.print()` kan blockeras eller klippas i Home Assistant Ingress-ramar och mobilappar; lokal PDF-generering fungerar helt offline utan nya serverberoenden.
+- **Konsekvens:** Klientpaketet håller sig fortfarande under storleksgränsen (< 300 KB) och inga externa bibliotek eller nätverksanrop behövs.
+- **Spårar:** UX-005, UX-006, FUT-003.
 
 ## Beslutsmall
 

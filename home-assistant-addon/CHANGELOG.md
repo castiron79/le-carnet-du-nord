@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.8.1 – 2026-11-26
+
+- Uppdaterar **Skriv ut ▾** till att ge två val: **Skriv ut…** (fristående utskriftsvy som fungerar utanför Home Assistant Ingress-ramen) och **Spara som PDF** (skapar och laddar ned receptet som lokal PDF).
+- Rättar versaler/gemener och svensk sortering i filterlistorna (*Protein*, *Kolhydrat*, *Taggar* och *Måltidstyp*).
+- Tar bort *Kopiera ingredienser* från receptvyn.
+
 ## 1.8.0 – 2026-11-26
 
 - Rättar receptsidans *Aktiv tid* till `active_minutes`, formaterar långa tider som timmar/minuter och visar **Förvaring**, **Allergener** samt **Beräkningsgrund**.

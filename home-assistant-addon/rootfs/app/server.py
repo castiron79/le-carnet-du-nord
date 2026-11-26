@@ -311,6 +311,9 @@ def parse_recipe(folder):
             hours, mins = divmod(total_min, 60)
             return f"{hours} tim {mins} min" if mins else f"{hours} tim"
         return f"{total_min} min"
+    def sentence_case(value):
+        text = str(value or "").strip()
+        return text[0].upper() + text[1:] if text else ""
     tips = list_or_paragraphs(block("Serveringstips", "Varför det blir så gott"))
     why = list_or_paragraphs(block("Varför det blir så gott", "Förvaring"))
     storage = block("Förvaring")
@@ -323,12 +326,13 @@ def parse_recipe(folder):
     revision = synced_revision()
     if revision:
         image = f"{image}?v={revision}"
-    tags = string_list(meta.get("tags", []))
+    tags = [sentence_case(t) for t in string_list(meta.get("tags", [])) if sentence_case(t)]
     allergens = string_list(meta.get("allergens", [])) if "allergens" in meta else None
     sommelier = str(meta.get("sommelier", "")).strip()
     total_minutes = meta.get("total_minutes", 0)
     active_minutes = meta.get("active_minutes", meta.get("cook_minutes", 0))
-    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "tags": tags, **({"allergens": allergens} if allergens is not None else {}), **({"storage": storage} if storage else {}), **({"sommelier": sommelier} if sommelier else {}), **({"nutritionMethod": nutrition_method} if nutrition_method else {}), "image": image, "prep": meta.get("prep_minutes", 0), "active": active_minutes, "totalMinutes": total_minutes, "total": format_minutes(total_minutes), "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
+    meal_type = sentence_case(meta.get("meal_type", "Middag"))
+    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": sentence_case(meta.get("protein_group", "Övrigt")), "carb": sentence_case(carb_group), "category": meal_type, "tags": tags, **({"allergens": allergens} if allergens is not None else {}), **({"storage": storage} if storage else {}), **({"sommelier": sommelier} if sommelier else {}), **({"nutritionMethod": nutrition_method} if nutrition_method else {}), "image": image, "prep": meta.get("prep_minutes", 0), "active": active_minutes, "totalMinutes": total_minutes, "total": format_minutes(total_minutes), "servings": meta.get("servings", 1), "occasion": meal_type, "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
 
 
 def load_step_timers(folder, steps):

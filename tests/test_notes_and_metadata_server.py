@@ -67,10 +67,10 @@ prep_minutes: 20
 cook_minutes: 180
 active_minutes: 30
 total_minutes: 200
-protein_group: nöt
+protein_group: nöt- och blandfärs
 carb_group: potatis
-meal_type: helgmiddag
-tags: [långkok, helg]
+meal_type: lunch och middag
+tags: [långkok, helg, Julia Child]
 allergens: [selleri, senap]
 hero_image: hero.webp
 hero_alt: Mustig gryta
@@ -108,10 +108,12 @@ Innehåller selleri och senap.
         self.assertEqual(parsed["active"], 30)
         self.assertEqual(parsed["totalMinutes"], 200)
         self.assertEqual(parsed["total"], "3 tim 20 min")
+        self.assertEqual(parsed["protein"], "Nöt- och blandfärs")
+        self.assertEqual(parsed["occasion"], "Lunch och middag")
         self.assertEqual(parsed["allergens"], ["selleri", "senap"])
         self.assertEqual(parsed["storage"], "Kyl snabbt och förvara i upp till 3 dagar.")
         self.assertEqual(parsed["nutritionMethod"], "Beräknat på råa vikter.")
-        self.assertEqual(parsed["tags"], ["långkok", "helg"])
+        self.assertEqual(parsed["tags"], ["Långkok", "Helg", "Julia Child"])
 
     def test_note_create_resolve_reopen_and_logical_delete(self):
         port = self.serve()

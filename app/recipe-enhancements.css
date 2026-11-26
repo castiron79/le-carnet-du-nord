@@ -866,13 +866,15 @@ html[data-theme="dark"] .facts .factIcon { color: var(--ink); border-color: var(
 .actions { flex-wrap: wrap; }
 
 .recipeUtilityBar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 2.4vw 0; }
-.utilityButtons { display: flex; flex-wrap: wrap; gap: 8px; }
-.recipeUtilityBar button, .copyIngredientsBtn, .noteActions button { border: 1px solid var(--line); border-radius: 5px; background: #f9f6ef; color: var(--forest); padding: 8px 12px; min-height: 38px; cursor: pointer; font: 700 10px Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
-.recipeUtilityBar button:hover, .copyIngredientsBtn:hover, .noteActions button:hover { border-color: var(--forest); }
+.utilityButtons { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.recipeUtilityBar button, .noteActions button { border: 1px solid var(--line); border-radius: 5px; background: #f9f6ef; color: var(--forest); padding: 8px 12px; min-height: 38px; cursor: pointer; font: 700 10px Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.recipeUtilityBar button:hover, .noteActions button:hover { border-color: var(--forest); }
 .wakeLockToggle.active { background: var(--forest); color: #f8f4eb; border-color: var(--forest); }
-.ingredientsHead { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 4px; }
-.ingredientsHead h3 { margin: 0; }
-.copyIngredientsBtn { min-height: 34px; padding: 6px 10px; }
+.printMenuWrap { position: relative; }
+.printMenu { position: absolute; right: 0; top: calc(100% + 5px); z-index: 20; min-width: 175px; padding: 5px; border: 1px solid var(--line); border-radius: 6px; background: #f9f6ef; box-shadow: 0 8px 22px rgba(18,61,43,.16); display: grid; gap: 4px; }
+.printMenu button { width: 100%; text-align: left; border: 0; border-radius: 4px; background: transparent; padding: 9px 11px; }
+.printMenu button:hover, .printMenu button:focus-visible { background: var(--forest); color: #f8f4eb; }
+.printNotice { font: 600 11px Arial, sans-serif; color: var(--gold); }
 
 .noteItem { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid #d8cfbd; }
 .noteItem p { border-top: 0; padding: 0; flex: 1 1 240px; }
@@ -882,8 +884,11 @@ html[data-theme="dark"] .facts .factIcon { color: var(--ink); border-color: var(
 
 html[data-theme="dark"] .allergenList li,
 html[data-theme="dark"] .recipeUtilityBar button,
-html[data-theme="dark"] .copyIngredientsBtn,
+html[data-theme="dark"] .printMenu,
 html[data-theme="dark"] .noteActions button { background: #1b211e; border-color: var(--line); color: var(--ink); }
+html[data-theme="dark"] .printMenu button { background: transparent; border: 0; }
+html[data-theme="dark"] .printMenu button:hover,
+html[data-theme="dark"] .printMenu button:focus-visible { background: var(--forest); color: #f8f4eb; }
 html[data-theme="dark"] .wakeLockToggle.active { background: var(--forest); color: #f8f4eb; border-color: var(--forest); }
 html[data-theme="dark"] .nutritionMethod,
 html[data-theme="dark"] .noteItem { border-color: var(--line); }
@@ -898,7 +903,7 @@ html[data-theme="dark"] .noteItem { border-color: var(--line); }
 
 @media print {
   html, body, .recipePage, .paper, .facts, .recipeHero, .recipeTitle { background: #fff !important; color: #111 !important; }
-  .masthead, .recipeUtilityBar, .timerOverview, footer, .community, .back, .illustrationBulkActions, .stepControls, .ingredientHint, .portionControls, .copyIngredientsBtn, .nutritionMethod { display: none !important; }
+  .masthead, .recipeUtilityBar, .timerOverview, footer, .community, .back, .illustrationBulkActions, .stepControls, .ingredientHint, .portionControls, .nutritionMethod { display: none !important; }
   .recipeHero { min-height: auto; grid-template-columns: 1.2fr .8fr; border-bottom: 1px solid #ccc; }
   .recipeTitle { width: 100%; min-height: auto; padding: 18px 16px; background: #fff !important; }
   .heroDish { position: relative; inset: auto; min-height: 200px; max-height: 260px; }

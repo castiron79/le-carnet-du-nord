@@ -217,4 +217,4 @@ Gemensamma mängdreferenser i app 1.5.0: servern läser och validerar quantities
 
 `GET /api/state/{slug}` inkluderar `id` och `status` på aktiva anteckningar och filtrerar bort `status = 'deleted'`. `POST /api/notes` returnerar skapat `id`, `status` och datum, och `POST /api/notes/status` tar emot `{ "recipe_id", "note_id", "status": "open"|"resolved"|"deleted" }` bakom samma `X-Carnet-Request: 1`-kontroll.
 
-Klienten använder URL-hash (`#recept=<id>` och `#alla`) så att Ingress-sökvägen förblir intakt vid omladdning och bakåtnavigering, stöder lokal ingrediens- och taggsökning samt sortering i arkivvyn, erbjuder Screen Wake Lock, skalad ingredienskopiering och `@media print`-utskrift.
+Klienten använder URL-hash (`#recept=<id>` och `#alla`) så att Ingress-sökvägen förblir intakt vid omladdning och bakåtnavigering, stöder lokal ingrediens- och taggsökning samt sortering i arkivvyn, erbjuder Screen Wake Lock, fristående utskriftsfönster (`@media print` som fallback) samt lokal PDF 1.4-generering (`app/recipe-pdf.mjs`) utan externa anrop.
