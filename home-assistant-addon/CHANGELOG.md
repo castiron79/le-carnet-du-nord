@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.8.3 – 2026-11-26
+
+- Rättar YAML-parsningen av `tags` och `allergens` i `recipe.md` så att citattecken runt listvärden tas bort och taggar får korrekt stor begynnelsebokstav och sortering.
+
 ## 1.8.2 – 2026-11-26
 
 - Ny kokbokslayout (**Fransk kokbok, 2-spalt**) för både **Spara som PDF** och **Skriv ut…** med rättens bild i helbredd, svensk huvudtitel, fransk undertitel och 5-kolumns faktarad.

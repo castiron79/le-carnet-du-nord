@@ -1,5 +1,9 @@
 # Ändringslogg
 
+## 1.8.3 – 2026-11-26
+
+- Rättar YAML-parsningen i [`server.py`](home-assistant-addon/rootfs/app/server.py) så att omgivande citattecken (`"` och `'`) tas bort från listelement i `tags` och `allergens`, vilket förhindrar att taggar visas som `"bakning"` istället för `Bakning` när recept skapas med citerade YAML-listor.
+
 ## 1.8.2 – 2026-11-26
 
 - Uppgraderar PDF-exporten och den fristående utskriftsvyn till layouten **Fransk kokbok (2-spalt)** med smal bistro-vinjett, centrerad svensk huvudtitel och fransk undertitel, helbreddsfoto på rätten (inbäddat lokalt som JPEG via `<canvas>` utan externa anrop) och 5-kolumns faktarad.

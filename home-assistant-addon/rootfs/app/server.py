@@ -130,7 +130,8 @@ def github_request(url, token, accept="application/vnd.github+json"):
 def scalar(value):
     value = value.strip()
     if value.startswith("[") and value.endswith("]"):
-        return [x.strip() for x in value[1:-1].split(",") if x.strip()]
+        items = [x.strip().strip("\"'") for x in value[1:-1].split(",")]
+        return [item for item in items if item]
     if re.fullmatch(r"\d+(?:\.\d+)?", value):
         return float(value) if "." in value else int(value)
     return value.strip("\"'")
@@ -297,10 +298,10 @@ def parse_recipe(folder):
         return items or [x.strip() for x in re.split(r"\n\s*\n", value) if x.strip()]
     def string_list(raw):
         if isinstance(raw, list):
-            return [str(x).strip() for x in raw if str(x).strip()]
+            return [str(x).strip().strip("\"'") for x in raw if str(x).strip().strip("\"'")]
         if isinstance(raw, str):
             cleaned = raw.strip().strip("[]")
-            return [x.strip().strip("\"'") for x in cleaned.split(",") if x.strip()]
+            return [x.strip().strip("\"'") for x in cleaned.split(",") if x.strip().strip("\"'")]
         return []
     def format_minutes(minutes):
         try:

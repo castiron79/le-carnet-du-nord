@@ -115,6 +115,62 @@ Innehåller selleri och senap.
         self.assertEqual(parsed["nutritionMethod"], "Beräknat på råa vikter.")
         self.assertEqual(parsed["tags"], ["Långkok", "Helg", "Julia Child"])
 
+    def test_parse_recipe_strips_quotes_from_tags_and_allergens(self):
+        folder = self.app.RECIPES / "appelpaj"
+        folder.mkdir(parents=True)
+        shutil.copyfile(self.fixtures / "pixel.webp", folder / "hero.webp")
+        (folder / "recipe.md").write_text("""---
+schema_version: 1
+id: appelpaj
+slug: appelpaj
+title: Äppelpaj
+restaurant_title: Tarte aux pommes
+summary: Klassisk äppelpaj.
+status: published
+published_at: 2026-11-26
+updated_at: 2026-11-26
+servings: 4
+prep_minutes: 20
+cook_minutes: 40
+total_minutes: 60
+protein_group: mejeri
+carb_group: övrigt
+meal_type: dessert
+tags: ["äpple", "paj", 'kanel', bakning]
+allergens: ["gluten (vete)", 'mjölk']
+hero_image: hero.webp
+hero_alt: Äppelpaj
+nutrition:
+  basis: per portion
+  kcal: 350
+  protein_g: 4
+  carbs_g: 48
+  fat_g: 15
+  fiber_g: 3
+  method: Beräknat på råa vikter.
+---
+
+# Äppelpaj
+
+## Ingredienser
+- 500 g äpplen
+
+## Gör så här
+1. **Grädda.** Grädda i 200 °C.
+
+## Serveringstips
+- Servera ljummen.
+
+## Varför det blir så gott
+- Syra och sötma i balans.
+
+## Förvaring
+Förvara kallt i 3 dagar.
+""", encoding="utf-8")
+        parsed = self.app.parse_recipe(folder)
+        self.assertEqual(parsed["tags"], ["Äpple", "Paj", "Kanel", "Bakning"])
+        self.assertEqual(parsed["allergens"], ["gluten (vete)", "mjölk"])
+
     def test_note_create_resolve_reopen_and_logical_delete(self):
         port = self.serve()
         headers = {"Content-Type": "application/json", "X-Carnet-Request": "1"}
