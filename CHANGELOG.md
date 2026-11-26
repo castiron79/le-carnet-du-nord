@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.8.2 – 2026-11-26
+
+- Uppgraderar PDF-exporten och den fristående utskriftsvyn till layouten **Fransk kokbok (2-spalt)** med smal bistro-vinjett, centrerad svensk huvudtitel och fransk undertitel, helbreddsfoto på rätten (inbäddat lokalt som JPEG via `<canvas>` utan externa anrop) och 5-kolumns faktarad.
+- Inför en fast sidstandard beroende på receptets längd: **1 sida** (2 spalter + 2-kolumns faktaband längst ned), **2 sidor** (klassiskt 2-spaltsuppslag med redaktionella sidokort på sida 2) och **3+ sidor** (2-spalt medan ingredienserna pågår, därefter full bredd för resterande steg samt 2-kolumns faktakort på slutet).
+- Ersätter den oanvända `@import "tailwindcss"` i `app/globals.css` med en kompakt CSS-basreset för att hålla Home Assistant-paketets JS+CSS väl under 300 KB.
+
 ## 1.8.1 – 2026-11-26
 
 - Ersätter direkt `window.print()` på knappen **Skriv ut ▾** med en meny som erbjuder både **Skriv ut…** (öppnar fristående utskriftsvy utanför Ingress-ramen med fallback) och **Spara som PDF** (skapar och laddar ned en lokal PDF-fil med anpassat portionsantal, helt utan externa anrop).

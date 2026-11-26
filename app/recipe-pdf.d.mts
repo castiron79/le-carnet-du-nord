@@ -1,9 +1,17 @@
+export type PdfJpegImage = {
+  bytes: Uint8Array;
+  width: number;
+  height: number;
+};
+
 export type PrintableRecipe = {
   id: string;
   title: string;
   subtitle: string;
   swedishTitle: string;
   description: string;
+  imageUrl?: string;
+  imageJpeg?: PdfJpegImage | null;
   totalLabel: string;
   active: number;
   servings: number;
@@ -20,5 +28,6 @@ export type PrintableRecipe = {
   why: string[];
 };
 
+export function loadRecipeImageJpeg(src?: string): Promise<PdfJpegImage | null>;
 export function buildRecipePdfBytes(recipe: PrintableRecipe): Uint8Array;
 export function buildPrintableHtml(recipe: PrintableRecipe): string;

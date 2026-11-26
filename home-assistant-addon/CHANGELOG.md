@@ -1,5 +1,10 @@
 # Ändringslogg
 
+## 1.8.2 – 2026-11-26
+
+- Ny kokbokslayout (**Fransk kokbok, 2-spalt**) för både **Spara som PDF** och **Skriv ut…** med rättens bild i helbredd, svensk huvudtitel, fransk undertitel och 5-kolumns faktarad.
+- Automatisk sidstandard för **1 sida**, **2 sidor** och **3+ sidor** så att ingredienser, steg och faktakort (*Allergener & näringsvärde*, *Serveringstips*, *L’accord du sommelier*, *Förvaring*, *Varför det blir så gott*) alltid placeras balanserat utan brutna steg.
+
 ## 1.8.1 – 2026-11-26
 
 - Uppdaterar **Skriv ut ▾** till att ge två val: **Skriv ut…** (fristående utskriftsvy som fungerar utanför Home Assistant Ingress-ramen) och **Spara som PDF** (skapar och laddar ned receptet som lokal PDF).
