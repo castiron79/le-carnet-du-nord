@@ -210,3 +210,11 @@ Publik åtkomst, extern databas, molnpublicering, produkt-/varumärkesdatabas, n
 `/data/recipes/<slug>/illustrations.json` är en bakåtkompatibel sidecar med en ordnad lista av 1-baserade stegindex, bildtyp, lokala filnamn, alt och caption. `parse_recipe` läser och validerar manifestet vid synk och bygger bildobjekt under respektive steg i API-svaret. Bilder nås via redan existerande `/recipe-assets/` och cachebryts av GitHub-revisionen. React bygger en illustrationstoggle som endast monterar `img` när användaren öppnar den. Inga nya databastabeller, fjärr-API:er eller separata bildservrar behövs. Se `ILLUSTRATIONS.md`.
 
 Gemensamma mängdreferenser i app 1.5.0: servern läser och validerar quantities.json och skickar grunddata tillsammans med oförändrade textmallar. Klienten renderar lista, stegrubriker och stegtext med samma rena modul. Äldre recept behåller textskalning i listan. Ingen databasändring krävs. Se [PORTION-SCALING.md](PORTION-SCALING.md).
+
+## Utökad metadata, sökning och anteckningshantering, version 1.8.0
+
+`parse_recipe` returnerar nu `active_minutes` som `active` (med `cook_minutes` som bakåtkompatibel fallback), heltalet `totalMinutes`, formaterad `total`, `allergens`, `storage` (`## Förvaring`) samt `nutritionMethod`.
+
+`GET /api/state/{slug}` inkluderar `id` och `status` på aktiva anteckningar och filtrerar bort `status = 'deleted'`. `POST /api/notes` returnerar skapat `id`, `status` och datum, och `POST /api/notes/status` tar emot `{ "recipe_id", "note_id", "status": "open"|"resolved"|"deleted" }` bakom samma `X-Carnet-Request: 1`-kontroll.
+
+Klienten använder URL-hash (`#recept=<id>` och `#alla`) så att Ingress-sökvägen förblir intakt vid omladdning och bakåtnavigering, stöder lokal ingrediens- och taggsökning samt sortering i arkivvyn, erbjuder Screen Wake Lock, skalad ingredienskopiering och `@media print`-utskrift.

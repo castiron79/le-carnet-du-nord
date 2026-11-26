@@ -106,6 +106,14 @@ Statusvärden: **Godkänt**, **Ersatt**, **Föreslaget**. En ersättande post h�
 - **Konsekvens:** Skalningen får aldrig mutera receptkällan eller makron per portion. Skillens uppdateringsläge måste hämta befintlig basversion, bevara identiteten, visa diff, kräva godkännande och publicera exakt validerade bytes.
 - **Spårar:** INT-003, INT-005, INT-006, OPS-006, OPS-007.
 
+### D-014 — Utökad receptpresentation, hash-navigering och anteckningsstatus (1.8.0)
+
+- **Datum/status:** 2026-11-26 — Godkänt
+- **Beslut:** Receptsidan använder befintliga fält (`active_minutes`, `allergens`, `## Förvaring`, `nutrition.method`), erbjuder hash-navigering (`#recept=<id>`), valfri skärmlåsning (Screen Wake Lock), `@media print`-utskrift, kopiering av skalade ingredienser, utökad filtrering/sortering i arkivet samt statusbyte/logisk radering av anteckningar (`POST /api/notes/status`).
+- **Skäl:** Gör befintlig receptdata synlig, förbättrar mobil köksanvändning under Home Assistant Ingress utan externa beroenden och fullbordar livscykeln för personliga anteckningar i SQLite.
+- **Konsekvens:** Bakåtkompatibilitet med äldre recept utan `active_minutes` bevaras via fallback till `cook_minutes`. Inga nya portar, molntjänster eller receptformatändringar krävs.
+- **Spårar:** REC-002, UX-003, UX-006, UX-008, INT-001, FUT-003.
+
 ## Beslutsmall
 
 ```markdown

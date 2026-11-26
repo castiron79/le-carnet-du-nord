@@ -123,12 +123,11 @@ för att spara det som favorit; ett rött fyllt hjärta betyder sparat och ett
 konturhjärta betyder inte sparat. Favoriterna lagras i Le Carnet och är därför
 desamma på telefonen och surfplattan. De senast favoritmarkerade visas först.
 
-I **Visa alla recept** kan du filtrera med **Favoriter**. Klicka på resten av
-receptets rad för att öppna receptet, eller direkt på hjärtat för att ändra
-favoritstatus. Klick på **Le Carnet du Nord** uppe till vänster återgår alltid
-till startsidans vy med de senaste recepten.
+I **Visa alla recept** kan du söka på namn, ingrediens eller tagg, filtrera på **Protein**, **Kolhydrat**, **Taggar**, **Måltidstyp**, **Tid** (t.ex. `≤ 30 min`) och **Favoriter**, samt sortera på **Namn**, **Senast tillagd**, **Snabbast**, **Högst betyg** eller **Mest lagad**. Klicka på resten av receptets rad för att öppna receptet, eller direkt på hjärtat för att ändra favoritstatus. Klick på **Le Carnet du Nord** uppe till vänster återgår alltid till startsidans vy med de senaste recepten.
 
-Kommentarer och betyg ligger separat i SQLite och ska finnas kvar. Skriv framtida förbättringsidéer som kommentarer och välj själv vilka som ska ingå när receptet senare uppdateras via chatten.
+På receptsidan finns dessutom **Håll skärmen vaken** (i webbläsare som stöder Screen Wake Lock), **Skriv ut** för en ren pappers-/PDF-utskrift samt **Kopiera ingredienser** (som kopierar skalade mängder — eller endast ej avbockade ingredienser). Under sidopanelen visas nu även **Förvaring**, **Allergener** och **Beräkningsgrund** för näringsvärdena. Webbläsarens bakåtknapp och sidomladdning bevarar aktuellt recept via URL-hash (`#recept=...`).
+
+Kommentarer och betyg ligger separat i SQLite och ska finnas kvar. Befintliga anteckningar kan markeras som klara (**Markera klar** / **Återöppna**) eller tas bort (**Ta bort**). Skriv framtida förbättringsidéer som kommentarer och välj själv vilka som ska ingå när receptet senare uppdateras via chatten.
 
 ## 9. Bildregler
 

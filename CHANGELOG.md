@@ -1,5 +1,14 @@
 # Ändringslogg
 
+## 1.8.0 – 2026-11-26
+
+- Rättar receptsidans **Aktiv tid** så att `active_minutes` från `recipe.md` används istället för `cook_minutes`, och formaterar total tillagningstid på ≥ 60 minuter som timmar och minuter (t.ex. `3 tim 20 min`).
+- Visar befintliga receptdata på receptsidan: **Förvaring**, **Allergener** samt utfällbar **Beräkningsgrund** under *Näringsvärde*.
+- Lägger till hash-baserad navigering (`#recept=<id>` och `#alla`) så att öppet recept överlever omladdning och webbläsarens Tillbaka-knapp fungerar naturligt i Ingress.
+- Lägger till **Håll skärmen vaken** (Screen Wake Lock), **Skriv ut** (`@media print`) och **Kopiera ingredienser** (skalat och med stöd för att bara kopiera ej avbockade ingredienser).
+- Bygger ut **Alla recept** med fritextsökning i ingredienser och taggar, filter för **Måltidstyp** och **Max tid** (`≤ 30 min`, `Under 60 min`) samt sortering på *Namn*, *Senast tillagd*, *Snabbast*, *Högst betyg* och *Mest lagad*.
+- Lägger till hantering av befintliga anteckningar/kommentarer via `POST /api/notes/status`: **Markera klar** / **Återöppna** samt logisk radering (**Ta bort**) i SQLite.
+
 ## 1.7.6 – 2026-11-24
 
 - Håller Spotify-knappen i sidfoten aktiv även när SpotifyPlus är i `idle`/`standby`/`off` så länge `media_player.kitchen` (Sonos) och SpotifyPlus är nåbara.

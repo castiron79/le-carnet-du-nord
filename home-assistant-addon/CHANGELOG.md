@@ -1,5 +1,11 @@
 # Ändringslogg
 
+## 1.8.0 – 2026-11-26
+
+- Rättar receptsidans *Aktiv tid* till `active_minutes`, formaterar långa tider som timmar/minuter och visar **Förvaring**, **Allergener** samt **Beräkningsgrund**.
+- Lägger till hash-navigering (`#recept=`), **Håll skärmen vaken**, **Skriv ut** (`@media print`) och **Kopiera ingredienser** med portionsskalning.
+- Utökar *Alla recept* med ingredienssökning, filter för *Måltidstyp* och *Tid*, fler sorteringsval (*Senast tillagd*, *Snabbast*, *Högst betyg*, *Mest lagad*) samt möjlighet att markera kommentarer som klara eller ta bort dem.
+
 ## 1.7.6 – 2026-11-24
 
 - Håller sidfotens Spotify-knapp aktiv i `idle`/`standby`/`off` och väcker Sonos (`Kitchen`) med `force_activate_device: True` och `delay: 2` vid start.

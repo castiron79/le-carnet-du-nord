@@ -295,9 +295,27 @@ def parse_recipe(folder):
     def list_or_paragraphs(value):
         items = [x.strip() for x in re.findall(r"^-\s+(.+)$", value, re.M)]
         return items or [x.strip() for x in re.split(r"\n\s*\n", value) if x.strip()]
+    def string_list(raw):
+        if isinstance(raw, list):
+            return [str(x).strip() for x in raw if str(x).strip()]
+        if isinstance(raw, str):
+            cleaned = raw.strip().strip("[]")
+            return [x.strip().strip("\"'") for x in cleaned.split(",") if x.strip()]
+        return []
+    def format_minutes(minutes):
+        try:
+            total_min = int(round(float(minutes)))
+        except (TypeError, ValueError):
+            return "0 min"
+        if total_min >= 60:
+            hours, mins = divmod(total_min, 60)
+            return f"{hours} tim {mins} min" if mins else f"{hours} tim"
+        return f"{total_min} min"
     tips = list_or_paragraphs(block("Serveringstips", "Varför det blir så gott"))
     why = list_or_paragraphs(block("Varför det blir så gott", "Förvaring"))
+    storage = block("Förvaring")
     nutrition = meta.get("nutrition", {})
+    nutrition_method = str(nutrition.get("method", "")).strip()
     carb_group = str(meta.get("carb_group", "Övrigt"))
     if carb_group.lower() == "vetemjöl":
         carb_group = "bröd"
@@ -305,16 +323,12 @@ def parse_recipe(folder):
     revision = synced_revision()
     if revision:
         image = f"{image}?v={revision}"
-    raw_tags = meta.get("tags", [])
-    if isinstance(raw_tags, list):
-        tags = [str(t).strip() for t in raw_tags if str(t).strip()]
-    elif isinstance(raw_tags, str):
-        cleaned = raw_tags.strip().strip("[]")
-        tags = [x.strip().strip("\"'") for x in cleaned.split(",") if x.strip()]
-    else:
-        tags = []
+    tags = string_list(meta.get("tags", []))
+    allergens = string_list(meta.get("allergens", [])) if "allergens" in meta else None
     sommelier = str(meta.get("sommelier", "")).strip()
-    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "tags": tags, **({"sommelier": sommelier} if sommelier else {}), "image": image, "prep": meta.get("prep_minutes", 0), "active": meta.get("cook_minutes", 0), "total": f"{meta.get('total_minutes', 0)} min", "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
+    total_minutes = meta.get("total_minutes", 0)
+    active_minutes = meta.get("active_minutes", meta.get("cook_minutes", 0))
+    return {"id": meta.get("id", folder.name), "title": str(meta.get("restaurant_title", meta.get("title", folder.name))).upper(), "subtitle": str(meta.get("subtitle", "RECETTE DE LA MAISON")).upper(), "swedishTitle": meta.get("title", folder.name), "description": meta.get("summary", ""), "publishedAt": str(meta.get("published_at", "")), "updatedAt": str(meta.get("updated_at", "")), "protein": str(meta.get("protein_group", "Övrigt")).title(), "carb": carb_group.title(), "category": meta.get("meal_type", "Middag"), "tags": tags, **({"allergens": allergens} if allergens is not None else {}), **({"storage": storage} if storage else {}), **({"sommelier": sommelier} if sommelier else {}), **({"nutritionMethod": nutrition_method} if nutrition_method else {}), "image": image, "prep": meta.get("prep_minutes", 0), "active": active_minutes, "totalMinutes": total_minutes, "total": format_minutes(total_minutes), "servings": meta.get("servings", 1), "occasion": meta.get("meal_type", "Middag"), "macros": {"kcal": nutrition.get("kcal", 0), "protein": nutrition.get("protein_g", 0), "carbs": nutrition.get("carbs_g", 0), "fat": nutrition.get("fat_g", 0), "fiber": nutrition.get("fiber_g", 0)}, "ingredients": ingredients, **({"quantities": quantities} if quantities is not None else {}), "steps": steps, "tips": tips, "why": why}
 
 
 def load_step_timers(folder, steps):
@@ -660,8 +674,8 @@ class Handler(SimpleHTTPRequestHandler):
                 row = db.execute("SELECT rating FROM ratings WHERE recipe_id=?", (recipe_id,)).fetchone()
                 favorite = db.execute("SELECT updated_at FROM favorites WHERE recipe_id=?", (recipe_id,)).fetchone()
                 cooked_row = db.execute("SELECT count,last_cooked_at FROM cooked WHERE recipe_id=?", (recipe_id,)).fetchone()
-                rows = db.execute("SELECT kind,text,created_at FROM notes WHERE recipe_id=? ORDER BY id", (recipe_id,)).fetchall()
-            notes = [{"text": (("Ändringsförslag: " if x["kind"] == "change" else "") + x["text"]), "date": x["created_at"][:10]} for x in rows]
+                rows = db.execute("SELECT id,kind,text,status,created_at FROM notes WHERE recipe_id=? AND status!='deleted' ORDER BY id", (recipe_id,)).fetchall()
+            notes = [{"id": x["id"], "text": (("Ändringsförslag: " if x["kind"] == "change" else "") + x["text"]), "status": x["status"], "date": x["created_at"][:10]} for x in rows]
             return self.send_json({"rating": row["rating"] if row else 0, "favorite": bool(favorite), "favorite_updated_at": favorite["updated_at"] if favorite else None, "cooked": {"count": cooked_row["count"], "lastCookedAt": cooked_row["last_cooked_at"]} if cooked_row else {"count": 0, "lastCookedAt": None}, "notes": notes})
         if path == "/health":
             self.log_message("health ingress=%s", bool(self.headers.get("X-Ingress-Path")))
@@ -726,10 +740,30 @@ class Handler(SimpleHTTPRequestHandler):
                     text = str(data.get("text", "")).strip()
                     if kind not in ("comment", "change") or not text or len(text) > 8000:
                         raise ValueError("Ogiltig anteckning")
-                    count = db.execute("SELECT COUNT(*) FROM notes WHERE recipe_id=?", (recipe_id,)).fetchone()[0]
+                    count = db.execute("SELECT COUNT(*) FROM notes WHERE recipe_id=? AND status!='deleted'", (recipe_id,)).fetchone()[0]
                     if count >= 1000:
                         return self.send_json({"error": "För många anteckningar för receptet"}, 409)
-                    db.execute("INSERT INTO notes(recipe_id,kind,text,created_at) VALUES(?,?,?,?)", (recipe_id, kind, text, now))
+                    cursor = db.execute("INSERT INTO notes(recipe_id,kind,text,created_at) VALUES(?,?,?,?)", (recipe_id, kind, text, now))
+                    db.commit()
+                    return self.send_json({"ok": True, "id": cursor.lastrowid, "status": "open", "date": now[:10]}, 201)
+                elif self.path == "/api/notes/status":
+                    note_id = data.get("note_id")
+                    if type(note_id) is not int or note_id <= 0:
+                        raise ValueError("Ogiltigt antecknings-id")
+                    status = data.get("status")
+                    if status not in ("open", "resolved", "deleted"):
+                        raise ValueError("Ogiltig anteckningsstatus")
+                    if "text" in data:
+                        text = str(data.get("text", "")).strip()
+                        if not text or len(text) > 8000:
+                            raise ValueError("Ogiltig anteckning")
+                        cursor = db.execute("UPDATE notes SET status=?, text=? WHERE id=? AND recipe_id=?", (status, text, note_id, recipe_id))
+                    else:
+                        cursor = db.execute("UPDATE notes SET status=? WHERE id=? AND recipe_id=?", (status, note_id, recipe_id))
+                    if cursor.rowcount == 0:
+                        return self.send_json({"error": "Anteckningen hittades inte"}, 404)
+                    db.commit()
+                    return self.send_json({"ok": True, "id": note_id, "status": status}, 200)
                 else:
                     return self.send_json({"error": "Saknas"}, 404)
                 db.commit()

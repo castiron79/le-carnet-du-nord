@@ -128,3 +128,25 @@ test("receptets tillagningssteg har samma indrag på mobil oavsett timers eller 
   assert.match(css, /@media \(max-width:520px\)[\s\S]*\.step \.stepContents\s*\{\s*grid-column:1\/-1;\s*\}/);
 });
 
+test("receptvyn och arkivet har utökade funktioner och utskriftsstöd i HA-paketet", async () => {
+  const [page, css, assets] = await Promise.all([
+    read("app/page.tsx"),
+    read("app/recipe-enhancements.css"),
+    readdir(new URL("home-assistant-addon/rootfs/app/www/assets/", root)),
+  ]);
+  const folder = "home-assistant-addon/rootfs/app/www/assets/";
+  const scripts = (await Promise.all(assets.filter((name) => name.endsWith(".js")).map((name) => read(folder + name)))).join("\n");
+  assert.match(page, /#recept=/);
+  assert.match(page, /Håll skärmen vaken/);
+  assert.match(page, /Kopiera ingredienser/);
+  assert.match(page, /<h3>Förvaring<\/h3>/);
+  assert.match(page, /<h3>Allergener<\/h3>/);
+  assert.match(page, /Beräkningsgrund/);
+  assert.match(page, /Markera klar/);
+  assert.match(page, /MÅLTIDSTYP/);
+  assert.match(page, /Senast tillagd/);
+  assert.match(css, /@media print/);
+  assert.ok(scripts.includes("Kopiera ingredienser"), "Bygg om HA-paketet efter ändring");
+  assert.ok(scripts.includes("Markera klar"), "Bygg om HA-paketet efter anteckningsstöd");
+});
+
